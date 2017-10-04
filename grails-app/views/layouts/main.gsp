@@ -102,7 +102,10 @@
                         </sec:ifNotLoggedIn>
                         <sec:ifLoggedIn>
                             <li>
-                                <g:link class="logout" data-toggle="modal" controller="logout" action="index"><span>Logout</span></g:link>
+                                <%--<g:link class="logout" data-toggle="modal" controller="logout" action="index"><span>Logout</span></g:link>--%>
+                                <a href="#" data-toggle="modal" data-target="#logoutModal">
+                                    <span>Logout</span>
+                                </a>
                                 | Logged In as <i><sec:username/></i> 
                             </li>
                         </sec:ifLoggedIn>
@@ -158,7 +161,7 @@
                 <h4 class="modal-title">Logout</h4>
             </div>
             <div class="modal-body">
-                <g:link action="logout" class="btn btn-success">Yes</g:link>
+                <g:link controller="logout" action="index" class="btn btn-success">Yes</g:link>
                     <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
                 </div>
                 <div class="modal-footer">
