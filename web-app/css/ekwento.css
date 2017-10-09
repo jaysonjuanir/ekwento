@@ -1180,3 +1180,84 @@ table th {
 .form-input .button ~ .input {
   padding-right: 2em;
 }
+
+.post {
+  background: white;
+  max-width: 900px;
+  padding: 50px;
+  margin: 50px auto;
+}
+
+#pressCoverage .post h3 {
+  font-size: 24px;
+  padding: 0;
+  margin: 0;
+}
+
+.post h1 {
+  padding: 20px 0px;
+  line-height: 50px;
+}
+
+#pressReleases .post h3 {
+  font-size: 24px;
+  padding-bottom: 15px;
+  margin: 0;
+}
+
+.post .company {
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.post:nth-of-type(1) .company {
+  border-bottom: #8888ff solid 3px;
+}
+
+.post:nth-of-type(2) .company {
+  border-bottom: yellow solid 3px;
+}
+
+.post .author {
+  color: grey;
+  padding: 15px 0px;
+}
+
+.post .keepReading,
+.post .closeArticle {
+  float: right;
+  font-weight: 700;
+  text-transform: uppercase;
+  cursor: pointer;
+  text-decoration: none;
+  color: black;
+}
+
+.post .closeArticle {
+  opacity: 0;
+}
+
+.post article {
+  display: none;
+}
+
+@media screen and (max-width: 980px) {
+  .post h3 {
+    font-size: 20px;
+    line-height: 28px;
+  }
+  .post h2 {
+    font-size: 32px;
+    line-height: 40px;
+  }
+  .post .keepReading,
+  .post .closeArticle {
+    width: 100%;
+    text-align: center;
+    float: none;
+    margin: 20px auto 0px;
+  }
+  .post .closeArticle {
+    margin: 0px auto 20px;
+  }
+}

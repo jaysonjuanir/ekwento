@@ -135,7 +135,7 @@ class UserAccountController {
         
         def registerUser = new UserAccount()
         registerUser.username = params.regUsername
-        registerUser.password = params.regPassword
+        registerUser.password = springSecurityService.encodePassword(params.regPassword)
         registerUser.firstName = params.regFirstName
         registerUser.lastName = params.regLastName
         registerUser.email = params.regEmail

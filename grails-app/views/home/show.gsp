@@ -26,6 +26,34 @@
             }
         </style>
 
+        <script type="text/javascript">
+            $( document ).ready(function() {
+            $('div.keepReading').click(function() {
+            $(this).animate({
+            opacity: 0
+            });
+            $(this).parent().find('.closeArticle').animate({
+            opacity: 1
+            });
+            $(this).prev().slideDown();
+
+            return false;
+            });
+
+            $('div.closeArticle').click(function() {
+            $(this).animate({
+            opacity: 0
+            });
+            $(this).parent().find('.keepReading').animate({
+            opacity: 1
+            });
+            $(this).parent().find('article').slideUp();
+
+            return false;
+            });
+            });
+        </script>
+
     </head>
     <body id="page-top" class="container-fluid">
 
@@ -46,82 +74,29 @@
 
         <section id="bulletin" class="hris-section">
             <div class="container bookSection" id="offset-top">
-                <div class="leftSidePanel" id="offset-top">
-                    <div class="leftSideBooks" style="border-radius:5px;background-color: rgba(189, 184, 184, 0.54);">
-                        <h3 class="reg-inline"><b>Latest Uploads</b></h3>
-                        <g:link class="reg-inline side-buttons btn btn-primary" action="show" id="1">Read More</g:link>
+                <div class="post">
+                    <div class="closeArticle">Close Article</div>
+                    <h1>My First Blog Post</h1>
+                    <h3>Welcome to my new blog!</h3>
+                    <div class="author">By G-SCO | 2016-02-03</div>
 
-                        <div>
-                            <ul id="Grid">
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                            </ul>
-                        </div>
-                    </div>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam eu varius leo, vel porta eros. Praesent et viverra enim. Sed finibus, justo porttitor mattis posuere, dui elit dignissim dolor, vitae bibendum ipsum orci a quam. Praesent eget velit sit amet
+                        ante ultricies vulputate in nec orci. Interdum et malesuada fames ac ante ipsum primis in faucibus. Praesent eget ultrices odio. Vestibulum tempor commodo mauris, id blandit lectus hendrerit ac. Maecenas non faucibus tellus, ut eleifend libero. Integer
+                        consectetur tellus ac semper euismod. Aenean porttitor semper tincidunt. Nunc sed urna nibh. Cras nec felis luctus, sollicitudin enim at, consequat orci. Suspendisse sit amet odio id velit aliquet commodo sed vitae lectus. Praesent egestas id justo
+                        sit amet congue. Donec sed arcu quis felis finibus lacinia.</p>
 
-                    <div class="leftSideBooks" style="border-radius:5px;background-color: rgba(189, 184, 184, 0.54);">
-                        <h3 class="reg-inline"><b>Recent Books</b></h3>
-                        <g:link class="reg-inline side-buttons btn btn-primary" action="show" id="1">Read More</g:link>
+                    <g:each var="sentence" in="${params.wordLists}" status="i">
+                        <g:if test="${i<=3}">
+                            <p>${sentence}</p>
+                        </g:if>
+                        <g:else>
+                            <article>    
+                                <p>${sentence}</p>
+                        </article>
+                        </g:else>
+                    </g:each>
 
-                        <div>
-                            <ul id="Grid">
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="rightSidePanel" id="offset-top">
-                    <div class="rightSideBooks" style="border-radius:5px;background-color: rgba(189, 184, 184, 0.54);">
-                        <h3 class="reg-inline"><b>Articles</b></h3>
-                        <g:link class="reg-inline side-buttons btn btn-primary" action="show" id="1">Read More</g:link>
-
-                        <div>
-                            <ul id="Grid">
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="rightSideBooks" style="border-radius:5px;background-color: rgba(189, 184, 184, 0.54);">
-                        <h3 class="reg-inline"><b>Manga</b></h3>
-                        <g:link class="reg-inline side-buttons btn btn-primary" action="show" id="1">Read More</g:link>
-
-                        <div>
-                            <ul id="Grid">
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="rightSideBooks" style="border-radius:5px;background-color: rgba(189, 184, 184, 0.54);">
-                        <h3 class="reg-inline"><b>Books</b></h3>
-                        <g:link class="reg-inline side-buttons btn btn-primary" action="show" id="1">Read More</g:link>
-
-                        <div>
-                            <ul id="Grid">
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                            </ul>
-                        </div>
-                    </div>
+                    <div class="keepReading">Keep Reading</div>
                 </div>
 
 
@@ -131,27 +106,38 @@
 
         <g:render template="/layouts/footer"/>
 
-
-
-
-
-
-
-
         <div id="composeModal" class="modal fade" role="dialog">
             <div class="modal-dialog">
               <!-- Modal content-->
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Logout</h4>
+                        <h4 class="modal-title">Create new Book</h4>
                     </div>
                     <div class="modal-body">
-                        <g:link controller="logout" action="index" class="btn btn-success">Yes</g:link>
-                            <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
-                        </div>
-                        <div class="modal-footer">
-
+                        <g:form action="create" method="post" name="create" controller="book" enctype="multipart/form-data">
+                            <div class="form-group">
+                                <label for="email" style="color : black;">Title:</label>
+                                <%--<g:textField type="text" name = "user" value = "" class="form-control" id="email"/>--%>
+                                <input type="text" class="form-control" name="bookTitle" id="bookTitle" placeholder="Title" required/>
+                            </div>
+                            <div class="form-group">
+                                <label for="email" style="color : black;">Description:</label>
+                                <%--<g:textField type="text" name = "user" value = "" class="form-control" id="email"/>--%>
+                                <input type="text" class="form-control" name="bookDescription" id="bookDescription" placeholder="Description" required/>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label for="bookContent" style="color : black;">Upload text file:</label>
+                                    <input type="file" class="form-control" name="fileContent"/>
+                                </div>
+                            </div>
+                        <%--<g:actionSubmit action="login" value="Submit" class="btn btn-success"/>--%>
+                            <input type="submit" class="btn btn-success" id="submit" value="Submit"/><br>
+                        </g:form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>

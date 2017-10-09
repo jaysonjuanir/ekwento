@@ -11,28 +11,31 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
         <!-- SCRIPTS -->
-        <script src="/eKwento-1.0/js/jquery.js"></script>
+<!--        <script src="/eKwento-1.0/js/jquery.js"></script>
         <script src="/eKwento-1.0/js/bootstrap.min.js"></script>
         <script src="/eKwento-1.0/js/effects.js"></script>
-        <script src="/eKwento-1.0/dist/js/smooth-scroll.js"></script>
-        <!--<script src="${resource(dir: 'js', file: 'jquery.js')}"></script>-->
-        <!--<script src="${resource(dir: 'js', file: 'bootstrap.min.js')}"></script>-->
-        <!--<script src="${resource(dir: 'js', file: 'effects.js')}"></script>-->
-        <!--<script src="${resource(dir: 'dist/js', file: 'smooth-scroll.js')}"></script>-->
+        <script src="/eKwento-1.0/dist/js/smooth-scroll.js"></script>-->
+        <script src="${resource(dir: 'js', file: 'jquery.js')}"></script>
+        <script src="${resource(dir: 'js', file: 'bootstrap.min.js')}"></script>
+        <script src="${resource(dir: 'js', file: 'effects.js')}"></script>
+        <script src="${resource(dir: 'dist/js', file: 'smooth-scroll.js')}"></script>
         
         <!-- Latest compiled and minified CSS -->
-        <link rel="stylesheet" href="/eKwento-1.0/css/bootstrap.min.css" type="text/css" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <!--<link rel="stylesheet" href="/eKwento-1.0/css/bootstrap.min.css" type="text/css" />-->
+        
+        <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">-->
+        
         <!--<link rel="stylesheet" href="/eKwento-1.0/css/font-awesome.min.css" type="text/css" />-->
-        <!--<link href="${resource(dir: 'css', file: 'bootstrap.min.css')}" rel="stylesheet"/>-->
-        <!--<link href="${resource(dir: 'css', file: 'font-awesome.min.css')}" rel="stylesheet"/>-->
+        <link href="${resource(dir: 'css', file: 'bootstrap.min.css')}" rel="stylesheet"/>
+        <link href="${resource(dir: 'css', file: 'font-awesome.min.css')}" rel="stylesheet"/>
         
         <!-- Custom CSS -->
-        <link rel="stylesheet" href="/eKwento-1.0/css/ekwento.css" type="text/css" />
-        <!--<link rel="stylesheet" href="${resource(dir: 'css', file: 'ekwento.css')}" type="text/css" />-->
+        <!--<link rel="stylesheet" href="/eKwento-1.0/css/ekwento.css" type="text/css" />-->
+        <link rel="stylesheet" href="${resource(dir: 'css', file: 'ekwento.css')}" type="text/css" />
         
         <!-- Favicon -->
-        <link href="/eKwento-1.0/images/faviconn.ico" rel="shortcut icon" type="image/x-icon"></link>
+        <!--<link href="/eKwento-1.0/images/faviconn.ico" rel="shortcut icon" type="image/x-icon"></link>-->
+        <link href="${resource(dir: 'images', file: 'faviconn.ico')}" rel="shortcut icon" type="image/x-icon"></link>
         <g:layoutHead/>
     </head>
     <body>
@@ -73,9 +76,16 @@
                         </li>
                         <li>
                             <!--<a data-scroll href="#page-top">-->
-                                <g:link data-scroll href="#page-top" action="index" controller="home">
+                            <sec:ifNotLoggedIn>
+                                <g:link action="index" controller="home">
                                 <span>Home</span>
                                 </g:link>
+                            </sec:ifNotLoggedIn>
+                            <sec:ifLoggedIn>
+                                <g:link  action="show" controller="home">
+                                <span>Home</span>
+                                </g:link>
+                            </sec:ifLoggedIn>
                             <!--</a>-->
                         </li>
                         <li>
@@ -96,6 +106,7 @@
                         <sec:ifNotLoggedIn>
                             <li>
                                 <a href="#" data-toggle="modal" data-target="#loginModal">
+                                    <span class="glyphicon glyphicon-log-in"></span>
                                     <span>Login</span>
                                 </a>
                             </li>

@@ -15,6 +15,9 @@ class UserAccount {
     String lastName
     String email
     String token
+    
+    Date birthdate //viewing content below 18
+    String contact
 
     static transients = ['springSecurityService']
 
@@ -25,6 +28,8 @@ class UserAccount {
         lastName(nullable:false,blank:false, minSize:1, maxSize:255, matches:"[0-9, a-z, A-Z, \\,, \\-, /, ., \\s]+")
         email(nullable:false,blank:false,email:true, minSize:1, maxSize:255)
         token(blank:true)
+        contact(blank:true, nullable:true)
+        birthdate(nullable:true, blank:true)
     }
 
     static mapping = {
@@ -32,7 +37,7 @@ class UserAccount {
     }
     
     String toString() {
-        "["+id+"]"+" " +firstName + " " + lastName
+        firstName + " " + lastName
     }
 
     Set<UserGroup> getAuthorities() {
