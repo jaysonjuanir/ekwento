@@ -142,14 +142,14 @@
                         <!--<form action="/eKwento-1.0/j_spring_security_check" method="POST" role="form">-->
                         <form action="${postUrl}" method="POST" role="form">
                             <div class="form-group">
-                                <label for="email" style="color : black;">Username:</label>
+                                <label for="username" style="color : black;">Username:</label>
                                 <%--<g:textField type="text" name = "user" value = "" class="form-control" id="email"/>--%>
-                                <input type="text" class="form-control" name="j_username" id="username" placeholder="username"/>
+                                <input type="text" class="form-control" name="j_username" id="username" placeholder="Username"/>
                             </div>
                             <div class="form-group">
-                                <label for="pwd" style="color : black;">Password:</label>
+                                <label for="password" style="color : black;">Password:</label>
                                 <%--<g:passwordField type="password" name="pass" value = "" class="form-control" id="pwd"/><br/>--%>
-                                <input type="password" class="form-control" name="j_password" id="password" placeholder="password"/>
+                                <input type="password" class="form-control" name="j_password" id="password" placeholder="Password"/>
                             </div>
                             <%--<g:actionSubmit action="login" value="Submit" class="btn btn-success"/>--%>
                             <input type="submit" class="btn btn-success" id="submit" value="Submit"/><br>

@@ -26,7 +26,9 @@ class LoginController {
     def springSecurityService
         
     def index() {
+        println("login index")
         if (springSecurityService.isLoggedIn()) {
+            println("postUrl lol dito ba?")
             //			redirect uri: SpringSecurityUtils.securityConfig.successHandler.defaultTargetUrl
             redirect action:'show', controller:"home"
             //			redirect uri: '/index'
@@ -38,10 +40,11 @@ class LoginController {
     }
 
     def auth() {
-
+        println("login auth")
         def config = SpringSecurityUtils.securityConfig
 
         if (springSecurityService.isLoggedIn()) {
+            println("postUrl lol dito ba?")
             //redirect uri: config.successHandler.defaultTargetUrl
             redirect action:'show', controller:"home"
             return
@@ -49,15 +52,10 @@ class LoginController {
 
         String view = 'auth'
         String postUrl = "${request.contextPath}${config.apf.filterProcessesUrl}"
+        
+        
         render view: view, model: [postUrl: postUrl]
+        return
     }
     
-    def test(){
-        sendMail {
-            to "bertoasdf@gmail.com"
-            subject "This is a test mail"
-            body "Hello, This is a test mail, how are you?"
-        }
-    
-    }
 }

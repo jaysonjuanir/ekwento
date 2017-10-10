@@ -19,7 +19,7 @@ environments {
     development {
         dataSource {
             dbCreate = "update" // one of 'create', 'create-drop','update'
-            url = "jdbc:mysql://localhost:3306/ekwento"
+            url = "jdbc:mysql://localhost:3306/ekwento1"
         }
     }
     test {

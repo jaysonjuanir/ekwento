@@ -13,31 +13,44 @@ class BootStrap {
         def searchAdminAccount = UserAccount.findByUsername('ekwento')
         def searchAdminGroup = UserGroup.findByName("GROUP_ADMIN")
         def searchAdminRole = UserRole.findByAuthority("ROLE_ADMIN_DASHBOARD")
+        def user
+        def group
+        def role
         if(!searchAdminAccount){
-            def user = new UserAccount()
+            
+            user = new UserAccount()
             user.username = 'ekwento'
+            user.firstName = 'ekwento'
+            user.lastName = 'ekwento'
+            user.email = 'ekw3nt0@gmail.com'
+            user.token = '1'
             user.password = springSecurityService.encodePassword('ekwento')
-            user.save(flush:true)
+            user.save(flush:true, failOnError:true)
+            println("User Account Created!")
         }else{
             println("Already have admin account!")
         }
         if(!searchAdminGroup){
-            def group = new UserGroup()
+            group = new UserGroup()
             group.name = 'GROUP_ADMIN'
-            group.save(flush:true)
+            group.save(flush:true, failOnError:true)
+            println("User Group Created!")
         }
         if(!searchAdminRole){
-            def role = new UserRole()
+            role = new UserRole()
             role.authority = 'ROLE_ADMIN_DASHBOARD'
-            role.save(flush:true)
+            role.save(flush:true, failOnError:true)
+            println("User Role Created!")
         }
         
         if(!searchAdminGroup && !searchAdminRole){
             UserGroupUserRole.create(group, role, true)
+            println("User Group User Role Created!")
         }
         
         if(!searchAdminAccount && !searchAdminGroup){
             UserAccountUserGroup.create(user,group,true)
+            println("User Account User Group Created!")
         }
         
         println("Initialize eKwento!")
