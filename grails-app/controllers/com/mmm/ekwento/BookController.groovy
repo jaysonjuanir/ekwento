@@ -17,10 +17,11 @@ class BookController {
         
         def testFile=null
         testFile = request.getFile("fileContent")
+        def bookInstance
         if(testFile){
             def content = testFile.getFileItem().getString()
             
-            def bookInstance = new Book()
+            bookInstance = new Book()
             bookInstance.title = params.bookTitle
             bookInstance.description = params.bookDescription
             bookInstance.content = content
@@ -28,6 +29,10 @@ class BookController {
             bookInstance.dateUpdated = new Date()
             bookInstance.createdBy = authenticatedUser
             bookInstance.save(flush:true, failOnError:true)
+        }else{
+            flash.error = "File cannot read."
+            redirect action:"index"
+            return
         }
         
         //params.wordLists = wordLists
@@ -36,7 +41,7 @@ class BookController {
         //        println("wordLists "+wordLists1)
         flash.message = "Book "+params.bookTitle + " has been created."
         
-        redirect action:'show', controller:"home", params:params
+        redirect action:'show', id:bookInstance.id
     }
     
     def show(Book bookInstance){

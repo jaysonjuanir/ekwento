@@ -35,7 +35,7 @@
         
         <!-- Favicon -->
         <!--<link href="/eKwento-1.0/images/faviconn.ico" rel="shortcut icon" type="image/x-icon"></link>-->
-        <link href="${resource(dir: 'images', file: 'faviconn.ico')}" rel="shortcut icon" type="image/x-icon"></link>
+        <link href="${resource(dir: 'images', file: 'ek.ico')}" rel="shortcut icon" type="image/x-icon"></link>
         <g:layoutHead/>
     </head>
     <body>

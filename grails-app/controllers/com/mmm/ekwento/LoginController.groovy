@@ -28,9 +28,9 @@ class LoginController {
     def index() {
         println("login index")
         if (springSecurityService.isLoggedIn()) {
-            println("postUrl lol dito ba?")
-            //			redirect uri: SpringSecurityUtils.securityConfig.successHandler.defaultTargetUrl
-            redirect action:'show', controller:"home"
+            println("postUrl lol dito ba sa index?")
+            redirect uri: SpringSecurityUtils.securityConfig.successHandler.defaultTargetUrl
+            //redirect action:'show', controller:"home"
             //			redirect uri: '/index'
             //			redirect uri: '/layouts/main'
         }
@@ -44,9 +44,10 @@ class LoginController {
         def config = SpringSecurityUtils.securityConfig
 
         if (springSecurityService.isLoggedIn()) {
-            println("postUrl lol dito ba?")
+            println("postUrl lol dito ba sa auth?")
+            redirect uri: SpringSecurityUtils.securityConfig.successHandler.defaultTargetUrl
             //redirect uri: config.successHandler.defaultTargetUrl
-            redirect action:'show', controller:"home"
+            //redirect action:'show', controller:"home"
             return
         }
 

@@ -10,18 +10,18 @@ class Book {
     Integer numberOfViews = 0
     UserAccount createdBy
     
-    //Boolean approved = false  //admin approved
-    //byte[] logo    //logo for book
+    Boolean approved = false  //admin approved
+    byte[] logo    //logo for book
     
     static mapping = {
         content type: 'text'
-        //logo column: "logo" , sqlType: "LONGBLOB"
+        logo column: "logo" , sqlType: "LONGBLOB"
     }
     
     static constraints = {
         title nullable:false
         content nullable:false
         dateUpdated nullable:true
-        //logo(nullable:true)
+        logo(nullable:true)
     }
 }
