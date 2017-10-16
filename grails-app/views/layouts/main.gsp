@@ -139,8 +139,9 @@
                     </div>
                     <div class="modal-body">
                         <%--<form role="form" >--%>
-                        <!--<form action="/eKwento-1.0/j_spring_security_check" method="POST" role="form">-->
-                        <form action="${postUrl}" method="POST" role="form">
+                        <%--<form action="/eKwento-1.0/j_spring_security_check" method="POST" role="form">--%>
+                        <%--<form action="${postUrl}" method="POST" role="form">--%>
+                        <form action="${ request.contextPath }/j_spring_security_check" method="POST" role="form">
                             <div class="form-group">
                                 <label for="username" style="color : black;">Username:</label>
                                 <%--<g:textField type="text" name = "user" value = "" class="form-control" id="email"/>--%>

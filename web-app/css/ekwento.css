@@ -731,12 +731,11 @@ table a{
   background:#f4f4f4;
   background:rgba(244,244,244,.79);
   border: 1px solid #d3d3d3;
-	left: 35%;
-  padding: 2px 5px;
+
+
   position: absolute;
-	margin: -20px 0 0 -215px;
-	top: 75%;
-  width:339px;
+
+	top: 60%;
   box-shadow:0 4px 9px rgba(0,0,0,.37);
   -moz-box-shadow:0 4px 9px rgba(0,0,0,.37);
   -webkit-box-shadow:0 4px 9px rgba(0,0,0,.37);

@@ -67,6 +67,39 @@
                 </ul>
             </div>
         </nav>
+		
+		<g:if test="${flash.warning || flash.message || flash.success || flash.error}">
+            <div class="span7">
+                <g:if test="${flash.message}">
+                    <div class="alert alert-info" role="status">
+                        <strong>
+                            ${flash.message}
+                        </strong>
+                    </div>
+                </g:if>
+                <g:if test="${flash.success}">
+                    <div class="alert alert-success" role="status">
+                        <strong>
+                            ${flash.success}
+                        </strong>
+                    </div>
+                </g:if>
+                <g:if test="${flash.error}">
+                    <div class="alert alert-error" role="status">
+                        <strong>
+                            ${flash.error}
+                        </strong>
+                    </div>
+                </g:if>
+                <g:if test="${flash.warning}">
+                    <div class="alert alert-warning" role="status">
+                        <strong>
+                            ${flash.warning}
+                        </strong>
+                    </div>
+                </g:if>
+            </div>
+        </g:if>
 
         <section id="bulletin" class="hris-section">
 

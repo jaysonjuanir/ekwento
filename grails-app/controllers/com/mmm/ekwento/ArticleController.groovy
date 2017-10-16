@@ -28,6 +28,8 @@ class ArticleController {
             articleInstance.dateCreated = new Date()
             articleInstance.dateUpdated = new Date()
             articleInstance.createdBy = authenticatedUser
+			def genres = Genre.getAll(params.genres)
+			articleInstance.genres = genres
             articleInstance.save(flush:true, failOnError:true)
         }else{
             flash.error = "File cannot read."
@@ -62,9 +64,12 @@ class ArticleController {
         model.createdBy = articleInstance.createdBy
         model.numberOfViews = articleInstance.numberOfViews
         
+        model.isOwned = false
+        if(user == bookInstance.createdBy){
+			model.isOwned = true
+		}
         
-        
-        println(articleInstance.content.split("\\r?\\n"))
+        //println(articleInstance.content.split("\\r?\\n"))
         
         respond articleInstance, model:model
     }
@@ -76,6 +81,9 @@ class ArticleController {
         articleInstance.description = params.articleDescription
         articleInstance.content = params.content
         articleInstance.dateUpdated = new Date()
+		
+		def genres = Genre.getAll(params.genres)
+		articleInstance.genres = genres
         
         articleInstance.save(flush:true, failOnError:true)
         

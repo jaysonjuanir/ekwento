@@ -2,6 +2,7 @@ package com.mmm.ekwento
 
 import grails.converters.JSON
 import grails.plugin.springsecurity.SpringSecurityUtils
+import org.springframework.security.access.annotation.Secured
 
 import javax.servlet.http.HttpServletResponse
 //
@@ -14,10 +15,9 @@ import javax.servlet.http.HttpServletResponse
 //import org.springframework.security.web.WebAttributess
 import org.apache.commons.lang.RandomStringUtils;
 
-
+@Secured('permitAll')
 class LoginController {
     
-    def authenticationTrustResolver
     
 
     /**
@@ -29,8 +29,9 @@ class LoginController {
         println("login index")
         if (springSecurityService.isLoggedIn()) {
             println("postUrl lol dito ba sa index?")
-            redirect uri: SpringSecurityUtils.securityConfig.successHandler.defaultTargetUrl
+            //redirect uri: SpringSecurityUtils.securityConfig.successHandler.defaultTargetUrl
             //redirect action:'show', controller:"home"
+			redirect uri: '/home/list'
             //			redirect uri: '/index'
             //			redirect uri: '/layouts/main'
         }
@@ -43,17 +44,19 @@ class LoginController {
         println("login auth")
         def config = SpringSecurityUtils.securityConfig
 
+		println("springSecurityService.isLoggedIn: ${springSecurityService.isLoggedIn()}")
         if (springSecurityService.isLoggedIn()) {
             println("postUrl lol dito ba sa auth?")
-            redirect uri: SpringSecurityUtils.securityConfig.successHandler.defaultTargetUrl
+            //redirect uri: SpringSecurityUtils.securityConfig.successHandler.defaultTargetUrl
             //redirect uri: config.successHandler.defaultTargetUrl
             //redirect action:'show', controller:"home"
+			redirect uri: '/home/list'
             return
         }
 
         String view = 'auth'
         String postUrl = "${request.contextPath}${config.apf.filterProcessesUrl}"
-        
+        //println("config.apf.filterProcessesUrl: "+config.apf.filterProcessesUrl)
         
         render view: view, model: [postUrl: postUrl]
         return

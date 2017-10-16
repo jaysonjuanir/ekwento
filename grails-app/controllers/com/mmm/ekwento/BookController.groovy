@@ -28,6 +28,8 @@ class BookController {
             bookInstance.dateCreated = new Date()
             bookInstance.dateUpdated = new Date()
             bookInstance.createdBy = authenticatedUser
+			def genres = Genre.getAll(params.genres)
+			bookInstance.genres = genres
             bookInstance.save(flush:true, failOnError:true)
         }else{
             flash.error = "File cannot read."
@@ -53,7 +55,7 @@ class BookController {
             bookInstance.numberOfViews = bookInstance.numberOfViews + 1
             bookInstance.save(flush:true)
         }
-        
+		
         def model = [:]
         model.title = bookInstance.title
         model.description = bookInstance.description
@@ -62,9 +64,17 @@ class BookController {
         model.createdBy = bookInstance.createdBy
         model.numberOfViews = bookInstance.numberOfViews
         
+		model.isOwned = false
+        if(user == bookInstance.createdBy){
+			model.isOwned = true
+		}else{
+//			if(!bookInstance.approved){
+//				flash.message = "Book is not ready for viewing because it is not approved by admin"
+//				redirect action:"show", controller:"home"
+//			}
+		}
         
-        
-        println(bookInstance.content.split("\\r?\\n"))
+        //println(bookInstance.content.split("\\r?\\n"))
         
         respond bookInstance, model:model
     }
@@ -76,6 +86,9 @@ class BookController {
         bookInstance.description = params.bookDescription
         bookInstance.content = params.content
         bookInstance.dateUpdated = new Date()
+		
+		def genres = Genre.getAll(params.genres)
+		bookInstance.genres = genres
         
         bookInstance.save(flush:true, failOnError:true)
         

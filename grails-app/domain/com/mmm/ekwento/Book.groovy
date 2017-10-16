@@ -13,9 +13,12 @@ class Book {
     Boolean approved = false  //admin approved
     byte[] logo    //logo for book
     
+	static hasMany = [genres:Genre]
+	
     static mapping = {
         content type: 'text'
         logo column: "logo" , sqlType: "LONGBLOB"
+		genres joinTable: [name: "book_genres", column: "genre_id", key: 'book_id' ]
     }
     
     static constraints = {

@@ -4,8 +4,10 @@ package com.mmm.ekwento
 
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
+import org.springframework.security.access.annotation.Secured
 
 @Transactional(readOnly = true)
+@Secured('permitAll')
 class UserAccountController {
 
     def springSecurityService
@@ -150,11 +152,87 @@ class UserAccountController {
                 errorMessage += error + " "
             }
             flash.error = errorMessage
+			println "errorMessage: " + errorMessage
             redirect action:"auth", controller:"login"
             return
         }
         registerUser.enabled = false;
         registerUser.save flush:true
+		
+		def group = UserGroup.findByName("GROUP_CLIENT")
+		if(!group){
+            group = new UserGroup()
+            group.name = 'GROUP_CLIENT'
+            group.save(flush:true, failOnError:true)
+            println("User Group Created!")
+        }
+		
+		def roles = []
+		def role = UserRole.findByAuthority("ROLE_CREATE_BOOKS")
+		if(!role){
+            role = new UserRole()
+            role.authority = 'ROLE_CREATE_BOOKS'
+            role.save(flush:true, failOnError:true)
+            println("User Role Created!")
+        }
+		roles << role
+		
+		role = UserRole.findByAuthority("ROLE_UPDATE_BOOKS")
+		if(!role){
+            role = new UserRole()
+            role.authority = 'ROLE_UPDATE_BOOKS'
+            role.save(flush:true, failOnError:true)
+            println("User Role Created!")
+        }
+		roles << role
+		
+		role = UserRole.findByAuthority("ROLE_CREATE_ARITICLES")
+		if(!role){
+            role = new UserRole()
+            role.authority = 'ROLE_CREATE_ARITICLES'
+            role.save(flush:true, failOnError:true)
+            println("User Role Created!")
+        }
+		roles << role
+		
+		role = UserRole.findByAuthority("ROLE_UPDATE_ARITICLES")
+		if(!role){
+            role = new UserRole()
+            role.authority = 'ROLE_UPDATE_ARITICLES'
+            role.save(flush:true, failOnError:true)
+            println("User Role Created!")
+        }
+		roles << role
+		
+		role = UserRole.findByAuthority("ROLE_CREATE_MANGA")
+		if(!role){
+            role = new UserRole()
+            role.authority = 'ROLE_CREATE_MANGA'
+            role.save(flush:true, failOnError:true)
+            println("User Role Created!")
+        }
+		roles << role
+		
+		role = UserRole.findByAuthority("ROLE_UPDATE_MANGA")
+		if(!role){
+            role = new UserRole()
+            role.authority = 'ROLE_UPDATE_MANGA'
+            role.save(flush:true, failOnError:true)
+            println("User Role Created!")
+        }
+		roles << role
+		
+		roles.each{ r->
+			if( !(UserGroupUserRole.exists(group.id, r.id)) ){
+				UserGroupUserRole.create(group, r, true)
+				println("User Group User Role Created!")
+			}
+		}
+        
+		if( !(UserAccountUserGroup.exists(registerUser.id, group.id)) ){
+			UserAccountUserGroup.create(registerUser,group,true)
+			println("User Account User Group Created!")
+		}
         
         def url = createLink(action:"verify", controller:"userAccount", absolute:true)
         params.regLink = url

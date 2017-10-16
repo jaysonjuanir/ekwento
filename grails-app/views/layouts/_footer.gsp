@@ -3,25 +3,23 @@
   To change this template file, choose Tools | Templates
   and open the template in the editor.
 -->
-
+<%@ page import="com.mmm.ekwento.Book" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <section id="footer" class="hris-section">
     <div class="container" id="offset-top">
         <div class="rowFooter">
-            <h3>Other Stories</h3>
-            <g:link action="auth" controller="login">Sample Stories</g:link>
-            <br/>
-            <g:link action="auth" controller="login">Sample Stories</g:link>
-            <br/>
-            <g:link action="auth" controller="login">Sample Stories</g:link>
+            <h3>Recent Stories</h3>
+			<g:each var="book" in="${Book.list(max: 3, sort: "dateCreated", order: "desc")}">
+				<g:link action="show" controller="book" id="${book.id}">${book.title}</g:link>
+				<br/>
+			</g:each>
         </div>
         <div class="rowFooter">
             <h3>Trending Stories</h3>
-            <g:link action="auth" controller="login">Sample Stories</g:link>
-            <br/>
-            <g:link action="auth" controller="login">Sample Stories</g:link>
-            <br/>
-            <g:link action="auth" controller="login">Sample Stories</g:link>
+            <g:each var="book" in="${Book.list(max: 3, sort: "numberOfViews", order: "desc")}">
+				<g:link action="show" controller="book" id="${book.id}">${book.title}</g:link>
+				<br/>
+			</g:each>
         </div>
         <div class="rowFooter">
             <h3>Trending Authors</h3>

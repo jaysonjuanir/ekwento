@@ -3,7 +3,7 @@
   To change this template file, choose Tools | Templates
   and open the template in the editor.
 -->
-
+<%@ page import="com.mmm.ekwento.Genre" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 
 <html>
@@ -69,13 +69,15 @@
                             <li><a href="#" data-toggle="modal" data-target="#composeMangaModal">Manga</a></li>
                         </ul>
                     </li>
+					<li class="active"><a href="#">Library</a></li>
                     <li class="active"><a href="#">Message</a></li>
-                    <li class="active"><a href="#">Library</a></li>
                     <li class="active"><a href="#">Notification</a></li>
                 </ul>
                 
                 <ul class="nav navbar-nav navbar-right ">
-                    <li class="active"><a href="#" data-toggle="modal" data-target='#editModal'><span class="glyphicon glyphicon-pencil"></span>Edit</a></li>
+					<g:if test="${isOwned}">
+						<li class="active"><a href="#" data-toggle="modal" data-target='#editModal'><span class="glyphicon glyphicon-pencil"></span>Edit</a></li>
+					</g:if>
                     <li class="active"><a href="#"><span class="glyphicon glyphicon-eye-open"></span>${numberOfViews} Views</a></li>
                 </ul>
             </div>
@@ -161,6 +163,12 @@
                 </div>
                 <div class="modal-body">
                     <g:form action="create" method="post" name="create" controller="book" enctype="multipart/form-data">
+						<div class="col-lg-12">
+                            <div class="form-group">
+                                <label for="bookLogo" style="color : black;">Upload text file:</label>
+                                <input type="file" class="form-control" name="bookLogo" accept=".gif,.jpg,.jpeg,.png,"/>
+                            </div>
+                        </div>
                         <div class="form-group">
                             <label for="email" style="color : black;">Title:</label>
                             <%--<g:textField type="text" name = "user" value = "" class="form-control" id="email"/>--%>
@@ -174,9 +182,21 @@
                         <div class="col-lg-12">
                             <div class="form-group">
                                 <label for="bookContent" style="color : black;">Upload text file:</label>
-                                <input type="file" class="form-control" name="fileContent"/>
+                                <input type="file" class="form-control" name="fileContent" accept=".txt"/>
                             </div>
                         </div>
+						<g:each var="genre" in="${Genre.list(sort: "type", order: "asc")}">
+							<div class="col-lg-3">
+								<div class="form-group">
+									<label for="genres" style="color : black;">
+										<g:checkBox name="genres" value="${genre.id}" /> ${genre.type}
+										<br/>
+										
+									</label>
+								</div>
+							</div>
+						</g:each>
+						
                     <%--<g:actionSubmit action="login" value="Submit" class="btn btn-success"/>--%>
                         <input type="submit" class="btn btn-success" id="submit" value="Submit"/><br>
                     </g:form>
@@ -214,6 +234,17 @@
                                 <input type="file" class="form-control" name="fileContent"/>
                             </div>
                         </div>
+						<g:each var="genre" in="${Genre.list(sort: "type", order: "asc")}">
+							<div class="col-lg-3">
+								<div class="form-group">
+									<label for="genres" style="color : black;">
+										<g:checkBox name="genres" value="${genre.id}" /> ${genre.type}
+										<br/>
+										
+									</label>
+								</div>
+							</div>
+						</g:each>
                     <%--<g:actionSubmit action="login" value="Submit" class="btn btn-success"/>--%>
                         <input type="submit" class="btn btn-success" id="submit" value="Submit"/><br>
                     </g:form>
@@ -253,6 +284,17 @@
                                 <g:textArea class="form-control" name="content" value="${bookInstance.content}" rows="10" cols="100"/>
                             </div>
                         </div>
+						<g:each var="genre" in="${Genre.list(sort: "type", order: "asc")}">
+							<div class="col-lg-3">
+								<div class="form-group">
+									<label for="genres" style="color : black;">
+										<g:checkBox name="genres" value="${genre.id}" /> ${genre.type}
+										<br/>
+										
+									</label>
+								</div>
+							</div>
+						</g:each>
                     <%--<g:actionSubmit action="login" value="Submit" class="btn btn-success"/>--%>
                         <input type="submit" class="btn btn-success" id="submit" value="Submit"/><br>
                         

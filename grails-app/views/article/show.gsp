@@ -166,13 +166,15 @@
                             <li><a href="#" data-toggle="modal" data-target="#composeMangaModal">Manga</a></li>
                         </ul>
                     </li>
-                    <li class="active"><a href="#">Message</a></li>
                     <li class="active"><a href="#">Library</a></li>
+                    <li class="active"><a href="#">Message</a></li>
                     <li class="active"><a href="#">Notification</a></li>
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right ">
-                    <li class="active"><a href="#" data-toggle="modal" data-target='#editModal'><span class="glyphicon glyphicon-pencil"></span>Edit</a></li>
+                    <g:if test="${isOwned}">
+						<li class="active"><a href="#" data-toggle="modal" data-target='#editModal'><span class="glyphicon glyphicon-pencil"></span>Edit</a></li>
+					</g:if>
                     <li class="active"><a href="#"><span class="glyphicon glyphicon-eye-open"></span>${numberOfViews} Views</a></li>
                 </ul>
             </div>
@@ -317,6 +319,12 @@
                     </div>
                     <div class="modal-body">
                         <g:form action="create" method="post" name="create" controller="article" enctype="multipart/form-data">
+							<div class="col-lg-12">
+                                <div class="form-group">
+                                    <label for="articleLogo" style="color : black;">Upload text file:</label>
+                                    <input type="file" class="form-control" name="fileContent" accept=".gif,.jpg,.jpeg,.png,"/>
+                                </div>
+                            </div>
                             <div class="form-group">
                                 <label for="email" style="color : black;">Title:</label>
                                 <%--<g:textField type="text" name = "user" value = "" class="form-control" id="email"/>--%>
@@ -330,7 +338,7 @@
                             <div class="col-lg-12">
                                 <div class="form-group">
                                     <label for="articleContent" style="color : black;">Upload text file:</label>
-                                    <input type="file" class="form-control" name="fileContent"/>
+                                    <input type="file" class="form-control" name="fileContent" accept=".txt"/>
                                 </div>
                             </div>
                         <%--<g:actionSubmit action="login" value="Submit" class="btn btn-success"/>--%>
