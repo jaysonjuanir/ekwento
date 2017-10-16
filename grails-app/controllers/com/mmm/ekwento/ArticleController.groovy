@@ -65,7 +65,7 @@ class ArticleController {
         model.numberOfViews = articleInstance.numberOfViews
         
         model.isOwned = false
-        if(user == bookInstance.createdBy){
+        if(user == articleInstance.createdBy){
 			model.isOwned = true
 		}
         
