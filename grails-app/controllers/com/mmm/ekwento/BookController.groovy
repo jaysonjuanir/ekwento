@@ -7,11 +7,12 @@ import org.springframework.web.multipart.commons.*;
 
 import grails.plugin.springsecurity.annotation.Secured
 
-@Secured('IS_AUTHENTICATED_FULLY')
+
 class BookController {
 
     def index() { }
     
+	//@Secured('ROLE_CREATE_BOOKS')
     def create(){
         println("test method params: "+params)
         
@@ -80,7 +81,8 @@ class BookController {
         
         respond bookInstance, model:model
     }
-    
+	
+	//@Secured('ROLE_UPDATE_BOOKS')
     def update(Book bookInstance){
         println("Book update params: " +params)
         
@@ -101,11 +103,12 @@ class BookController {
         redirect action:"show", id:bookInstance.id
     }
 	
-	
-	def renderImage = {
+	@Secured('IS_AUTHENTICATED_ANONYMOUSLY')
+	def renderImage(){
         log.info "renderImage : " + params.id
+        println "renderImage : " + params.id
+		
         def bookInstance = Book.findById(params.id)
-
         if (bookInstance?.logo) {
             response.setContentLength(bookInstance.logo.length)
             response.outputStream.write(bookInstance.logo)

@@ -9,20 +9,24 @@
     <div class="container" id="offset-top">
         <div class="rowFooter">
             <h3>Recent Stories</h3>
-			<g:each var="book" in="${Book.list(max: 3, sort: "dateCreated", order: "desc")}">
+			<g:each var="book" in="${Book.findAllByApprovedAndRejected(true, false, [max: 3, sort: "dateCreated", order: "desc"])}">
 				<g:link action="show" controller="book" id="${book.id}">${book.title}</g:link>
 				<br/>
 			</g:each>
         </div>
         <div class="rowFooter">
             <h3>Trending Stories</h3>
-            <g:each var="book" in="${Book.list(max: 3, sort: "numberOfViews", order: "desc")}">
+            <g:each var="book" in="${Book.findAllByApprovedAndRejected(true, false, [max: 3, sort: "numberOfViews", order: "desc"])}">
 				<g:link action="show" controller="book" id="${book.id}">${book.title}</g:link>
 				<br/>
 			</g:each>
         </div>
         <div class="rowFooter">
             <h3>Trending Authors</h3>
+			<%-- <g:each var="author" in="${UserAccount.list(max: 3, sort: "numberOfFollowers", order: "desc")}">
+				<g:link action="show" controller="profile" id="${author.id}">${author.firstName} ${author.lastName}</g:link>
+				<br/>
+			</g:each> --%>
             <g:link action="auth" controller="login">Sample Stories</g:link>
             <br/>
             <g:link action="auth" controller="login">Sample Stories</g:link>

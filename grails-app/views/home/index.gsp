@@ -133,7 +133,8 @@
                         <div>
                             <ul id="Grid">
 								
-								<g:each var="book" in="${Book.list(max: 4, sort: "dateCreated", order: "desc")}">
+								<%--<g:each var="book" in="${Book.list(max: 4, sort: "dateCreated", order: "desc")}">--%>
+								<g:each var="book" in="${Book.findAllByApprovedAndRejected(true, false, [max: 4, sort: "dateCreated", order: "desc"])}">
 									<li>
 										<g:if test="${book.logo}">
 											<img src="${createLink (controller:'book' , action:'renderImage' , id:book.id)}" alt="bookLogo" height="140" width="140"/>
@@ -155,7 +156,7 @@
 
                         <div>
                             <ul id="Grid">
-								<g:each var="book" in="${Book.list(max: 8, sort: "dateCreated", order: "desc")}">
+								<g:each var="book" in="${Book.findAllByApprovedAndRejected(true, false, [max: 8, sort: "dateCreated", order: "desc"])}">
 									<li>
 										<g:if test="${book.logo}">
 											<img src="${createLink (controller:'book' , action:'renderImage' , id:book.id)}" alt="bookLogo" height="140" width="140"/>
@@ -179,7 +180,7 @@
 
                         <div>
                             <ul id="Grid">
-                                <g:each var="article" in="${Article.list(max: 4, sort: "dateCreated", order: "desc")}">
+                                <g:each var="article" in="${Article.findAllByApprovedAndRejected(true, false, [max: 4, sort: "dateCreated", order: "desc"])}">
 									<li>
 										<g:if test="${article.logo}">
 											<img src="${createLink (controller:'article' , action:'renderImage' , id:article.id)}" alt="articleLogo" height="75" width="75"/>
@@ -214,7 +215,7 @@
 
                         <div>
                             <ul id="Grid">
-                                <g:each var="book" in="${Book.list(max: 4, sort: "dateCreated", order: "desc")}">
+                                <g:each var="book" in="${Book.findAllByApprovedAndRejected(true, false, [max: 4, sort: "dateCreated", order: "desc"])}">
 									<li>
 										<g:if test="${book.logo}">
 											<img src="${createLink (controller:'book' , action:'renderImage' , id:book.id)}" alt="bookLogo" height="75" width="75"/>
