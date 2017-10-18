@@ -7,7 +7,7 @@ import grails.transaction.Transactional
 import org.springframework.security.access.annotation.Secured
 
 @Transactional(readOnly = true)
-@Secured('permitAll')
+@Secured('IS_AUTHENTICATED_FULLY')
 class UserAccountController {
 
     def springSecurityService
@@ -15,6 +15,7 @@ class UserAccountController {
     
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
+	@Secured('ROLE_ADMIN_DASHBOARD')
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         def total = 0

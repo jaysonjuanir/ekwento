@@ -185,6 +185,12 @@
                                 <input type="file" class="form-control" name="fileContent" accept=".txt"/>
                             </div>
                         </div>
+						<div class="col-lg-12">
+							<div class="form-group">
+								<label for="bookLogo" style="color : black;">Upload logo:</label>
+								<input type="file" class="form-control" name="bookLogo" accept=".gif,.jpg,.jpeg,.png,"/>
+							</div>
+						</div>
 						<g:each var="genre" in="${Genre.list(sort: "type", order: "asc")}">
 							<div class="col-lg-3">
 								<div class="form-group">
@@ -234,6 +240,12 @@
                                 <input type="file" class="form-control" name="fileContent"/>
                             </div>
                         </div>
+						<div class="col-lg-12">
+                                <div class="form-group">
+                                    <label for="articleLogo" style="color : black;">Upload logo:</label>
+                                    <input type="file" class="form-control" name="articleLogo" accept=".gif,.jpg,.jpeg,.png,"/>
+                                </div>
+                            </div>
 						<g:each var="genre" in="${Genre.list(sort: "type", order: "asc")}">
 							<div class="col-lg-3">
 								<div class="form-group">
@@ -268,6 +280,12 @@
                 </div>
                 <div class="modal-body">
                     <g:form action="update" method="post" name="update" controller="book" enctype="multipart/form-data">
+						<div class="col-lg-12">
+							<div class="form-group">
+								<label for="bookLogo" style="color : black;">Update Logo:</label>
+								<input type="file" class="form-control" name="bookLogo" accept=".gif,.jpg,.jpeg,.png,"/>
+							</div>
+						</div>
                         <div class="form-group">
                             <label for="email" style="color : black;">Title:</label>
                             <%--<g:textField type="text" name = "user" value = "" class="form-control" id="email"/>--%>

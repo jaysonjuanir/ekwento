@@ -1,4 +1,9 @@
 <!DOCTYPE html>
+
+<%@ page import="com.mmm.ekwento.UserAccount" %>
+<%@ page import="com.mmm.ekwento.Book" %>
+<%@ page import="com.mmm.ekwento.Article" %>
+
 <html>
     <head>
         <title>e-Kwento - MMM</title>
@@ -6,43 +11,46 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
         <meta name='layout' content='main' />
-
+		<g:set var="userObject" value="${UserAccount.findByUsername(sec.loggedInUserInfo(field:'username'))}"/>
     </head>
 
     <body id="page-top">
                 <!-- HEADER -->
-        <section id="home-top" class="header hris-section">
-            <div class="span7">
-                <g:if test="${flash.message}">
-                    <div class="alert alert-info" role="status">
-                        <strong>
-                            ${flash.message}
-                        </strong>
-                    </div>
-                </g:if>
-                <g:if test="${flash.success}">
-                    <div class="alert alert-success" role="status">
-                        <strong>
-                            ${flash.success}
-                        </strong>
-                    </div>
-                </g:if>
-                <g:if test="${flash.error}">
-                    <div class="alert alert-error" role="status">
-                        <strong>
-                            ${flash.error}
-                        </strong>
-                    </div>
-                </g:if>
-                <g:if test="${flash.warning}">
-                    <div class="alert alert-warning" role="status">
-                        <strong>
-                            ${flash.warning}
-                        </strong>
-                    </div>
-                </g:if>
-            </div>
-            <div class="container cont">
+			<g:if test="${flash.warning || flash.message || flash.success || flash.error}">
+				<div class="span7">
+					<g:if test="${flash.message}">
+						<div class="alert alert-info" role="status">
+							<strong>
+								${flash.message}
+							</strong>
+						</div>
+					</g:if>
+					<g:if test="${flash.success}">
+						<div class="alert alert-success" role="status">
+							<strong>
+								${flash.success}
+							</strong>
+						</div>
+					</g:if>
+					<g:if test="${flash.error}">
+						<div class="alert alert-error" role="status">
+							<strong>
+								${flash.error}
+							</strong>
+						</div>
+					</g:if>
+					<g:if test="${flash.warning}">
+						<div class="alert alert-warning" role="status">
+							<strong>
+								${flash.warning}
+							</strong>
+						</div>
+					</g:if>
+				</div>
+			</g:if>
+			
+			<sec:ifNotLoggedIn>
+            <div class="container cont" style="margin-bottom: 1.5em;">
                 <div class="registration" style="float:left;">
                     <h3 class="text-center">New in eKwento? Sign up here!</h3>
                     <g:form class="form-horizontal" action="register" controller="userAccount">
@@ -99,7 +107,21 @@
                     </a>
                 </div>
             </div>
-        </section>
+			</sec:ifNotLoggedIn>
+			
+			<sec:ifLoggedIn>
+            <div class="container cont" style="margin-bottom: 1.5em;">
+                <div class="registration" style="float:left;">
+                    <h3 class="text-center"> Welcome ${userObject.firstName} ${userObject.lastName} | <sec:username/></h3>
+                    
+                </div>
+                <div class="splash-image-registration">
+                    <a data-scroll class="pull-left header-link" href="#page-top">
+                        <img class="img-responsive" alt="Responsive image" src="${resource(dir: 'images', file: 'books-library.jpg')}" >
+                    </a>
+                </div>
+            </div>
+			</sec:ifLoggedIn>
 
         <section id="bulletin" class="hris-section">
             <div class="container bookSection" id="offset-top">
@@ -110,10 +132,19 @@
 
                         <div>
                             <ul id="Grid">
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                                <li></li>
+								
+								<g:each var="book" in="${Book.list(max: 4, sort: "dateCreated", order: "desc")}">
+									<li>
+										<g:if test="${book.logo}">
+											<img src="${createLink (controller:'book' , action:'renderImage' , id:book.id)}" alt="bookLogo" height="140" width="140"/>
+										</g:if>
+										<g:else>
+											<g:img dir="images" file="ek.png" width="140" height="140"/>
+										</g:else>
+										<div><g:link action="show" controller="book" id="${book.id}">${book.title}</g:link></div>
+									</li>
+								</g:each>
+                                
                             </ul>
                         </div>
                     </div>
@@ -124,14 +155,18 @@
 
                         <div>
                             <ul id="Grid">
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                                <li></li>
+								<g:each var="book" in="${Book.list(max: 8, sort: "dateCreated", order: "desc")}">
+									<li>
+										<g:if test="${book.logo}">
+											<img src="${createLink (controller:'book' , action:'renderImage' , id:book.id)}" alt="bookLogo" height="140" width="140"/>
+										</g:if>
+										<g:else>
+											<g:img dir="images" file="ek.png" width="140" height="140"/>
+										</g:else>
+										
+										<div><g:link action="show" controller="book" id="${book.id}">${book.title}</g:link></div>
+									</li>
+								</g:each>
                             </ul>
                         </div>
                     </div>
@@ -144,10 +179,17 @@
 
                         <div>
                             <ul id="Grid">
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                                <li></li>
+                                <g:each var="article" in="${Article.list(max: 4, sort: "dateCreated", order: "desc")}">
+									<li>
+										<g:if test="${article.logo}">
+											<img src="${createLink (controller:'article' , action:'renderImage' , id:article.id)}" alt="articleLogo" height="75" width="75"/>
+										</g:if>
+										<g:else>
+											<g:img dir="images" file="ek.png" height="75" width="75"/>
+										</g:else>
+										<div><g:link action="show" controller="article" id="${article.id}" style="font-size:1em;">${article.title}</g:link></div>
+									</li>
+								</g:each>
                             </ul>
                         </div>
                     </div>
@@ -172,10 +214,17 @@
 
                         <div>
                             <ul id="Grid">
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                                <li></li>
+                                <g:each var="book" in="${Book.list(max: 4, sort: "dateCreated", order: "desc")}">
+									<li>
+										<g:if test="${book.logo}">
+											<img src="${createLink (controller:'book' , action:'renderImage' , id:book.id)}" alt="bookLogo" height="75" width="75"/>
+										</g:if>
+										<g:else>
+											<g:img dir="images" file="ek.png" height="75" width="75"/>
+										</g:else>
+										<div><g:link action="show" controller="book" id="${book.id}" style="font-size:1em;">${book.title}</g:link></div>
+									</li>
+								</g:each>
                             </ul>
                         </div>
                     </div>

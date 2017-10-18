@@ -295,7 +295,13 @@
                             <div class="col-lg-12">
                                 <div class="form-group">
                                     <label for="bookContent" style="color : black;">Upload text file:</label>
-                                    <input type="file" class="form-control" name="fileContent"/>
+                                    <input type="file" class="form-control" name="fileContent" accept=".txt"/>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label for="bookLogo" style="color : black;">Upload text file:</label>
+                                    <input type="file" class="form-control" name="bookLogo" accept=".gif,.jpg,.jpeg,.png,"/>
                                 </div>
                             </div>
                         <%--<g:actionSubmit action="login" value="Submit" class="btn btn-success"/>--%>
@@ -322,7 +328,7 @@
 							<div class="col-lg-12">
                                 <div class="form-group">
                                     <label for="articleLogo" style="color : black;">Upload text file:</label>
-                                    <input type="file" class="form-control" name="fileContent" accept=".gif,.jpg,.jpeg,.png,"/>
+                                    <input type="file" class="form-control" name="articleLogo" accept=".gif,.jpg,.jpeg,.png,"/>
                                 </div>
                             </div>
                             <div class="form-group">

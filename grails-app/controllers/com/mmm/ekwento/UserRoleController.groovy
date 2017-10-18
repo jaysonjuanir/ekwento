@@ -4,14 +4,15 @@ package com.mmm.ekwento
 
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
-import grails.plugin.springsecurity.annotation.Secured
+import org.springframework.security.access.annotation.Secured
 
-///@Secured('IS_AUTHENTICATED_FULLY')
-@Transactional(readOnly = true)
+//@Transactional(readOnly = true)
+@Secured('IS_AUTHENTICATED_FULLY')
 class UserRoleController {
 
     //static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
+	@Secured('ROLE_ADMIN_DASHBOARD')
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         def total = 0

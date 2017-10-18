@@ -11,6 +11,7 @@ class Book {
     UserAccount createdBy
     
     Boolean approved = false  //admin approved
+    Boolean rejected = false  //admin rejected
     byte[] logo    //logo for book
     
 	static hasMany = [genres:Genre]

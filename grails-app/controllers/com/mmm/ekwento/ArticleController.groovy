@@ -17,6 +17,7 @@ class ArticleController {
         
         def testFile=null
         testFile = request.getFile("fileContent")
+        logo = request.getFile("articleLogo")
         def articleInstance
         if(testFile){
             def content = testFile.getFileItem().getString()
@@ -25,6 +26,7 @@ class ArticleController {
             articleInstance.title = params.articleTitle
             articleInstance.description = params.articleDescription
             articleInstance.content = content
+            articleInstance.logo = logo.getBytes()
             articleInstance.dateCreated = new Date()
             articleInstance.dateUpdated = new Date()
             articleInstance.createdBy = authenticatedUser
@@ -77,10 +79,12 @@ class ArticleController {
     def update(Article articleInstance){
         println("Book update params: " +params)
         
+		def logo = request.getFile('articleLogo')
         articleInstance.title = params.articleTitle
         articleInstance.description = params.articleDescription
         articleInstance.content = params.content
         articleInstance.dateUpdated = new Date()
+        articleInstance.logo = logo.getBytes()
 		
 		def genres = Genre.getAll(params.genres)
 		articleInstance.genres = genres
@@ -90,5 +94,17 @@ class ArticleController {
         flash.message = "Book Updated!"
         
         redirect action:"show", id:articleInstance.id
+    }
+	
+	def renderImage = {
+        log.info "renderImage : " + params.id
+        def articleInstance = Article.findById(params.id)
+
+        if (articleInstance?.logo) {
+            response.setContentLength(articleInstance.logo.length)
+            response.outputStream.write(articleInstance.logo)
+        } else {
+            response.sendError(404)
+        }
     }
 }

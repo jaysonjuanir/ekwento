@@ -17,6 +17,7 @@ class BookController {
         
         def testFile=null
         testFile = request.getFile("fileContent")
+		def logo = request.getFile('bookLogo')
         def bookInstance
         if(testFile){
             def content = testFile.getFileItem().getString()
@@ -25,6 +26,7 @@ class BookController {
             bookInstance.title = params.bookTitle
             bookInstance.description = params.bookDescription
             bookInstance.content = content
+            bookInstance.logo = logo.getBytes()
             bookInstance.dateCreated = new Date()
             bookInstance.dateUpdated = new Date()
             bookInstance.createdBy = authenticatedUser
@@ -82,10 +84,12 @@ class BookController {
     def update(Book bookInstance){
         println("Book update params: " +params)
         
+		def logo = request.getFile('bookLogo')
         bookInstance.title = params.bookTitle
         bookInstance.description = params.bookDescription
         bookInstance.content = params.content
         bookInstance.dateUpdated = new Date()
+        bookInstance.logo = logo.getBytes()
 		
 		def genres = Genre.getAll(params.genres)
 		bookInstance.genres = genres
@@ -95,5 +99,18 @@ class BookController {
         flash.message = "Book Updated!"
         
         redirect action:"show", id:bookInstance.id
+    }
+	
+	
+	def renderImage = {
+        log.info "renderImage : " + params.id
+        def bookInstance = Book.findById(params.id)
+
+        if (bookInstance?.logo) {
+            response.setContentLength(bookInstance.logo.length)
+            response.outputStream.write(bookInstance.logo)
+        } else {
+            response.sendError(404)
+        }
     }
 }

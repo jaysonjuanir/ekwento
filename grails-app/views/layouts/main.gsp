@@ -74,35 +74,40 @@
                         <li class="hidden active">
                             <a data-scroll href="#page-top"></a>
                         </li>
-                        <li>
-                            <!--<a data-scroll href="#page-top">-->
-                            <sec:ifNotLoggedIn>
-                                <g:link action="index" controller="home">
-                                <span>Home</span>
-                                </g:link>
-                            </sec:ifNotLoggedIn>
-                            <sec:ifLoggedIn>
-                                <g:link  action="show" controller="home">
-                                <span>Home</span>
-                                </g:link>
-                            </sec:ifLoggedIn>
-                            <!--</a>-->
-                        </li>
-                        <li>
-                            <a data-scroll href="#bulletin">
-                                <span>Books</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a data-scroll href="#about">
-                                <span>About</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a data-scroll href="#contact">
-                                <span>Contact Us</span>
-                            </a>
-                        </li>
+						<sec:ifAnyGranted roles="ROLE_ADMIN_DASHBOARD">
+							<li>
+								<g:link action="list" controller="home">
+								<span>Home</span>
+								</g:link>
+							</li>
+							<li>
+								<a data-scroll href="#about">
+									<span>About</span>
+								</a>
+							</li>
+						</sec:ifAnyGranted>
+						<sec:ifNotGranted roles="ROLE_ADMIN_DASHBOARD">
+							<li>
+								<g:link action="index" controller="home">
+								<span>Home</span>
+								</g:link>
+							</li>
+							<li>
+								<a data-scroll href="#bulletin">
+									<span>Books</span>
+								</a>
+							</li>
+							<li>
+								<a data-scroll href="#about">
+									<span>About</span>
+								</a>
+							</li>
+							<li>
+								<a data-scroll href="#contact">
+									<span>Contact Us</span>
+								</a>
+							</li>
+						</sec:ifNotGranted>
                         <sec:ifNotLoggedIn>
                             <li>
                                 <a href="#" data-toggle="modal" data-target="#loginModal">

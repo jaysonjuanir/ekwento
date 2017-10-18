@@ -243,7 +243,6 @@ hr {
 
 }
 .cont{
-    
     background-size:cover;
 
 }
@@ -888,7 +887,6 @@ table a{
 #Grid{
   padding:3%;
   text-align: justify;
-  font-size: 0.1px;
   width:100%;
 }
 
@@ -896,8 +894,16 @@ table a{
   display: inline-block;
   background: #eee;
   width: 23%;
-  padding-top: 23%; /* Used instead of height to give elements fluid, width-based height */
   margin-bottom: 2.5%;
+}
+
+#Grid div{
+}
+#Grid div a{
+  text-align: center;
+  padding:3%;
+  font-size: 1.5em;
+  color:#000;
 }
 
 #Grid:after{
