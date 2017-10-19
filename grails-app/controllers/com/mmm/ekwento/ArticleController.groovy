@@ -5,13 +5,46 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import org.springframework.web.multipart.commons.*;
 
-import grails.plugin.springsecurity.annotation.Secured
+import org.springframework.security.access.annotation.Secured
 
-@Secured('IS_AUTHENTICATED_FULLY')
+@Secured('permitAll')
 class ArticleController {
 
-    def index() { }
+    def index(Integer max) { 
+		println("article index: " +params)
+		String view
+		params.max = Math.min(max ?: 10, 100)
+        if(!params.max) params.max = 10
+        if(!params.offset) params.offset = 0
+        
+        def model= [:]		
+		
+		model.articleInstanceCount = Article.createCriteria().get{
+			projections{
+				count("id")
+			}
+			eq("approved", true);
+			eq("rejected", false)
+			if(params?.searchArticle)
+				ilike("title", "%"+params.searchArticle+"%")
+				
+		}
+		model.articleInstanceList = Article.createCriteria().list{
+			eq("approved", true);
+			eq("rejected", false);
+			
+			if(params?.searchArticle)
+				ilike("title", "%"+params.searchArticle+"%")
+				
+			maxResults(new Integer(params.max))
+			firstResult(new Integer(params.offset))
+			order("dateCreated")
+		}
+		
+		render view: 'index', model: model
+	}
     
+	@Secured('ROLE_CREATE_ARITICLES')
     def create(){
         println("test method params: "+params)
         
@@ -76,6 +109,7 @@ class ArticleController {
         respond articleInstance, model:model
     }
     
+	@Secured('ROLE_UPDATE_ARITICLES')
     def update(Article articleInstance){
         println("Book update params: " +params)
         

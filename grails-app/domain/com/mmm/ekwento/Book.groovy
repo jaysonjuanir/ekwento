@@ -28,4 +28,7 @@ class Book {
         dateUpdated nullable:true
         logo(nullable:true)
     }
+	String toString(){
+		return "${title} by ${createdBy}"
+	}
 }

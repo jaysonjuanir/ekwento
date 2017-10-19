@@ -33,34 +33,79 @@ class HomeController {
 	
 	@Secured('ROLE_ADMIN_DASHBOARD')
 	def list() { 
-        println("home list")
+        println("home list: " +params)
+		def max = null
+		String view
+		params.max = Math.min(max ?: 10, 100)
+        if(!params.max) params.max = 10
+        if(!params.offset) params.offset = 0
         
         def model= [:]		
 
-		if(params.id=="0"){ //book
+		if(params.id=="1"){ //book
+			model.bookPendingCount = Book.createCriteria().get{
+				projections{
+					count("id")
+				}
+				eq("approved", false);
+				eq("rejected", false)
+				if(params?.searchBook)
+					ilike("title", "%"+params.searchBook+"%")
+				
+			}
 			model.bookPendingList = Book.createCriteria().list{
 				eq("approved", false);
-				eq("rejected", false)
+				eq("rejected", false);
+				if(params?.searchBook)
+					ilike("title", "%"+params.searchBook+"%")
+				
+				maxResults(new Integer(params.max))
+				firstResult(new Integer(params.offset))
+				order("dateCreated")
 			}
-		}else if(params.id=="1"){ //article
-			model.articlePendingList = Article.createCriteria().list{
+			view = 'bookAdminList'
+			params.listId = params.id
+			
+			println("model.bookPendingList: " + model.bookPendingList)
+		}else if(params.id=="2"){ //article
+			model.articlePendingCount = Article.createCriteria().get{
+				projections{
+					count("id")
+				}
 				eq("approved", false);
 				eq("rejected", false)
+				if(params?.searchBook)
+					ilike("title", "%"+params.searchBook+"%")
+				
 			}
-		}else if(params.id=="2"){  //manga
+			model.articlePendingList = Article.createCriteria().list{
+				eq("approved", false);
+				eq("rejected", false);
+				if(params?.searchBook)
+					ilike("title", "%"+params.searchBook+"%")
+				
+				maxResults(new Integer(params.max))
+				firstResult(new Integer(params.offset))
+				order("dateCreated")
+			}
+			view = 'articleAdminList'
+			params.listId = params.id
+			
+			println("model.articleAdminList: " + model.bookPendingList)
+		}else if(params.id=="3"){  //manga
 //			model.bookPendingList = Book.createCriteria().list{
 //				eq("approved", false);
 //				eq("rejected", false)
 //			}
 		}
 
-        String view = 'list'
-        respond view: view, model: model
+        //String view = 'list'
+        render view: view, model: model
     }
 	
 	@Secured('ROLE_ADMIN_DASHBOARD')
 	def updateApproveAdminBook(Book bookInstance) { 
-        
+        log.info "updateApproveAdminBook: " + params
         def model= [:]		
 		model.bookUser = bookInstance.createdBy
 
@@ -71,9 +116,10 @@ class HomeController {
 		//create notification from user here
 		//notification.createNotif(model.bookUser, "Admin approved your book.")
 
-		flash.message = "Successfully approved the book! ${bookInstance}"
-        String view = 'list'
-        respond view: view, model: model
+		flash.message = "Successfully approved the ${bookInstance} Book!"
+        //String view = 'list'
+		//model.id = params.listId
+        redirect action:"list", id:params.listId
     }
 	
 	@Secured('ROLE_ADMIN_DASHBOARD')
@@ -89,9 +135,9 @@ class HomeController {
 		//create notification from user here
 		//notification.createNotif(model.bookUser, "Admin approved your article.")
 
-		flash.message = "Successfully approved the article! ${articleInstance}"
+		flash.message = "Successfully approved the ${articleInstance} article!"
         String view = 'list'
-        respond view: view, model: model
+        redirect action:"list", id:params.listId
     }
 	
 	/*@Secured('ROLE_ADMIN_DASHBOARD')
@@ -125,9 +171,9 @@ class HomeController {
 		//create notification from user here
 		//notification.createNotif(model.bookUser, "Admin rejected your book.")
 
-		flash.message = "Successfully rejected the book! ${bookInstance}"
+		flash.message = "Successfully rejected the ${bookInstance} Book!"
         String view = 'list'
-        respond view: view, model: model
+        redirect action:"list", id:params.listId
     }
 	
 	@Secured('ROLE_ADMIN_DASHBOARD')
@@ -143,9 +189,9 @@ class HomeController {
 		//create notification from user here
 		//notification.createNotif(model.bookUser, "Admin rejected your article.")
 
-		flash.message = "Successfully rejected the article! ${articleInstance}"
+		flash.message = "Successfully rejected the ${articleInstance} Article!"
         String view = 'list'
-        respond view: view, model: model
+        redirect action:"list", id:params.listId
     }
 	
 	/*@Secured('ROLE_ADMIN_DASHBOARD')

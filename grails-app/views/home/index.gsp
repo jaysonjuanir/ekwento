@@ -128,7 +128,7 @@
                 <div class="leftSidePanel" id="offset-top">
                     <div class="leftSideBooks" style="border-radius:5px;background-color: rgba(189, 184, 184, 0.54);">
                         <h3 class="reg-inline"><b>Latest Uploads</b></h3>
-                        <g:link class="reg-inline side-buttons btn btn-primary" action="show" id="1">Read More</g:link>
+                        <g:link class="reg-inline side-buttons btn btn-primary" action="index" controller="book">Read More</g:link>
 
                         <div>
                             <ul id="Grid">
@@ -152,7 +152,7 @@
 
                     <div class="leftSideBooks" style="border-radius:5px;background-color: rgba(189, 184, 184, 0.54);">
                         <h3 class="reg-inline"><b>Recent Books</b></h3>
-                        <g:link class="reg-inline side-buttons btn btn-primary" action="show" id="1">Read More</g:link>
+                        <g:link class="reg-inline side-buttons btn btn-primary" action="index" controller="book">Read More</g:link>
 
                         <div>
                             <ul id="Grid">
@@ -176,7 +176,7 @@
                 <div class="rightSidePanel" id="offset-top">
                     <div class="rightSideBooks" style="border-radius:5px;background-color: rgba(189, 184, 184, 0.54);">
                         <h3 class="reg-inline"><b>Articles</b></h3>
-                        <g:link class="reg-inline side-buttons btn btn-primary" action="show" id="1">Read More</g:link>
+                        <g:link class="reg-inline side-buttons btn btn-primary" action="index" controller="article">Read More</g:link>
 
                         <div>
                             <ul id="Grid">
@@ -211,7 +211,7 @@
                     
                     <div class="rightSideBooks" style="border-radius:5px;background-color: rgba(189, 184, 184, 0.54);">
                         <h3 class="reg-inline"><b>Books</b></h3>
-                        <g:link class="reg-inline side-buttons btn btn-primary" action="show" id="1">Read More</g:link>
+                        <g:link class="reg-inline side-buttons btn btn-primary" action="index" controller="book">Read More</g:link>
 
                         <div>
                             <ul id="Grid">

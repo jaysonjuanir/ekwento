@@ -157,25 +157,38 @@
         <nav class="navbar navbar-inverse" data-spy="affix" data-offset-top="190" style="border:none;">
             <div class="container">
                 <ul class="nav navbar-nav">
+					<sec:ifAnyGranted roles="ROLE_CREATE_BOOKS, ROLE_CREATE_ARITICLES, ROLE_CREATE_MANGA">
                     <li class="dropdown active">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Compose
                             <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="#" data-toggle="modal" data-target="#composeBookModal">Book</a></li>
-                            <li><a href="#" data-toggle="modal" data-target="#composeArticleModal">Article</a></li>
-                            <li><a href="#" data-toggle="modal" data-target="#composeMangaModal">Manga</a></li>
+							<sec:ifAnyGranted roles="ROLE_CREATE_BOOKS">
+								<li><a href="#" data-toggle="modal" data-target="#composeBookModal">Book</a></li>
+							</sec:ifAnyGranted>
+							<sec:ifAnyGranted roles="ROLE_CREATE_ARITICLES">
+								<li><a href="#" data-toggle="modal" data-target="#composeArticleModal">Article</a></li>
+							</sec:ifAnyGranted>
+							<sec:ifAnyGranted roles="ROLE_CREATE_MANGA">
+								<li><a href="#" data-toggle="modal" data-target="#composeMangaModal">Manga</a></li>
+							</sec:ifAnyGranted>
                         </ul>
                     </li>
+					</sec:ifAnyGranted>
                     <li class="active"><a href="#">Library</a></li>
                     <li class="active"><a href="#">Message</a></li>
                     <li class="active"><a href="#">Notification</a></li>
+					
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right ">
                     <g:if test="${isOwned}">
 						<li class="active"><a href="#" data-toggle="modal" data-target='#editModal'><span class="glyphicon glyphicon-pencil"></span>Edit</a></li>
 					</g:if>
-                    <li class="active"><a href="#"><span class="glyphicon glyphicon-eye-open"></span>${numberOfViews} Views</a></li>
+					<sec:ifAnyGranted roles="ROLE_ADMIN_DASHBOARD">
+						<li class="active"><a href="#" data-toggle="modal" data-target="#composeMangaModal">Approve</a></li>
+						<li class="active"><a href="#" data-toggle="modal" data-target="#composeMangaModal">Reject</a></li>
+					</sec:ifAnyGranted>
+                    <li class="active"><a><span class="glyphicon glyphicon-eye-open"></span><span class="badge">${numberOfViews}</span> Views</a></li>
                 </ul>
             </div>
         </nav>
@@ -345,6 +358,50 @@
                                 <div class="form-group">
                                     <label for="articleContent" style="color : black;">Upload text file:</label>
                                     <input type="file" class="form-control" name="fileContent" accept=".txt"/>
+                                </div>
+                            </div>
+                        <%--<g:actionSubmit action="login" value="Submit" class="btn btn-success"/>--%>
+                            <input type="submit" class="btn btn-success" id="submit" value="Submit"/><br>
+                        </g:form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+		
+		<div id="composeMangaModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+              <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Create new Manga</h4>
+                    </div>
+                    <div class="modal-body">
+                        <g:form action="create" method="post" name="create" controller="article" enctype="multipart/form-data">
+							
+                            <div class="form-group">
+                                <label for="email" style="color : black;">Title:</label>
+                                <%--<g:textField type="text" name = "user" value = "" class="form-control" id="email"/>--%>
+                                <input type="text" class="form-control" name="articleTitle" id="articleTitle" placeholder="Title" required/>
+                            </div>
+                            <div class="form-group">
+                                <label for="email" style="color : black;">Description:</label>
+                                <%--<g:textField type="text" name = "user" value = "" class="form-control" id="email"/>--%>
+                                <input type="text" class="form-control" name="articleDescription" id="articleDescription" placeholder="Description" required/>
+                            </div>
+							<div class="col-lg-12">
+                                <div class="form-group">
+                                    <label for="articleLogo" style="color : black;">Upload logo file:</label>
+                                    <input type="file" class="form-control" name="articleLogo" accept=".gif,.jpg,.jpeg,.png,"/>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label for="mangaContent" style="color : black;">Upload Content Image files:</label>
+                                    <input type="file" class="form-control" name="mangaContent" accept=".gif,.jpg,.jpeg,.png" multiple/>
                                 </div>
                             </div>
                         <%--<g:actionSubmit action="login" value="Submit" class="btn btn-success"/>--%>

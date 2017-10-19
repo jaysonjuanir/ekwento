@@ -60,29 +60,41 @@
         <nav class="navbar navbar-inverse" data-spy="affix" data-offset-top="190" style="border:none;">
             <div class="container">
                 <ul class="nav navbar-nav">
-                    <li class="dropdown active">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Compose
-                            <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#" data-toggle="modal" data-target="#composeBookModal">Book</a></li>
-                            <li><a href="#" data-toggle="modal" data-target="#composeArticleModal">Article</a></li>
-                            <li><a href="#" data-toggle="modal" data-target="#composeMangaModal">Manga</a></li>
-                        </ul>
-                    </li>
+                    <sec:ifAnyGranted roles="ROLE_CREATE_BOOKS, ROLE_CREATE_ARITICLES, ROLE_CREATE_MANGA">
+						<li class="dropdown active">
+							<a class="dropdown-toggle" data-toggle="dropdown" href="#">Compose
+								<span class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<sec:ifAnyGranted roles="ROLE_CREATE_BOOKS">
+									<li><a href="#" data-toggle="modal" data-target="#composeBookModal">Book</a></li>
+								</sec:ifAnyGranted>
+								<sec:ifAnyGranted roles="ROLE_CREATE_ARITICLES">
+									<li><a href="#" data-toggle="modal" data-target="#composeArticleModal">Article</a></li>
+								</sec:ifAnyGranted>
+								<sec:ifAnyGranted roles="ROLE_CREATE_MANGA">
+									<li><a href="#" data-toggle="modal" data-target="#composeMangaModal">Manga</a></li>
+								</sec:ifAnyGranted>
+							</ul>
+						</li>
+					</sec:ifAnyGranted>
 					<li class="active"><a href="#">Library</a></li>
                     <li class="active"><a href="#">Message</a></li>
                     <li class="active"><a href="#">Notification</a></li>
                 </ul>
-                
+
                 <ul class="nav navbar-nav navbar-right ">
 					<g:if test="${isOwned}">
 						<li class="active"><a href="#" data-toggle="modal" data-target='#editModal'><span class="glyphicon glyphicon-pencil"></span>Edit</a></li>
-					</g:if>
-                    <li class="active"><a href="#"><span class="glyphicon glyphicon-eye-open"></span>${numberOfViews} Views</a></li>
+						</g:if>
+					<sec:ifAnyGranted roles="ROLE_ADMIN_DASHBOARD">
+						<li class="active"><a href="#" data-toggle="modal" data-target="#approveModal">Approve</a></li>
+						<li class="active"><a href="#" data-toggle="modal" data-target="#rejectModal">Reject</a></li>
+					</sec:ifAnyGranted>
+                    <li class="active"><a><span class="glyphicon glyphicon-eye-open"></span><span class="badge">${numberOfViews}</span> Views</a></li>
                 </ul>
             </div>
         </nav>
-        
+
         <g:if test="${flash.warning || flash.message || flash.success || flash.error}">
             <div class="span7">
                 <g:if test="${flash.message}">
@@ -139,10 +151,10 @@
                     <article>    
                         <g:each var="sentence" in="${content}" status="i">
                             <g:if test="${i>=3}">
-                                <p>${sentence}</p>
-                            </g:if>
-                        </g:each>
-                    </article>
+							<p>${sentence}</p>
+						</g:if>
+					</g:each>
+				</article>
                 <div class="keepReading">Keep Reading</div>
             </div>
 
@@ -163,12 +175,6 @@
                 </div>
                 <div class="modal-body">
                     <g:form action="create" method="post" name="create" controller="book" enctype="multipart/form-data">
-						<div class="col-lg-12">
-                            <div class="form-group">
-                                <label for="bookLogo" style="color : black;">Upload text file:</label>
-                                <input type="file" class="form-control" name="bookLogo" accept=".gif,.jpg,.jpeg,.png,"/>
-                            </div>
-                        </div>
                         <div class="form-group">
                             <label for="email" style="color : black;">Title:</label>
                             <%--<g:textField type="text" name = "user" value = "" class="form-control" id="email"/>--%>
@@ -197,13 +203,13 @@
 									<label for="genres" style="color : black;">
 										<g:checkBox name="genres" value="${genre.id}" /> ${genre.type}
 										<br/>
-										
+
 									</label>
 								</div>
 							</div>
 						</g:each>
-						
-                    <%--<g:actionSubmit action="login" value="Submit" class="btn btn-success"/>--%>
+
+<%--<g:actionSubmit action="login" value="Submit" class="btn btn-success"/>--%>
                         <input type="submit" class="btn btn-success" id="submit" value="Submit"/><br>
                     </g:form>
                 </div>
@@ -213,7 +219,7 @@
             </div>
         </div>
     </div>
-    
+
     <div id="composeArticleModal" class="modal fade" role="dialog">
         <div class="modal-dialog">
           <!-- Modal content-->
@@ -241,18 +247,18 @@
                             </div>
                         </div>
 						<div class="col-lg-12">
-                                <div class="form-group">
-                                    <label for="articleLogo" style="color : black;">Upload logo:</label>
-                                    <input type="file" class="form-control" name="articleLogo" accept=".gif,.jpg,.jpeg,.png,"/>
-                                </div>
-                            </div>
+							<div class="form-group">
+								<label for="articleLogo" style="color : black;">Upload logo:</label>
+								<input type="file" class="form-control" name="articleLogo" accept=".gif,.jpg,.jpeg,.png,"/>
+							</div>
+						</div>
 						<g:each var="genre" in="${Genre.list(sort: "type", order: "asc")}">
 							<div class="col-lg-3">
 								<div class="form-group">
 									<label for="genres" style="color : black;">
 										<g:checkBox name="genres" value="${genre.id}" /> ${genre.type}
 										<br/>
-										
+
 									</label>
 								</div>
 							</div>
@@ -267,6 +273,50 @@
             </div>
         </div>
     </div>
+	
+	<div id="composeMangaModal" class="modal fade" role="dialog">
+		<div class="modal-dialog">
+		  <!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Create new Manga</h4>
+				</div>
+				<div class="modal-body">
+					<g:form action="create" method="post" name="create" controller="article" enctype="multipart/form-data">
+
+						<div class="form-group">
+							<label for="email" style="color : black;">Title:</label>
+							<%--<g:textField type="text" name = "user" value = "" class="form-control" id="email"/>--%>
+							<input type="text" class="form-control" name="articleTitle" id="articleTitle" placeholder="Title" required/>
+						</div>
+						<div class="form-group">
+							<label for="email" style="color : black;">Description:</label>
+							<%--<g:textField type="text" name = "user" value = "" class="form-control" id="email"/>--%>
+							<input type="text" class="form-control" name="articleDescription" id="articleDescription" placeholder="Description" required/>
+						</div>
+						<div class="col-lg-12">
+							<div class="form-group">
+								<label for="articleLogo" style="color : black;">Upload logo file:</label>
+								<input type="file" class="form-control" name="articleLogo" accept=".gif,.jpg,.jpeg,.png,"/>
+							</div>
+						</div>
+						<div class="col-lg-12">
+							<div class="form-group">
+								<label for="mangaContent" style="color : black;">Upload Content Image files:</label>
+								<input type="file" class="form-control" name="mangaContent" accept=".gif,.jpg,.jpeg,.png" multiple/>
+							</div>
+						</div>
+					<%--<g:actionSubmit action="login" value="Submit" class="btn btn-success"/>--%>
+						<input type="submit" class="btn btn-success" id="submit" value="Submit"/><br>
+					</g:form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
 
 
 
@@ -308,14 +358,14 @@
 									<label for="genres" style="color : black;">
 										<g:checkBox name="genres" value="${genre.id}" /> ${genre.type}
 										<br/>
-										
+
 									</label>
 								</div>
 							</div>
 						</g:each>
                     <%--<g:actionSubmit action="login" value="Submit" class="btn btn-success"/>--%>
                         <input type="submit" class="btn btn-success" id="submit" value="Submit"/><br>
-                        
+
                         <g:hiddenField name="id" value="${bookInstance.id}" />
                     </g:form>
                 </div>
@@ -326,6 +376,44 @@
         </div>
     </div>
 
+
+	<div id="approveModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+		<div class="modal-dialog">
+		  <!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Approve this book?</h4>
+				</div>
+				<div class="modal-body">
+					<g:link controller="home" action="updateApproveAdminBook" class="btn btn-success" id="${bookInstance.id}" params="${params<<[listId:1]}">Yes</g:link>
+						<button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+					</div>
+					<div class="modal-footer">
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="rejectModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+		<div class="modal-dialog">
+		  <!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Reject this book?</h4>
+				</div>
+				<div class="modal-body">
+					<g:link controller="home" action="updateRejectAdminBook" class="btn btn-success" id="${bookInstance.id}" params="${params<<[listId:1]}">Yes</g:link>
+						<button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+					</div>
+					<div class="modal-footer">
+
+				</div>
+			</div>
+		</div>
+	</div>
 
 
 

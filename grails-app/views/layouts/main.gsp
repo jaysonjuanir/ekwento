@@ -75,15 +75,19 @@
                             <a data-scroll href="#page-top"></a>
                         </li>
 						<sec:ifAnyGranted roles="ROLE_ADMIN_DASHBOARD">
-							<li>
-								<g:link action="list" controller="home">
-								<span>Home</span>
-								</g:link>
+							<li class="dropdown active">
+								<a class="dropdown-toggle" data-toggle="dropdown" href="#">Home
+									<span class="caret"></span></a>
+								<ul class="dropdown-menu">
+									<li><g:link action="list" controller="home" id="${1}"><span>Book Admin Page</span></g:link></li>
+									<li><g:link action="list" controller="home" id="${2}"><span>Article Admin Page</span></g:link></li>
+									<li><g:link action="list" controller="home" id="${3}"><span>Manga Admin Page</span></g:link></li>
+								</ul>
 							</li>
 							<li>
-								<a data-scroll href="#about">
-									<span>About</span>
-								</a>
+								<g:link action="ekwento" controller="about">
+								<span>About</span>
+								</g:link>
 							</li>
 						</sec:ifAnyGranted>
 						<sec:ifNotGranted roles="ROLE_ADMIN_DASHBOARD">
@@ -93,14 +97,14 @@
 								</g:link>
 							</li>
 							<li>
-								<a data-scroll href="#bulletin">
-									<span>Books</span>
-								</a>
+								<g:link action="index" controller="book">
+								<span>Book</span>
+								</g:link>
 							</li>
 							<li>
-								<a data-scroll href="#about">
-									<span>About</span>
-								</a>
+								<g:link action="ekwento" controller="about">
+								<span>About</span>
+								</g:link>
 							</li>
 							<li>
 								<a data-scroll href="#contact">

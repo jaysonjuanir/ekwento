@@ -5,14 +5,46 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import org.springframework.web.multipart.commons.*;
 
-import grails.plugin.springsecurity.annotation.Secured
+import org.springframework.security.access.annotation.Secured
 
-
+@Secured('permitAll')
 class BookController {
 
-    def index() { }
+    def index(Integer max) { 
+		println("book index: " +params)
+		String view
+		params.max = Math.min(max ?: 10, 100)
+        if(!params.max) params.max = 10
+        if(!params.offset) params.offset = 0
+        
+        def model= [:]		
+		
+		model.bookInstanceCount = Book.createCriteria().get{
+			projections{
+				count("id")
+			}
+			eq("approved", true);
+			eq("rejected", false)
+			if(params?.searchBook)
+				ilike("title", "%"+params.searchBook+"%")
+				
+		}
+		model.bookInstanceList = Book.createCriteria().list{
+			eq("approved", true);
+			eq("rejected", false);
+			
+			if(params?.searchBook)
+				ilike("title", "%"+params.searchBook+"%")
+				
+			maxResults(new Integer(params.max))
+			firstResult(new Integer(params.offset))
+			order("dateCreated")
+		}
+		
+		render view: 'index', model: model
+	}
     
-	//@Secured('ROLE_CREATE_BOOKS')
+	@Secured('ROLE_CREATE_BOOKS')
     def create(){
         println("test method params: "+params)
         
@@ -71,10 +103,10 @@ class BookController {
         if(user == bookInstance.createdBy){
 			model.isOwned = true
 		}else{
-//			if(!bookInstance.approved){
-//				flash.message = "Book is not ready for viewing because it is not approved by admin"
-//				redirect action:"show", controller:"home"
-//			}
+			//			if(!bookInstance.approved){
+			//				flash.message = "Book is not ready for viewing because it is not approved by admin"
+			//				redirect action:"show", controller:"home"
+			//			}
 		}
         
         //println(bookInstance.content.split("\\r?\\n"))
@@ -82,7 +114,7 @@ class BookController {
         respond bookInstance, model:model
     }
 	
-	//@Secured('ROLE_UPDATE_BOOKS')
+	@Secured('ROLE_UPDATE_BOOKS')
     def update(Book bookInstance){
         println("Book update params: " +params)
         
