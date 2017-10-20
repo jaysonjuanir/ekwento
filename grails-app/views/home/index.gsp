@@ -3,6 +3,7 @@
 <%@ page import="com.mmm.ekwento.UserAccount" %>
 <%@ page import="com.mmm.ekwento.Book" %>
 <%@ page import="com.mmm.ekwento.Article" %>
+<%@ page import="com.mmm.ekwento.Manga" %>
 
 <html>
     <head>
@@ -12,6 +13,21 @@
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
         <meta name='layout' content='main' />
 		<g:set var="userObject" value="${UserAccount.findByUsername(sec.loggedInUserInfo(field:'username'))}"/>
+		<style>
+			.popover-content{
+				color:#000;
+			}
+			ul li div{
+				color:#000;
+				font-size:1.5em;
+			}
+		</style>
+
+		<script>
+			$(document).ready(function(){
+			$('[data-toggle="popover"]').popover();
+			});
+		</script>
     </head>
 
     <body id="page-top">
@@ -88,7 +104,28 @@
                             <div class="col-sm-offset-2 col-sm-10">
                                 <div class="checkbox">
                                     <label class="col-xs-12 col-sm-6 col-md-8">
-                                        <input class="reg-inline" type="checkbox"> By Checking this will also agree on license of terms provided by eKwento.
+                                        <input class="reg-inline" type="checkbox" data-toggle="popover" data-placement="bottom" title="By Checking this" data-content="Term and Termination
+
+This Agreement shall remain in effect until terminated by you or My Company (change this). 
+
+My Company (change this) may, in its sole discretion, at any time and for any or no reason, suspend or terminate this Agreement with or without prior notice.
+
+This Agreement will terminate immediately, without prior notice from My Company (change this), in the event that you fail to comply with any provision of this Agreement. You may also terminate this Agreement by deleting the Application and all copies thereof from your mobile device or from your desktop.
+
+Upon termination of this Agreement, you shall cease all use of the Application and delete all copies of the Application from your mobile device or from your desktop.
+
+Severability
+
+If any provision of this Agreement is held to be unenforceable or invalid, such provision will be changed and interpreted to accomplish the objectives of such provision to the greatest extent possible under applicable law and the remaining provisions will continue in full force and effect.
+
+Amendments to this Agreement
+
+My Company (change this) reserves the right, at its sole discretion, to modify or replace this Agreement at any time. If a revision is material we will provide at least 30 (changes this) days' notice prior to any new terms taking effect. What constitutes a material change will be determined at our sole discretion.
+
+Contact Information
+
+If you have any questions about this Agreement, please contact us.
+"> By Checking this will also agree on license of terms provided by eKwento.
                                     </label>
                                     <div class="col-xs-6 col-sm-4">
                                         <button type="submit" class="btn btn-default reg-inline">Sign in</button>
@@ -201,10 +238,17 @@
 
                         <div>
                             <ul id="Grid">
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                                <li></li>
+                                <g:each var="manga" in="${Manga.findAllByApprovedAndRejected(true, false, [max: 4, sort: "dateCreated", order: "desc"])}">
+									<li>
+										<g:if test="${manga.logo}">
+											<img src="${createLink (controller:'manga' , action:'renderImage' , id:manga.id)}" alt="mangaLogo" height="75" width="75"/>
+										</g:if>
+										<g:else>
+											<g:img dir="images" file="ek.png" height="75" width="75"/>
+										</g:else>
+										<div><g:link action="show" controller="manga" id="${manga.id}" style="font-size:1em;">${manga.title}</g:link></div>
+									</li>
+								</g:each>
                             </ul>
                         </div>
                     </div>

@@ -46,7 +46,7 @@ class BookController {
     
 	@Secured('ROLE_CREATE_BOOKS')
     def create(){
-        println("test method params: "+params)
+        println("book create method params: "+params)
         
         def testFile=null
         testFile = request.getFile("fileContent")
@@ -59,7 +59,9 @@ class BookController {
             bookInstance.title = params.bookTitle
             bookInstance.description = params.bookDescription
             bookInstance.content = content
-            bookInstance.logo = logo.getBytes()
+			if(logo)
+				bookInstance.logo = logo.getBytes()
+			
             bookInstance.dateCreated = new Date()
             bookInstance.dateUpdated = new Date()
             bookInstance.createdBy = authenticatedUser
@@ -76,9 +78,9 @@ class BookController {
         //        params.wordLists = wordLists1
         //        
         //        println("wordLists "+wordLists1)
-        flash.message = "Book "+params.bookTitle + " has been created."
+        flash.message = "Book "+params.bookTitle + " has been created. Please wait for Admin to approve your Book"
         
-        redirect action:'show', id:bookInstance.id
+        redirect action:"index"
     }
     
     def show(Book bookInstance){
@@ -123,7 +125,9 @@ class BookController {
         bookInstance.description = params.bookDescription
         bookInstance.content = params.content
         bookInstance.dateUpdated = new Date()
-        bookInstance.logo = logo.getBytes()
+		
+		if(logo)
+			bookInstance.logo = logo.getBytes()
 		
 		def genres = Genre.getAll(params.genres)
 		bookInstance.genres = genres
@@ -134,6 +138,20 @@ class BookController {
         
         redirect action:"show", id:bookInstance.id
     }
+	
+	@Secured('ROLE_UPDATE_BOOKS')
+	def followAuthor(Book bookInstance){
+		println "followAuthor : " + params.id + " and following: " + bookInstance.createdBy
+		
+		def follow = new Follower()
+		follow.userFollowed = authenticatedUser
+		follow.userFollowing = bookInstance.createdBy
+		follow.save(flush:true)
+		
+		flash.message = "Author followed!"
+        
+        redirect action:"show", id:bookInstance.id
+	}
 	
 	@Secured('IS_AUTHENTICATED_ANONYMOUSLY')
 	def renderImage(){

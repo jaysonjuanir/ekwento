@@ -3,7 +3,7 @@
   To change this template file, choose Tools | Templates
   and open the template in the editor.
 -->
-
+<%@ page import="com.mmm.ekwento.Genre" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 
 <html>
@@ -295,16 +295,20 @@
                     </div>
                     <div class="modal-body">
                         <g:form action="create" method="post" name="create" controller="book" enctype="multipart/form-data">
-                            <div class="form-group">
-                                <label for="email" style="color : black;">Title:</label>
-                                <%--<g:textField type="text" name = "user" value = "" class="form-control" id="email"/>--%>
-                                <input type="text" class="form-control" name="bookTitle" id="bookTitle" placeholder="Title" required/>
-                            </div>
-                            <div class="form-group">
-                                <label for="email" style="color : black;">Description:</label>
-                                <%--<g:textField type="text" name = "user" value = "" class="form-control" id="email"/>--%>
-                                <input type="text" class="form-control" name="bookDescription" id="bookDescription" placeholder="Description" required/>
-                            </div>
+                            <div class="col-lg-12">
+								<div class="form-group">
+									<label for="email" style="color : black;">Title:</label>
+									<%--<g:textField type="text" name = "user" value = "" class="form-control" id="email"/>--%>
+									<input type="text" class="form-control" name="bookTitle" id="bookTitle" placeholder="Title" required/>
+								</div>
+							</div>
+							<div class="col-lg-12">
+								<div class="form-group">
+									<label for="email" style="color : black;">Description:</label>
+									<%--<g:textField type="text" name = "user" value = "" class="form-control" id="email"/>--%>
+									<input type="text" class="form-control" name="bookDescription" id="bookDescription" placeholder="Description" required/>
+								</div>
+							</div>
                             <div class="col-lg-12">
                                 <div class="form-group">
                                     <label for="bookContent" style="color : black;">Upload text file:</label>
@@ -329,47 +333,62 @@
         </div>
 
         <div id="composeArticleModal" class="modal fade" role="dialog">
-            <div class="modal-dialog">
-              <!-- Modal content-->
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Create new Article</h4>
-                    </div>
-                    <div class="modal-body">
-                        <g:form action="create" method="post" name="create" controller="article" enctype="multipart/form-data">
+			<div class="modal-dialog">
+			  <!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">Create new Article</h4>
+					</div>
+					<div class="modal-body">
+						<g:form action="create" method="post" name="create" controller="article" enctype="multipart/form-data">
 							<div class="col-lg-12">
-                                <div class="form-group">
-                                    <label for="articleLogo" style="color : black;">Upload text file:</label>
-                                    <input type="file" class="form-control" name="articleLogo" accept=".gif,.jpg,.jpeg,.png,"/>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="email" style="color : black;">Title:</label>
-                                <%--<g:textField type="text" name = "user" value = "" class="form-control" id="email"/>--%>
-                                <input type="text" class="form-control" name="articleTitle" id="articleTitle" placeholder="Title" required/>
-                            </div>
-                            <div class="form-group">
-                                <label for="email" style="color : black;">Description:</label>
-                                <%--<g:textField type="text" name = "user" value = "" class="form-control" id="email"/>--%>
-                                <input type="text" class="form-control" name="articleDescription" id="articleDescription" placeholder="Description" required/>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="form-group">
-                                    <label for="articleContent" style="color : black;">Upload text file:</label>
-                                    <input type="file" class="form-control" name="fileContent" accept=".txt"/>
-                                </div>
-                            </div>
-                        <%--<g:actionSubmit action="login" value="Submit" class="btn btn-success"/>--%>
-                            <input type="submit" class="btn btn-success" id="submit" value="Submit"/><br>
-                        </g:form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+								<div class="form-group">
+									<label for="email" style="color : black;">Title:</label>
+									<%--<g:textField type="text" name = "user" value = "" class="form-control" id="email"/>--%>
+									<input type="text" class="form-control" name="articleTitle" id="articleTitle" placeholder="Title" required/>
+								</div>
+							</div>
+							<div class="col-lg-12">
+								<div class="form-group">
+									<label for="email" style="color : black;">Description:</label>
+									<%--<g:textField type="text" name = "user" value = "" class="form-control" id="email"/>--%>
+									<input type="text" class="form-control" name="articleDescription" id="articleDescription" placeholder="Description" required/>
+								</div>
+							</div>
+							<div class="col-lg-12">
+								<div class="form-group">
+									<label for="articleContent" style="color : black;">Upload text file:</label>
+									<input type="file" class="form-control" name="fileContent" accept=".txt"/>
+								</div>
+							</div>
+							<div class="col-lg-12">
+								<div class="form-group">
+									<label for="articleLogo" style="color : black;">Upload logo:</label>
+									<input type="file" class="form-control" name="articleLogo" accept=".gif,.jpg,.jpeg,.png,"/>
+								</div>
+							</div>
+							<g:each var="genre" in="${Genre.list(sort: "type", order: "asc")}">
+								<div class="col-lg-3">
+									<div class="form-group">
+										<label for="genres" style="color : black;">
+											<g:checkBox name="genres" value="${genre.id}" /> ${genre.type}
+											<br/>
+
+										</label>
+									</div>
+								</div>
+							</g:each>
+						<%--<g:actionSubmit action="login" value="Submit" class="btn btn-success"/>--%>
+							<input type="submit" class="btn btn-success" id="submit" value="Submit"/><br>
+						</g:form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
 		
 		<div id="composeMangaModal" class="modal fade" role="dialog">
             <div class="modal-dialog">
@@ -382,20 +401,24 @@
                     <div class="modal-body">
                         <g:form action="create" method="post" name="create" controller="article" enctype="multipart/form-data">
 							
-                            <div class="form-group">
-                                <label for="email" style="color : black;">Title:</label>
-                                <%--<g:textField type="text" name = "user" value = "" class="form-control" id="email"/>--%>
-                                <input type="text" class="form-control" name="articleTitle" id="articleTitle" placeholder="Title" required/>
-                            </div>
-                            <div class="form-group">
-                                <label for="email" style="color : black;">Description:</label>
-                                <%--<g:textField type="text" name = "user" value = "" class="form-control" id="email"/>--%>
-                                <input type="text" class="form-control" name="articleDescription" id="articleDescription" placeholder="Description" required/>
-                            </div>
+                            <div class="col-lg-12">
+								<div class="form-group">
+									<label for="email" style="color : black;">Title:</label>
+									<%--<g:textField type="text" name = "user" value = "" class="form-control" id="email"/>--%>
+									<input type="text" class="form-control" name="mangaTitle" id="mangaTitle" placeholder="Title" required/>
+								</div>
+							</div>
+							<div class="col-lg-12">
+								<div class="form-group">
+									<label for="email" style="color : black;">Description:</label>
+									<%--<g:textField type="text" name = "user" value = "" class="form-control" id="email"/>--%>
+									<input type="text" class="form-control" name="mangaDescription" id="mangaDescription" placeholder="Description" required/>
+								</div>
+							</div>
 							<div class="col-lg-12">
                                 <div class="form-group">
                                     <label for="articleLogo" style="color : black;">Upload logo file:</label>
-                                    <input type="file" class="form-control" name="articleLogo" accept=".gif,.jpg,.jpeg,.png,"/>
+                                    <input type="file" class="form-control" name="mangaLogo" accept=".gif,.jpg,.jpeg,.png"/>
                                 </div>
                             </div>
                             <div class="col-lg-12">
@@ -404,6 +427,23 @@
                                     <input type="file" class="form-control" name="mangaContent" accept=".gif,.jpg,.jpeg,.png" multiple/>
                                 </div>
                             </div>
+							<div class="col-lg-12">
+								<div class="form-group">
+									<label for="articleLogo" style="color : black;">Upload logo:</label>
+									<input type="file" class="form-control" name="articleLogo" accept=".gif,.jpg,.jpeg,.png,"/>
+								</div>
+							</div>
+							<g:each var="genre" in="${Genre.list(sort: "type", order: "asc")}">
+								<div class="col-lg-3">
+									<div class="form-group">
+										<label for="genres" style="color : black;">
+											<g:checkBox name="genres" value="${genre.id}" /> ${genre.type}
+											<br/>
+
+										</label>
+									</div>
+								</div>
+							</g:each>
                         <%--<g:actionSubmit action="login" value="Submit" class="btn btn-success"/>--%>
                             <input type="submit" class="btn btn-success" id="submit" value="Submit"/><br>
                         </g:form>

@@ -1,12 +1,12 @@
 
-<%@ page import="com.mmm.ekwento.Book" %>
+<%@ page import="com.mmm.ekwento.Manga" %>
 <%@ page import="com.mmm.ekwento.Genre" %>
 <!DOCTYPE html>
 <html>
     <head>
 		<meta name="layout" content="main">
-		<g:set var="entityName" value="${message(code: 'book.label', default: 'Book')}" />
-		<title>Book List | e-Kwento - MMM</title>
+		<g:set var="entityName" value="${message(code: 'manga.label', default: 'Manga')}" />
+		<title>Manga List | e-Kwento - MMM</title>
     </head>
     <body id="page-top">
         <!-- HEADER -->
@@ -48,11 +48,11 @@
 				<div class="row tableDesign">
 					<div class="col-md-12">
 
-						<h2 class="caption">Book List</h2>
-						<sec:ifAnyGranted roles="ROLE_CREATE_BOOKS">
+						<h2 class="caption">Manga List</h2>
+						<sec:ifAnyGranted roles="ROLE_CREATE_MANGA">
 							<div class="pagination addButton">
-								<a class="btnn btn-concrete" data-toggle="modal" data-target="#composeBookModal">
-									<i class="glyphicon glyphicon-plus"></i>Add Book
+								<a class="btnn btn-concrete" data-toggle="modal" data-target="#composeMangaModal">
+									<i class="glyphicon glyphicon-plus"></i>Add Manga
 								</a>
 							</div>
 						</sec:ifAnyGranted>
@@ -65,16 +65,15 @@
 									<div class="form-input">
 										<label for="input4" class="icon glyphicon glyphicon-pencil"></label>
 										<button id="convert" class="button glyphicon glyphicon-search"></button>
-										<input name="searchBook" type="text" class="input" value="">
+										<input name="searchManga" type="text" class="input" value="">
 									</div>
-									<g:hiddenField name="id" value="${1}" />
 								</g:form>
 							</div>
 
 						</div>
 						<div class="pagination" style="float:right;">
 							<ul class="paginateButtons">
-								<g:paginate controller="book" action="index" total="${bookInstanceCount}" />
+								<g:paginate controller="manga" action="index" total="${mangaInstanceCount}" />
 							</ul>
 						</div>
 
@@ -85,27 +84,27 @@
 
 							<thead>
 								<tr>
-									<th scope="col">Book Title</th>
-									<th scope="col">Book Description</th>
+									<th scope="col">Manga Title</th>
+									<th scope="col">Manga Description</th>
 									<th scope="col">Logo</th>
 								</tr>
 							</thead>
 							<tbody>
-								<g:each var="bookInstance" in="${bookInstanceList}">
+								<g:each var="mangaInstance" in="${mangaInstanceList}">
 									<tr>
-										<td data-label="ID"><g:link controller="book" action="show" id="${bookInstance.id}" class="nameLink">${bookInstance.title}</g:link></td>
-										<td data-label="Authority"><g:link controller="book" action="show" id="${bookInstance.id}" class="nameLink">${bookInstance.description}</g:link></td>
-
+										<td data-label="Title"><g:link controller="manga" action="show" id="${mangaInstance.id}" class="nameLink">${mangaInstance.title}</g:link></td>
+										<td data-label="Description"><g:link controller="manga" action="show" id="${mangaInstance.id}" class="nameLink">${mangaInstance.description}</g:link></td>
+										
 										<td data-label="Logo">
-											<g:if test="${bookInstance.logo}">
-												<img src="${createLink (controller:'book' , action:'renderImage' , id:bookInstance.id)}" alt="bookLogo" height="75" width="75"/>
+											<g:if test="${mangaInstance.logo}">
+												<img src="${createLink (controller:'manga' , action:'renderImage' , id:mangaInstance.id)}" alt="bookLogo" height="75" width="75"/>
 											</g:if>
 											<g:else>
 												<g:img dir="images" file="ek.png" height="75" width="75"/>
 											</g:else>
 										</td>
-									</tr>
-								</g:each>
+								</tr>
+							</g:each>
 							</tbody>
 						</table>
 
@@ -114,7 +113,7 @@
 						<div class="pagination" style="float:right;">
 
 							<ul class="paginateButtons">
-								<g:paginate controller="book" action="index" total="${bookInstanceCount}" />
+								<g:paginate controller="manga" action="index" total="${mangaInstanceCount}" />
 							</ul>
 						</div>
 					</div> <!--end of column-->
@@ -122,56 +121,44 @@
 			</div> <!--end of container-->
 		</section>
 
-
+		
 
         <g:render template="/layouts/footer"/>
-
-
-		<div id="composeBookModal" class="modal fade" role="dialog">
+		
+		<div id="composeMangaModal" class="modal fade" role="dialog">
 			<div class="modal-dialog">
 			  <!-- Modal content-->
 				<div class="modal-content">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
-						<h4 class="modal-title">Create new Book</h4>
+						<h4 class="modal-title">Create new Manga</h4>
 					</div>
 					<div class="modal-body">
-						<g:form action="create" method="post" name="create" controller="book" enctype="multipart/form-data">
+						<g:form action="create" method="post" name="create" controller="manga" enctype="multipart/form-data">
+
 							<div class="form-group">
-								<label for="email" style="color : black;">Title:</label>
+								<label for="mangaTitle" style="color : black;">Title:</label>
 								<%--<g:textField type="text" name = "user" value = "" class="form-control" id="email"/>--%>
-								<input type="text" class="form-control" name="bookTitle" id="bookTitle" placeholder="Title" required/>
+								<input type="text" class="form-control" name="mangaTitle" id="mangaTitle" placeholder="Title" required/>
 							</div>
 							<div class="form-group">
-								<label for="email" style="color : black;">Description:</label>
+								<label for="mangaDescription" style="color : black;">Description:</label>
 								<%--<g:textField type="text" name = "user" value = "" class="form-control" id="email"/>--%>
-								<input type="text" class="form-control" name="bookDescription" id="bookDescription" placeholder="Description" required/>
+								<input type="text" class="form-control" name="mangaDescription" id="mangaDescription" placeholder="Description" required/>
 							</div>
 							<div class="col-lg-12">
 								<div class="form-group">
-									<label for="bookContent" style="color : black;">Upload text file:</label>
-									<input type="file" class="form-control" name="fileContent" accept=".txt"/>
+									<label for="mangaLogo" style="color : black;">Upload logo file:</label>
+									<input type="file" class="form-control" name="mangaLogo" accept=".gif,.jpg,.jpeg,.png,"/>
 								</div>
 							</div>
 							<div class="col-lg-12">
 								<div class="form-group">
-									<label for="bookLogo" style="color : black;">Upload logo:</label>
-									<input type="file" class="form-control" name="bookLogo" accept=".gif,.jpg,.jpeg,.png,"/>
+									<label for="mangaContent" style="color : black;">Upload Content Image files:</label>
+									<input type="file" class="form-control" name="mangaContent" accept=".gif,.jpg,.jpeg,.png" multiple/>
 								</div>
 							</div>
-							<g:each var="genre" in="${Genre.list(sort: "type", order: "asc")}">
-								<div class="col-lg-3">
-									<div class="form-group">
-										<label for="genres" style="color : black;">
-											<g:checkBox name="genres" value="${genre.id}" /> ${genre.type}
-											<br/>
-
-										</label>
-									</div>
-								</div>
-							</g:each>
-
-<%--<g:actionSubmit action="login" value="Submit" class="btn btn-success"/>--%>
+						<%--<g:actionSubmit action="login" value="Submit" class="btn btn-success"/>--%>
 							<input type="submit" class="btn btn-success" id="submit" value="Submit"/><br>
 						</g:form>
 					</div>
@@ -181,5 +168,8 @@
 				</div>
 			</div>
 		</div>
+		
+		
+		
     </body>
 </html>

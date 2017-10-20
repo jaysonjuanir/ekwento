@@ -28,6 +28,7 @@
 
         <script type="text/javascript">
             $( document ).ready(function() {
+			$("[data-toggle=popover]").popover({html:true})
             $('div.keepReading').click(function() {
             $(this).animate({
             opacity: 0
@@ -155,7 +156,13 @@
 						</g:if>
 					</g:each>
 				</article>
-                <div class="keepReading">Keep Reading</div>
+				<sec:ifLoggedIn>
+					<div class="keepReading">Keep Reading</div>
+				</sec:ifLoggedIn>
+				<sec:ifNotLoggedIn>
+					<%--<div class="keepReading">Keep Reading</div>--%>
+					<a class="keepReading" href="#" data-toggle="modal" data-target="#mustLoginModal">Keep Reading</a> 
+				</sec:ifNotLoggedIn>
             </div>
 
 
@@ -416,6 +423,23 @@
 	</div>
 
 
+	<div id="mustLoginModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+		<div class="modal-dialog">
+		  <!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">You need to be logged in to read this book</h4>
+				</div>
+				<div class="modal-body">
+					<button type="button" class="btn btn-danger" data-dismiss="modal">Okay</button>
+				</div>
+				<div class="modal-footer">
+
+				</div>
+			</div>
+		</div>
+	</div>
 
 </body>
 </html>

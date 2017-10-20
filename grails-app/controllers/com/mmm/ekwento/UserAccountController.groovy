@@ -132,6 +132,7 @@ class UserAccountController {
         }
     }
     
+	@Secured('IS_AUTHENTICATED_ANONYMOUSLY')
     @Transactional
     def register(){
         println("Register eKwento Account:" + params)
@@ -244,6 +245,7 @@ class UserAccountController {
         redirect action:"auth", controller:"login"
     }
     
+	@Secured('IS_AUTHENTICATED_ANONYMOUSLY')
     @Transactional
     def verify(){
         println("params: " +params);

@@ -18,11 +18,11 @@ class HomeController {
         
         def config = SpringSecurityUtils.securityConfig
 
-//        if (springSecurityService.isLoggedIn()) {
-////            redirect uri: '/home/show'
-//            redirect action:'show', controller:"home"
-//            return
-//        }
+		//        if (springSecurityService.isLoggedIn()) {
+		////            redirect uri: '/home/show'
+		//            redirect action:'show', controller:"home"
+		//            return
+		//        }
 
 		
 
@@ -49,15 +49,23 @@ class HomeController {
 				}
 				eq("approved", false);
 				eq("rejected", false)
-				if(params?.searchBook)
-					ilike("title", "%"+params.searchBook+"%")
+				if(params?.searchBook){
+					or{
+						ilike("title", "%"+params.searchBook+"%")
+						ilike("description", "%"+params.searchBook+"%")
+					}
+				}
 				
 			}
 			model.bookPendingList = Book.createCriteria().list{
 				eq("approved", false);
 				eq("rejected", false);
-				if(params?.searchBook)
-					ilike("title", "%"+params.searchBook+"%")
+				if(params?.searchBook){
+					or{
+						ilike("title", "%"+params.searchBook+"%")
+						ilike("description", "%"+params.searchBook+"%")
+					}
+				}
 				
 				maxResults(new Integer(params.max))
 				firstResult(new Integer(params.offset))
@@ -74,15 +82,22 @@ class HomeController {
 				}
 				eq("approved", false);
 				eq("rejected", false)
-				if(params?.searchBook)
-					ilike("title", "%"+params.searchBook+"%")
-				
+				if(params?.searchArticle){
+					or{
+						ilike("title", "%"+params.searchArticle+"%")
+						ilike("description", "%"+params.searchArticle+"%")
+					}
+				}
 			}
 			model.articlePendingList = Article.createCriteria().list{
 				eq("approved", false);
 				eq("rejected", false);
-				if(params?.searchBook)
-					ilike("title", "%"+params.searchBook+"%")
+				if(params?.searchArticle){
+					or{
+						ilike("title", "%"+params.searchArticle+"%")
+						ilike("description", "%"+params.searchArticle+"%")
+					}
+				}
 				
 				maxResults(new Integer(params.max))
 				firstResult(new Integer(params.offset))
@@ -93,10 +108,42 @@ class HomeController {
 			
 			println("model.articleAdminList: " + model.bookPendingList)
 		}else if(params.id=="3"){  //manga
-//			model.bookPendingList = Book.createCriteria().list{
-//				eq("approved", false);
-//				eq("rejected", false)
-//			}
+			//			model.bookPendingList = Manga.createCriteria().list{
+			//				eq("approved", false);
+			//				eq("rejected", false)
+			//			}
+
+			model.mangaPendingCount = Manga.createCriteria().get{
+				projections{
+					count("id")
+				}
+				eq("approved", false);
+				eq("rejected", false)
+				if(params?.searchManga){
+					or{
+						ilike("title", "%"+params.searchManga+"%")
+						ilike("description", "%"+params.searchManga+"%")
+					}
+				}
+			}
+			model.mangaPendingList = Manga.createCriteria().list{
+				eq("approved", false);
+				eq("rejected", false);
+				if(params?.searchManga){
+					or{
+						ilike("title", "%"+params.searchManga+"%")
+						ilike("description", "%"+params.searchManga+"%")
+					}
+				}
+				
+				maxResults(new Integer(params.max))
+				firstResult(new Integer(params.offset))
+				order("dateCreated")
+			}
+			view = 'mangaAdminList'
+			params.listId = params.id
+			
+			println("model.mangaAdminList: " + model.bookPendingList)
 		}
 
         //String view = 'list'
@@ -140,7 +187,7 @@ class HomeController {
         redirect action:"list", id:params.listId
     }
 	
-	/*@Secured('ROLE_ADMIN_DASHBOARD')
+	@Secured('ROLE_ADMIN_DASHBOARD')
 	def updateApproveAdminManga(Manga mangaInstance) { 
         
         def model= [:]		
@@ -153,11 +200,11 @@ class HomeController {
 		//create notification from user here
 		//notification.createNotif(model.bookUser, "Admin approved your manga.")
 
-		flash.message = "Successfully approved the book! ${mangaInstance}"
+		flash.message = "Successfully approved the manga! ${mangaInstance}"
         String view = 'list'
-        respond view: view, model: model
-    }*/
-	
+        redirect action:"list", id:params.listId
+    }
+
 	@Secured('ROLE_ADMIN_DASHBOARD')
 	def updateRejectAdminBook(Book bookInstance) { 
         
@@ -194,23 +241,23 @@ class HomeController {
         redirect action:"list", id:params.listId
     }
 	
-	/*@Secured('ROLE_ADMIN_DASHBOARD')
-	def updateRejectAdminBook(Book bookInstance) { 
+	@Secured('ROLE_ADMIN_DASHBOARD')
+	def updateRejectAdminManga(Manga mangaInstance) { 
         
         def model= [:]		
-		model.bookUser = bookInstance.createdBy
+		model.mangaUser = mangaInstance.createdBy
 
-		bookInstance.rejected = true
-		bookInstance.save(flush:true, failOnError:true)
+		mangaInstance.rejected = true
+		mangaInstance.save(flush:true, failOnError:true)
 		
 		
 		//create notification from user here
-		//notification.createNotif(model.bookUser, "Admin rejected your book.")
+		//notification.createNotif(model.mangaUser, "Admin rejected your manga.")
 
-		flash.message = "Successfully rejected the book! ${bookInstance}"
+		flash.message = "Successfully rejected the manga! ${mangaInstance}"
         String view = 'list'
-        respond view: view, model: model
-    }*/
+        redirect action:"list", id:params.listId
+    }
     
 	@Secured('IS_AUTHENTICATED_FULLY')
     def show(){
@@ -225,15 +272,15 @@ class HomeController {
         //            println("lines: " + lines.size());
         //        }
         def testFile=null
-//        testFile = request.getFile("fileContent")
-//        if(testFile){
-//            def contentDaw = testFile.getFileItem().getString()
-//            
-//            def wordLists = contentDaw.split("\\r?\\n");
-//            
-//            params.wordLists = wordLists
-//            println("lines: " + wordLists.size());
-//        }
+		//        testFile = request.getFile("fileContent")
+		//        if(testFile){
+		//            def contentDaw = testFile.getFileItem().getString()
+		//            
+		//            def wordLists = contentDaw.split("\\r?\\n");
+		//            
+		//            params.wordLists = wordLists
+		//            println("lines: " + wordLists.size());
+		//        }
         
         println("Home show method params: "+params)
         render(view:"show");

@@ -15,9 +15,13 @@ class UserAccount {
     String lastName
     String email
     String token
+	Integer numberOfFollowers=0
     
     Date birthdate //viewing content below 18
     String contact
+	
+	static hasMany = [userFollowing:Follower]
+	static mappedBy = [userFollowing: 'userFollowing']
 
     static transients = ['springSecurityService']
 
@@ -29,6 +33,7 @@ class UserAccount {
         email(nullable:false,blank:false,email:true, minSize:1, maxSize:255)
         token(blank:true)
         contact(blank:true, nullable:true)
+        userFollowing( nullable:true)
         birthdate(nullable:true, blank:true)
     }
 

@@ -46,11 +46,12 @@ class ArticleController {
     
 	@Secured('ROLE_CREATE_ARITICLES')
     def create(){
-        println("test method params: "+params)
+        println("Article create method params: "+params)
         
         def testFile=null
         testFile = request.getFile("fileContent")
-        logo = request.getFile("articleLogo")
+		
+        def logo = request.getFile("articleLogo")
         def articleInstance
         if(testFile){
             def content = testFile.getFileItem().getString()
@@ -59,7 +60,10 @@ class ArticleController {
             articleInstance.title = params.articleTitle
             articleInstance.description = params.articleDescription
             articleInstance.content = content
-            articleInstance.logo = logo.getBytes()
+			
+			if(logo)
+				articleInstance.logo = logo.getBytes()
+			
             articleInstance.dateCreated = new Date()
             articleInstance.dateUpdated = new Date()
             articleInstance.createdBy = authenticatedUser
@@ -76,13 +80,13 @@ class ArticleController {
         //        params.wordLists = wordLists1
         //        
         //        println("wordLists "+wordLists1)
-        flash.message = "Book "+params.articleTitle + " has been created."
+        flash.message = "Article "+params.articleTitle + " has been created. Please wait for Admin to approve your Article"
         
-        redirect action:'show', id:articleInstance.id
+        redirect action:"index"
     }
     
     def show(Article articleInstance){
-        println("Book show params: " +params)
+        println("Article show params: " +params)
         
         def user = authenticatedUser
         
@@ -111,14 +115,15 @@ class ArticleController {
     
 	@Secured('ROLE_UPDATE_ARITICLES')
     def update(Article articleInstance){
-        println("Book update params: " +params)
+        println("Article update params: " +params)
         
 		def logo = request.getFile('articleLogo')
         articleInstance.title = params.articleTitle
         articleInstance.description = params.articleDescription
         articleInstance.content = params.content
         articleInstance.dateUpdated = new Date()
-        articleInstance.logo = logo.getBytes()
+		if(logo)
+			articleInstance.logo = logo.getBytes()
 		
 		def genres = Genre.getAll(params.genres)
 		articleInstance.genres = genres

@@ -1,5 +1,6 @@
 
 <%@ page import="com.mmm.ekwento.Article" %>
+<%@ page import="com.mmm.ekwento.Genre" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -48,6 +49,13 @@
 					<div class="col-md-12">
 
 						<h2 class="caption">Article List</h2>
+						<sec:ifAnyGranted roles="ROLE_CREATE_ARITICLES">
+							<div class="pagination addButton">
+								<a class="btnn btn-concrete" data-toggle="modal" data-target="#composeArticleModal">
+									<i class="glyphicon glyphicon-plus"></i>Add Article
+								</a>
+							</div>
+						</sec:ifAnyGranted>
 						<div class="clearfix"></div>
 						<div class="headerTableButtons">
 
@@ -116,5 +124,59 @@
 		
 
         <g:render template="/layouts/footer"/>
+		
+		<div id="composeArticleModal" class="modal fade" role="dialog">
+			<div class="modal-dialog">
+			  <!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">Create new Article</h4>
+					</div>
+					<div class="modal-body">
+						<g:form action="create" method="post" name="create" controller="article" enctype="multipart/form-data">
+							<div class="form-group">
+								<label for="email" style="color : black;">Title:</label>
+								<%--<g:textField type="text" name = "user" value = "" class="form-control" id="email"/>--%>
+								<input type="text" class="form-control" name="articleTitle" id="articleTitle" placeholder="Title" required/>
+							</div>
+							<div class="form-group">
+								<label for="email" style="color : black;">Description:</label>
+								<%--<g:textField type="text" name = "user" value = "" class="form-control" id="email"/>--%>
+								<input type="text" class="form-control" name="articleDescription" id="articleDescription" placeholder="Description" required/>
+							</div>
+							<div class="col-lg-12">
+								<div class="form-group">
+									<label for="articleContent" style="color : black;">Upload text file:</label>
+									<input type="file" class="form-control" name="fileContent" accept=".txt"/>
+								</div>
+							</div>
+							<div class="col-lg-12">
+								<div class="form-group">
+									<label for="articleLogo" style="color : black;">Upload logo:</label>
+									<input type="file" class="form-control" name="articleLogo" accept=".gif,.jpg,.jpeg,.png,"/>
+								</div>
+							</div>
+							<g:each var="genre" in="${Genre.list(sort: "type", order: "asc")}">
+								<div class="col-lg-3">
+									<div class="form-group">
+										<label for="genres" style="color : black;">
+											<g:checkBox name="genres" value="${genre.id}" /> ${genre.type}
+											<br/>
+
+										</label>
+									</div>
+								</div>
+							</g:each>
+						<%--<g:actionSubmit action="login" value="Submit" class="btn btn-success"/>--%>
+							<input type="submit" class="btn btn-success" id="submit" value="Submit"/><br>
+						</g:form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
     </body>
 </html>
