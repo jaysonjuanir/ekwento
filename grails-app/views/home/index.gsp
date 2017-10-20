@@ -100,6 +100,20 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label for="bookLogo" style="color : black;">Birthdate:</label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-9">
+                                    <div class="form-group">
+                                            <g:datePicker class="form-control" name="regBirthdate" value="${new Date()}" precision="day" years="${1970..2017}"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="form-horizontal">
                             <div class="col-sm-offset-2 col-sm-10">
                                 <div class="checkbox">

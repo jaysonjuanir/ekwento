@@ -1,5 +1,6 @@
 package com.mmm.ekwento
 
+import groovy.time.TimeCategory
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -16,30 +17,59 @@ class ArticleController {
 		params.max = Math.min(max ?: 10, 100)
         if(!params.max) params.max = 10
         if(!params.offset) params.offset = 0
+        def minorAgeCompare
+        def minorIndicator = true
+        
+        if(authenticatedUser){
+            Date birthdate = authenticatedUser.birthdate;
+            use(TimeCategory) {
+                minorAgeCompare = new Date() - 18.year
+            }
+
+            if(minorAgeCompare >= authenticatedUser.birthdate){
+                println "not minor" 
+                minorIndicator = false
+            }
+        }
         
         def model= [:]		
 		
 		model.articleInstanceCount = Article.createCriteria().get{
 			projections{
-				count("id")
+				countDistinct("id")
 			}
 			eq("approved", true);
 			eq("rejected", false)
 			if(params?.searchArticle)
 				ilike("title", "%"+params.searchArticle+"%")
 				
+            if(minorIndicator){
+                genres{
+                    eq("isRestricted", false)
+                }
+            }
 		}
-		model.articleInstanceList = Article.createCriteria().list{
+		model.articleInstanceIdList = Article.createCriteria().list{
+            projections{
+                groupProperty("id")
+            }
 			eq("approved", true);
 			eq("rejected", false);
 			
 			if(params?.searchArticle)
 				ilike("title", "%"+params.searchArticle+"%")
+                
+            if(minorIndicator){
+                genres{
+                    eq("isRestricted", false)
+                }
+            }
 				
 			maxResults(new Integer(params.max))
 			firstResult(new Integer(params.offset))
 			order("dateCreated")
 		}
+        model.articleInstanceList = Article.getAll(model.articleInstanceIdList)
 		
 		render view: 'index', model: model
 	}

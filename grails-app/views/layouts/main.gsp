@@ -62,10 +62,12 @@
                             </div>  
                             <g:actionSubmit action = "login" value = "Submit" class="btn btn-success"/>
                         </form>--%>
-                        <form role="form" class="searchform cf">
-                            <input type="text" placeholder="Is it me you’re looking for?">
+                        <sec:ifNotGranted roles="ROLE_ADMIN_DASHBOARD">
+                        <g:form controller="book" action="index" method="get" name="searchForm" role="form" class="searchform cf">
+                            <input type="text" placeholder="Is it me you’re looking for?" name="searchBook">
                             <button type="submit">Search</button>
-                        </form>
+                        </g:form>
+                        </sec:ifNotGranted>
                     </div>
                 </div>
 
@@ -101,15 +103,20 @@
 								<span>Book</span>
 								</g:link>
 							</li>
+                            <li>
+								<g:link action="index" controller="article">
+								<span>Article</span>
+								</g:link>
+							</li>
+                            <li>
+								<g:link action="index" controller="manga">
+								<span>Manga</span>
+								</g:link>
+							</li>
 							<li>
 								<g:link action="ekwento" controller="about">
 								<span>About</span>
 								</g:link>
-							</li>
-							<li>
-								<a data-scroll href="#contact">
-									<span>Contact Us</span>
-								</a>
 							</li>
 						</sec:ifNotGranted>
                         <sec:ifNotLoggedIn>

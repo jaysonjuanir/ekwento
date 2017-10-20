@@ -1,5 +1,7 @@
 package com.mmm.ekwento
 
+import java.text.SimpleDateFormat
+import groovy.time.TimeCategory
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -16,31 +18,61 @@ class BookController {
 		params.max = Math.min(max ?: 10, 100)
         if(!params.max) params.max = 10
         if(!params.offset) params.offset = 0
+        def minorAgeCompare
+        def minorIndicator = true
+        
+        //def sdf = new SimpleDateFormat("MM/dd/yyyy");
+        if(authenticatedUser){
+            Date birthdate = authenticatedUser.birthdate;
+            use(TimeCategory) {
+                minorAgeCompare = new Date() - 18.year
+            }
+
+            if(minorAgeCompare >= authenticatedUser.birthdate){
+                println "not minor" 
+                minorIndicator = false
+            }
+        }
         
         def model= [:]		
 		
 		model.bookInstanceCount = Book.createCriteria().get{
 			projections{
-				count("id")
+				countDistinct("id")
 			}
 			eq("approved", true);
 			eq("rejected", false)
 			if(params?.searchBook)
 				ilike("title", "%"+params.searchBook+"%")
-				
+                
+            if(minorIndicator){
+                genres{
+                    eq("isRestricted", false)
+                }
+            }
 		}
-		model.bookInstanceList = Book.createCriteria().list{
+        //model.bookInstanceList = Book.executeQuery("select distinct b from Book b join Genre g where g.isRestricted=0 and b.approved= :approved and b.rejected= :rejected order by b.dateCreated",[approved:true,rejected:false], [max: new Integer(params.max), offset: new Integer(params.offset)])
+		model.bookInstanceIdList = Book.createCriteria().list{
+            projections{
+                groupProperty("id")
+            }
 			eq("approved", true);
 			eq("rejected", false);
 			
 			if(params?.searchBook)
 				ilike("title", "%"+params.searchBook+"%")
+                
+            if(minorIndicator){
+                genres{
+                    eq("isRestricted", false)
+                }
+            }
 				
 			maxResults(new Integer(params.max))
 			firstResult(new Integer(params.offset))
 			order("dateCreated")
 		}
-		
+        model.bookInstanceList = Book.getAll(model.bookInstanceIdList)
 		render view: 'index', model: model
 	}
     

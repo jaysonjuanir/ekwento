@@ -143,6 +143,7 @@ class UserAccountController {
         registerUser.firstName = params.regFirstName
         registerUser.lastName = params.regLastName
         registerUser.email = params.regEmail
+        registerUser.birthdate = params.regBirthdate
         def token = emailerService.tokenGenerator(params.username+params.regFirstName, 40)
         registerUser.token = token
         
@@ -242,7 +243,7 @@ class UserAccountController {
         emailerService.sendRegistrationForm(params)
         
         flash.message = "User Account Registered. Please verify your email before logging in on eKwento."
-        redirect action:"auth", controller:"login"
+        redirect action:"index", controller:"home"
     }
     
 	@Secured('IS_AUTHENTICATED_ANONYMOUSLY')
@@ -255,14 +256,14 @@ class UserAccountController {
         
         if(userAccountInstance.enabled){
             flash.error = "User Account already verified."
-            redirect action:"auth", controller:"login"
+            redirect action:"index", controller:"home"
             return
         }
         if(params.token == userToken){
             userAccountInstance.enabled = true;
             userAccountInstance.save(flush:true)
             flash.message = "User Account Verified. You are now ready to login your account on eKwento."
-            redirect action:"auth", controller:"login"
+            redirect action:"index", controller:"home"
             return
         }
         

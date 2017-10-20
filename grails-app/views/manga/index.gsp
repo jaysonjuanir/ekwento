@@ -158,6 +158,17 @@
 									<input type="file" class="form-control" name="mangaContent" accept=".gif,.jpg,.jpeg,.png" multiple/>
 								</div>
 							</div>
+                            <g:each var="genre" in="${Genre.list(sort: "type", order: "asc")}">
+								<div class="col-lg-3">
+									<div class="form-group">
+										<label for="genres" style="color : black;">
+											<g:checkBox name="genres" value="${genre.id}" /> ${genre.type}
+											<br/>
+
+										</label>
+									</div>
+								</div>
+							</g:each>
 						<%--<g:actionSubmit action="login" value="Submit" class="btn btn-success"/>--%>
 							<input type="submit" class="btn btn-success" id="submit" value="Submit"/><br>
 						</g:form>

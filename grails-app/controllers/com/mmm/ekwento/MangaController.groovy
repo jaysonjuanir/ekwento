@@ -1,5 +1,6 @@
 package com.mmm.ekwento
 
+import groovy.time.TimeCategory
 import org.springframework.security.access.annotation.Secured
 
 @Secured('permitAll')
@@ -11,30 +12,59 @@ class MangaController {
 		params.max = Math.min(max ?: 10, 100)
         if(!params.max) params.max = 10
         if(!params.offset) params.offset = 0
+        def minorAgeCompare
+        def minorIndicator = true
+        
+        if(authenticatedUser){
+            Date birthdate = authenticatedUser.birthdate;
+            use(TimeCategory) {
+                minorAgeCompare = new Date() - 18.year
+            }
+
+            if(minorAgeCompare >= authenticatedUser.birthdate){
+                println "not minor" 
+                minorIndicator = false
+            }
+        }
         
         def model= [:]		
 		
 		model.mangaInstanceCount = Manga.createCriteria().get{
 			projections{
-				count("id")
+				countDistinct("id")
 			}
 			eq("approved", true);
 			eq("rejected", false)
 			if(params?.searchManga)
 				ilike("title", "%"+params.searchManga+"%")
 				
+            if(minorIndicator){
+                genres{
+                    eq("isRestricted", false)
+                }
+            }
 		}
-		model.mangaInstanceList = Manga.createCriteria().list{
+		model.mangaInstanceIdList = Manga.createCriteria().list{
+            projections{
+                groupProperty("id")
+            }
 			eq("approved", true);
 			eq("rejected", false);
 			
 			if(params?.searchManga)
 				ilike("title", "%"+params.searchManga+"%")
+                
+            if(minorIndicator){
+                genres{
+                    eq("isRestricted", false)
+                }
+            }
 				
 			maxResults(new Integer(params.max))
 			firstResult(new Integer(params.offset))
 			order("dateCreated")
 		}
+        model.mangaInstanceList = Manga.getAll(model.mangaInstanceIdList)
 		
 		render view: 'index', model: model
 	}

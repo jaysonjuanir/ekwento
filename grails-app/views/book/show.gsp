@@ -290,22 +290,22 @@
 					<h4 class="modal-title">Create new Manga</h4>
 				</div>
 				<div class="modal-body">
-					<g:form action="create" method="post" name="create" controller="article" enctype="multipart/form-data">
+					<g:form action="create" method="post" name="create" controller="manga" enctype="multipart/form-data">
 
 						<div class="form-group">
-							<label for="email" style="color : black;">Title:</label>
+							<label for="mangaTitle" style="color : black;">Title:</label>
 							<%--<g:textField type="text" name = "user" value = "" class="form-control" id="email"/>--%>
-							<input type="text" class="form-control" name="articleTitle" id="articleTitle" placeholder="Title" required/>
+							<input type="text" class="form-control" name="mangaTitle" id="mangaTitle" placeholder="Title" required/>
 						</div>
 						<div class="form-group">
-							<label for="email" style="color : black;">Description:</label>
+							<label for="mangaDescription" style="color : black;">Description:</label>
 							<%--<g:textField type="text" name = "user" value = "" class="form-control" id="email"/>--%>
-							<input type="text" class="form-control" name="articleDescription" id="articleDescription" placeholder="Description" required/>
+							<input type="text" class="form-control" name="mangaDescription" id="mangaDescription" placeholder="Description" required/>
 						</div>
 						<div class="col-lg-12">
 							<div class="form-group">
-								<label for="articleLogo" style="color : black;">Upload logo file:</label>
-								<input type="file" class="form-control" name="articleLogo" accept=".gif,.jpg,.jpeg,.png,"/>
+								<label for="mangaLogo" style="color : black;">Upload logo file:</label>
+								<input type="file" class="form-control" name="mangaLogo" accept=".gif,.jpg,.jpeg,.png,"/>
 							</div>
 						</div>
 						<div class="col-lg-12">
@@ -314,6 +314,17 @@
 								<input type="file" class="form-control" name="mangaContent" accept=".gif,.jpg,.jpeg,.png" multiple/>
 							</div>
 						</div>
+                        <g:each var="genre" in="${Genre.list(sort: "type", order: "asc")}">
+							<div class="col-lg-3">
+								<div class="form-group">
+									<label for="genres" style="color : black;">
+										<g:checkBox name="genres" value="${genre.id}" /> ${genre.type}
+										<br/>
+
+									</label>
+								</div>
+							</div>
+						</g:each>
 					<%--<g:actionSubmit action="login" value="Submit" class="btn btn-success"/>--%>
 						<input type="submit" class="btn btn-success" id="submit" value="Submit"/><br>
 					</g:form>

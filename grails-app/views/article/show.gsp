@@ -185,8 +185,8 @@
 						<li class="active"><a href="#" data-toggle="modal" data-target='#editModal'><span class="glyphicon glyphicon-pencil"></span>Edit</a></li>
 					</g:if>
 					<sec:ifAnyGranted roles="ROLE_ADMIN_DASHBOARD">
-						<li class="active"><a href="#" data-toggle="modal" data-target="#composeMangaModal">Approve</a></li>
-						<li class="active"><a href="#" data-toggle="modal" data-target="#composeMangaModal">Reject</a></li>
+						<li class="active"><a href="#" data-toggle="modal" data-target="#approveModal">Approve</a></li>
+						<li class="active"><a href="#" data-toggle="modal" data-target="#rejectModal">Reject</a></li>
 					</sec:ifAnyGranted>
                     <li class="active"><a><span class="glyphicon glyphicon-eye-open"></span><span class="badge">${numberOfViews}</span> Views</a></li>
                 </ul>
@@ -399,7 +399,7 @@
                         <h4 class="modal-title">Create new Manga</h4>
                     </div>
                     <div class="modal-body">
-                        <g:form action="create" method="post" name="create" controller="article" enctype="multipart/form-data">
+                        <g:form action="create" method="post" name="create" controller="manga" enctype="multipart/form-data">
 							
                             <div class="col-lg-12">
 								<div class="form-group">
@@ -497,6 +497,43 @@
         </div>
 
 
+        <div id="approveModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+            <div class="modal-dialog">
+              <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Approve this article?</h4>
+                    </div>
+                    <div class="modal-body">
+                        <g:link controller="home" action="updateApproveAdminArticle" class="btn btn-success" id="${articleInstance.id}" params="${params<<[listId:1]}">Yes</g:link>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                        </div>
+                        <div class="modal-footer">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="rejectModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+            <div class="modal-dialog">
+              <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Reject this book?</h4>
+                    </div>
+                    <div class="modal-body">
+                        <g:link controller="home" action="updateRejectAdminArticle" class="btn btn-success" id="${articleInstance.id}" params="${params<<[listId:1]}">Yes</g:link>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                        </div>
+                        <div class="modal-footer">
+
+                    </div>
+                </div>
+            </div>
+        </div>
 
 
     </body>
