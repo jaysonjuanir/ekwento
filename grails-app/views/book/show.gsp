@@ -152,23 +152,23 @@
                     <article>    
                         <g:each var="sentence" in="${content}" status="i">
                             <g:if test="${i>=3}">
-							<p>${sentence}</p>
-						</g:if>
-					</g:each>
-				</article>
-				<sec:ifLoggedIn>
-					<div class="keepReading">Keep Reading</div>
-				</sec:ifLoggedIn>
-				<sec:ifNotLoggedIn>
-					<%--<div class="keepReading">Keep Reading</div>--%>
-					<a class="keepReading" href="#" data-toggle="modal" data-target="#mustLoginModal">Keep Reading</a> 
-				</sec:ifNotLoggedIn>
-            </div>
-
+                                <p>${sentence}</p>
+                            </g:if>
+                        </g:each>
+                    </article>
+                    <sec:ifLoggedIn>
+                        <div class="keepReading">Keep Reading</div>
+                    </sec:ifLoggedIn>
+                    <sec:ifNotLoggedIn>
+                        <%--<div class="keepReading">Keep Reading</div>--%>
+                        <a class="keepReading" href="#" data-toggle="modal" data-target="#mustLoginModal">Keep Reading</a> 
+                    </sec:ifNotLoggedIn>
+                </div>
+            
 
             <div class="clearfix"></div>
-        </div>
-    </section>
+            </div>
+        </section>
 
     <g:render template="/layouts/footer"/>
 
