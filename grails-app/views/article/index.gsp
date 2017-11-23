@@ -67,6 +67,16 @@
 										<button id="convert" class="button glyphicon glyphicon-search"></button>
 										<input name="searchArticle" type="text" class="input" value="">
 									</div>
+                                    <div class="form-input">
+										<label for="genres" style="color : black;">Genre
+                                            <%--<g:each var="genre" in="${Genre.list(sort: "type", order: "asc")}">
+											<g:checkBox name="genres" value="${genre.id}" /> ${genre.type}
+											<br/>
+                                            </g:each>--%>
+                                            
+										</label>
+                                        <g:select name="genre" from="${Genre.list(sort: "type", order: "asc")}" value="${params.genre}" optionKey="id" noSelection="['':'-Choose your Genre-']"/>
+									</div>
 								</g:form>
 							</div>
 

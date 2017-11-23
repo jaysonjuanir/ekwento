@@ -38,10 +38,11 @@ class MangaController {
 			if(params?.searchManga)
 				ilike("title", "%"+params.searchManga+"%")
 				
-            if(minorIndicator){
-                genres{
+            genres{
+                if(minorIndicator)
                     eq("isRestricted", false)
-                }
+                if(params.genre)
+                    eq('id', params.genre.toLong())
             }
 		}
 		model.mangaInstanceIdList = Manga.createCriteria().list{
@@ -54,10 +55,11 @@ class MangaController {
 			if(params?.searchManga)
 				ilike("title", "%"+params.searchManga+"%")
                 
-            if(minorIndicator){
-                genres{
+            genres{
+                if(minorIndicator)
                     eq("isRestricted", false)
-                }
+                if(params.genre)
+                    eq('id', params.genre.toLong())
             }
 				
 			maxResults(new Integer(params.max))

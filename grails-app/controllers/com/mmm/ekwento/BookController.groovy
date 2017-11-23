@@ -15,6 +15,7 @@ class BookController {
     def index(Integer max) { 
 		println("book index: " +params)
 		String view
+        def genre = []
 		params.max = Math.min(max ?: 10, 100)
         if(!params.max) params.max = 10
         if(!params.offset) params.offset = 0
@@ -45,10 +46,12 @@ class BookController {
 			if(params?.searchBook)
 				ilike("title", "%"+params.searchBook+"%")
                 
-            if(minorIndicator){
-                genres{
+            genres{
+                if(minorIndicator){
                     eq("isRestricted", false)
                 }
+                if(params.genre)
+                eq('id', params.genre.toLong())
             }
 		}
         //model.bookInstanceList = Book.executeQuery("select distinct b from Book b join Genre g where g.isRestricted=0 and b.approved= :approved and b.rejected= :rejected order by b.dateCreated",[approved:true,rejected:false], [max: new Integer(params.max), offset: new Integer(params.offset)])
@@ -61,11 +64,13 @@ class BookController {
 			
 			if(params?.searchBook)
 				ilike("title", "%"+params.searchBook+"%")
-                
-            if(minorIndicator){
-                genres{
+
+            genres{
+                if(minorIndicator){
                     eq("isRestricted", false)
                 }
+                if(params.genre)
+                eq('id', params.genre.toLong())
             }
 				
 			maxResults(new Integer(params.max))

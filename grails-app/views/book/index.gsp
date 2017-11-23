@@ -62,18 +62,21 @@
 
 							<div class="searchWrapper">
 								<g:form action="index" method="get" name="searchForm">
-                                    <div class="form-input">
-										<label for="genres" style="color : black;">
-                                            <g:each var="genre" in="${Genre.list(sort: "type", order: "asc")}">
-											<g:checkBox name="genres" value="${genre.id}" /> ${genre.type}
-											<br/>
-                                            </g:each>
-										</label>
-									</div>
+                                    
 									<div class="form-input">
 										<label for="input4" class="icon glyphicon glyphicon-pencil"></label>
 										<button id="convert" class="button glyphicon glyphicon-search"></button>
 										<input name="searchBook" type="text" class="input" value="">
+									</div>
+                                    <div class="form-input">
+										<label for="genres" style="color : black;">Genre
+                                            <%--<g:each var="genre" in="${Genre.list(sort: "type", order: "asc")}">
+											<g:checkBox name="genres" value="${genre.id}" /> ${genre.type}
+											<br/>
+                                            </g:each>--%>
+                                            
+										</label>
+                                        <g:select name="genre" from="${Genre.list(sort: "type", order: "asc")}" value="${params.genre}" optionKey="id" noSelection="['':'-Choose your Genre-']"/>
 									</div>
 									<g:hiddenField name="id" value="${1}" />
 								</g:form>

@@ -8,4 +8,5 @@ class Genre {
     static constraints = {
 		type nullable:false
     }
+    String toString(){ type }
 }

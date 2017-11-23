@@ -43,11 +43,14 @@ class ArticleController {
 			if(params?.searchArticle)
 				ilike("title", "%"+params.searchArticle+"%")
 				
-            if(minorIndicator){
-                genres{
+            
+            genres{
+                if(minorIndicator)
                     eq("isRestricted", false)
-                }
+                if(params.genre)
+                    eq('id', params.genre.toLong())
             }
+            
 		}
 		model.articleInstanceIdList = Article.createCriteria().list{
             projections{
@@ -59,10 +62,11 @@ class ArticleController {
 			if(params?.searchArticle)
 				ilike("title", "%"+params.searchArticle+"%")
                 
-            if(minorIndicator){
-                genres{
+            genres{
+                if(minorIndicator)
                     eq("isRestricted", false)
-                }
+                if(params.genre)
+                    eq('id', params.genre.toLong())
             }
 				
 			maxResults(new Integer(params.max))
