@@ -24,6 +24,14 @@
             .affix + .container-fluid {
             padding-top: 70px;
             }
+            
+            .container{
+            -moz-user-select: none;
+
+            -webkit-user-select: none;
+
+            user-select: none;
+            }
         </style>
 
         <script type="text/javascript">
@@ -51,6 +59,16 @@
             $(this).parent().find('article').slideUp();
 
             return false;
+            });
+            
+            //Disable cut copy paste
+            $('body').bind('cut copy paste', function (e) {
+                e.preventDefault();
+            });
+
+            //Disable mouse right click
+            $("body").on("contextmenu",function(e){
+                return false;
             });
             });
         </script>

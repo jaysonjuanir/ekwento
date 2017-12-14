@@ -36,6 +36,11 @@
             .container {
             margin-left: auto;
             margin-right: auto;
+            -moz-user-select: none;
+
+            -webkit-user-select: none;
+
+            user-select: none;
             }
 
             .story-line {
@@ -125,29 +130,17 @@
         </script>
         <script type="text/javascript">
             $( document ).ready(function() {
-            $('div.keepReading').click(function() {
-            $(this).animate({
-            opacity: 0
-            });
-            $(this).parent().find('.closeArticle').animate({
-            opacity: 1
-            });
-            $(this).prev().slideDown();
+                //Disable cut copy paste
+                $('body').bind('cut copy paste', function (e) {
+                    e.preventDefault();
+                });
 
-            return false;
-            });
-
-            $('div.closeArticle').click(function() {
-            $(this).animate({
-            opacity: 0
-            });
-            $(this).parent().find('.keepReading').animate({
-            opacity: 1
-            });
-            $(this).parent().find('article').slideUp();
-
-            return false;
-            });
+                //Disable mouse right click
+                $("body").on("contextmenu",function(e){
+                    return false;
+                });
+            
+                
             });
         </script>
 
@@ -250,7 +243,7 @@
 
 <%--  lol --%>
             <div class="story-line">
-                <div class="viewport">
+                <div class="viewport" id="viewport">
                 </div>
 
                 <div class="story-line-container">
