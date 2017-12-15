@@ -193,7 +193,7 @@ If you have any questions about this Agreement, please contact us.
 										<g:else>
 											<g:img dir="images" file="ek.png" width="140" height="140"/>
 										</g:else>
-										<div><g:link action="show" controller="book" id="${book.id}">${book.title}</g:link></div>
+										<div><g:link title="${book.description}" action="show" controller="book" id="${book.id}">${book.title}</g:link></div>
 									</li>
 								</g:each>
                                 
@@ -216,7 +216,7 @@ If you have any questions about this Agreement, please contact us.
 											<g:img dir="images" file="ek.png" width="140" height="140"/>
 										</g:else>
 										
-										<div><g:link action="show" controller="book" id="${book.id}">${book.title}</g:link></div>
+										<div><g:link title="${book.description}" action="show" controller="book" id="${book.id}">${book.title}</g:link></div>
 									</li>
 								</g:each>
                             </ul>
@@ -239,7 +239,7 @@ If you have any questions about this Agreement, please contact us.
 										<g:else>
 											<g:img dir="images" file="ek.png" height="75" width="75"/>
 										</g:else>
-										<div><g:link action="show" controller="article" id="${article.id}" style="font-size:1em;">${article.title}</g:link></div>
+										<div><g:link title="${article.description}" action="show" controller="article" id="${article.id}" style="font-size:1em;">${article.title}</g:link></div>
 									</li>
 								</g:each>
                             </ul>
@@ -260,7 +260,7 @@ If you have any questions about this Agreement, please contact us.
 										<g:else>
 											<g:img dir="images" file="ek.png" height="75" width="75"/>
 										</g:else>
-										<div><g:link action="show" controller="manga" id="${manga.id}" style="font-size:1em;">${manga.title}</g:link></div>
+										<div><g:link title="${manga.description}" action="show" controller="manga" id="${manga.id}" style="font-size:1em;">${manga.title}</g:link></div>
 									</li>
 								</g:each>
                             </ul>
@@ -281,7 +281,7 @@ If you have any questions about this Agreement, please contact us.
 										<g:else>
 											<g:img dir="images" file="ek.png" height="75" width="75"/>
 										</g:else>
-										<div><g:link action="show" controller="book" id="${book.id}" style="font-size:1em;">${book.title}</g:link></div>
+										<div><g:link title="${book.description}" action="show" controller="book" id="${book.id}" style="font-size:1em;">${book.title}</g:link></div>
 									</li>
 								</g:each>
                             </ul>
