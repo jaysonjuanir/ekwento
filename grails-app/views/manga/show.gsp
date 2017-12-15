@@ -148,8 +148,20 @@
 						<li><g:link controller="manga" action="show" id="${mangaInstance.id}" params="[page: pageNumber]">${pageNumber}</g:link></li>
 					</g:each>
 				</ul>
+
+				<g:if test="${Integer.valueOf(params.page) != 1}">
+					<g:link controller="manga" action="show" id="${mangaInstance.id}" params="[page: (Integer.valueOf(params.page)-1)]">
+						<span class="text-center">Previous</span>
+					</g:link>
+				</g:if>
+				<g:if test="${Integer.valueOf(params.page) != mangaMaxPage}">
+					<g:link controller="manga" action="show" id="${mangaInstance.id}" params="[page: (Integer.valueOf(params.page)+1)]">
+						<span class="text-center">Next</span>
+					</g:link>
+				</g:if>
 			</div>
-			
+            
+            
 			
 		</div>
 			<h2>${mangaInstance.title}</h2>
