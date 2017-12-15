@@ -236,7 +236,7 @@
                                 <div class="col-lg-3">
                                     <div class="form-group">
                                         <label for="genres" style="color : black;">
-                                            <g:checkBox name="genres" value="${genre.id}" /> ${genre.type}
+                                            <g:checkBox name="genres" value="${genre.id}" checked='false'/> ${genre.type}
                                             <br/>
 
                                         </label>
