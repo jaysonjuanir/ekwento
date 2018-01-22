@@ -137,6 +137,8 @@ grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'com.mmm.ekwent
 grails.plugin.springsecurity.authority.className = 'com.mmm.ekwento.UserRole'
 grails.plugin.springsecurity.authority.groupAuthorityNameField = 'authorities'
 grails.plugin.springsecurity.useRoleGroups = true
+grails.plugin.springsecurity.successHandler.defaultTargetUrl = '/'
+grails.plugin.springsecurity.successHandler.alwaysUseDefault = true
 grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	'/':                              ['permitAll'],
 	'/index':                         ['permitAll'],
