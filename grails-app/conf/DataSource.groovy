@@ -19,19 +19,23 @@ environments {
     development {
         dataSource {
             dbCreate = "update" // one of 'create', 'create-drop','update'
-            url = "jdbc:mysql://localhost:3306/ekwento1"
+            url = "jdbc:mysql://localhost:3306/ekwentotest"
         }
     }
     test {
         dataSource {
+            username = "ekwentoc_admin"
+			password = "3kw3nt0"
             dbCreate = "update" // one of 'create', 'create-drop','update'
-            url = "jdbc:mysql://localhost:3306/ekwento"
+            url = "jdbc:mysql://173.243.120.231/ekwentoc_prod"
         }
     }
     production {
         dataSource {
+			username = "ekwentoc_admin"
+			password = "3kw3nt0"
             dbCreate = "update" // one of 'create', 'create-drop','update'
-            url = "jdbc:mysql://localhost:3306/ekwento"
+            url = "jdbc:mysql://173.243.120.231/ekwentoc_prod"
         }
     }
 }
