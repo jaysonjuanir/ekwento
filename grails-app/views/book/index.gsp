@@ -104,8 +104,8 @@
 							<tbody>
 								<g:each var="bookInstance" in="${bookInstanceList}">
 									<tr>
-										<td data-label="ID"><g:link title="${book.description}" controller="book" action="show" id="${bookInstance.id}" class="nameLink">${bookInstance.title}</g:link></td>
-										<td data-label="Authority"><g:link title="${book.description}" controller="book" action="show" id="${bookInstance.id}" class="nameLink">${bookInstance.description}</g:link></td>
+										<td data-label="ID"><g:link title="${bookInstance.description}" controller="book" action="show" id="${bookInstance.id}" class="nameLink">${bookInstance.title}</g:link></td>
+										<td data-label="Authority"><g:link title="${bookInstance.description}" controller="book" action="show" id="${bookInstance.id}" class="nameLink">${bookInstance.description}</g:link></td>
 
 										<td data-label="Logo">
 											<g:if test="${bookInstance.logo}">

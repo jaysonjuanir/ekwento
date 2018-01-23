@@ -27,11 +27,11 @@
 				<g:link action="show" controller="profile" id="${author.id}">${author.firstName} ${author.lastName}</g:link>
 				<br/>
 			</g:each> --%>
-            <g:link action="auth" controller="login">Sample Stories</g:link>
+            <g:link action="auth" controller="login">Mica</g:link>
             <br/>
-            <g:link action="auth" controller="login">Sample Stories</g:link>
+            <g:link action="auth" controller="login">John Michael</g:link>
             <br/>
-            <g:link action="auth" controller="login">Sample Stories</g:link>
+            <g:link action="auth" controller="login">Maxine</g:link>
         </div>
         <div class="rowFooter">
             <h3>Contact Us</h3>

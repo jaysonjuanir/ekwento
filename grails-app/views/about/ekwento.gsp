@@ -47,19 +47,19 @@
 									<a data-toggle="popover" data-placement="bottom" title="Popover Header" data-content="Some content inside the popover">
 										<g:img dir="images" file="ek1.jpg" width="215" height="215"/>
 									</a>
-									<div>Team 1</div>
+									<div>Mica - Developer</div>
 								</li>
 								<li>
 									<a data-toggle="popover" data-placement="bottom" title="Popover Header" data-content="Some content inside the popover">
 										<g:img dir="images" file="ek2.jpg" width="215" height="215"/>
 									</a>
-									<div>Team 2</div>
+									<div>John Michael - Programmer</div>
 								</li>
 								<li>
 									<a data-toggle="popover" data-placement="bottom" title="Popover Header" data-content="Some content inside the popover">
 										<g:img dir="images" file="ek3.jpg" width="215" height="215"/>
 									</a>
-									<div>Team 3</div>
+									<div>Maxine - Designer</div>
 								</li>
 							</ul>
 						</div>
