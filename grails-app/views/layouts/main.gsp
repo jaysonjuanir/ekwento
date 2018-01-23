@@ -19,6 +19,9 @@
         <script src="${resource(dir: 'js', file: 'bootstrap.min.js')}"></script>
         <script src="${resource(dir: 'js', file: 'effects.js')}"></script>
         <script src="${resource(dir: 'dist/js', file: 'smooth-scroll.js')}"></script>
+        <script src="${resource(dir: 'js', file: 'jquery.textfill.min.js')}"></script>
+        <script src="${resource(dir: 'js', file: 'jquery.textfill.js')}"></script>
+		
         
         <!-- Latest compiled and minified CSS -->
         <!--<link rel="stylesheet" href="/eKwento-1.0/css/bootstrap.min.css" type="text/css" />-->

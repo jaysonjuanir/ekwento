@@ -40,8 +40,17 @@ class ArticleController {
 			}
 			eq("approved", true);
 			eq("rejected", false)
-			if(params?.searchArticle)
-				ilike("title", "%"+params.searchArticle+"%")
+
+			if(params?.searchArticle){
+				or{
+					ilike("title", "%"+params.searchArticle+"%")
+					createdBy{
+						ilike("firstName", "%"+params.searchArticle+"%")
+						ilike("lastName", "%"+params.searchArticle+"%")
+						ilike("username", "%"+params.searchArticle+"%")
+					}
+				}
+			}
 				
             
             genres{
@@ -59,8 +68,16 @@ class ArticleController {
 			eq("approved", true);
 			eq("rejected", false);
 			
-			if(params?.searchArticle)
-				ilike("title", "%"+params.searchArticle+"%")
+			if(params?.searchArticle){
+				or{
+					ilike("title", "%"+params.searchArticle+"%")
+					createdBy{
+						ilike("firstName", "%"+params.searchArticle+"%")
+						ilike("lastName", "%"+params.searchArticle+"%")
+						ilike("username", "%"+params.searchArticle+"%")
+					}
+				}
+			}
                 
             genres{
                 if(minorIndicator)

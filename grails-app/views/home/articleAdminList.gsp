@@ -79,8 +79,8 @@
 								<tr>
 									<th scope="col">Article Title</th>
 									<th scope="col">Article Description</th>
-									<th scope="col">Edit</th>
-									<th scope="col">Delete</th>
+									<th scope="col">Approve</th>
+									<th scope="col">Reject</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -121,7 +121,7 @@
 													<h4 class="modal-title">Reject this article?</h4>
 												</div>
 												<div class="modal-body">
-													<g:link controller="home" action="updateRejectAdminArticle" class="btn btn-success" id="${articleInstance.id}" params="${params}">Yes</g:link>
+													<g:link controller="home" action="showRejectAdminArticleForm" class="btn btn-success" id="${articleInstance.id}" params="${params}">Yes</g:link>
 														<button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
 													</div>
 													<div class="modal-footer">

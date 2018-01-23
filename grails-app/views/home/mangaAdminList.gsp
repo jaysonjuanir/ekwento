@@ -79,8 +79,8 @@
 								<tr>
 									<th scope="col">Manga Title</th>
 									<th scope="col">Manga Description</th>
-									<th scope="col">Edit</th>
-									<th scope="col">Delete</th>
+									<th scope="col">Approve</th>
+									<th scope="col">Reject</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -121,7 +121,7 @@
 													<h4 class="modal-title">Reject this manga?</h4>
 												</div>
 												<div class="modal-body">
-													<g:link controller="home" action="updateRejectAdminManga" class="btn btn-success" id="${mangaInstance.id}" params="${params}">Yes</g:link>
+													<g:link controller="home" action="showRejectAdminMangaForm" class="btn btn-success" id="${mangaInstance.id}" params="${params}">Yes</g:link>
 														<button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
 													</div>
 													<div class="modal-footer">

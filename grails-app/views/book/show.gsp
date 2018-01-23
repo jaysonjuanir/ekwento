@@ -281,7 +281,7 @@
 							<div class="col-lg-3">
 								<div class="form-group">
 									<label for="genres" style="color : black;">
-										<g:checkBox name="genres" value="${genre.id}" /> ${genre.type}
+										<g:checkBox name="genres" value="${genre.id}" checked='false'/> ${genre.type}
 										<br/>
 
 									</label>
@@ -336,7 +336,7 @@
 							<div class="col-lg-3">
 								<div class="form-group">
 									<label for="genres" style="color : black;">
-										<g:checkBox name="genres" value="${genre.id}" /> ${genre.type}
+										<g:checkBox name="genres" value="${genre.id}" checked='false'/> ${genre.type}
 										<br/>
 
 									</label>
@@ -392,7 +392,7 @@
 							<div class="col-lg-3">
 								<div class="form-group">
 									<label for="genres" style="color : black;">
-										<g:checkBox name="genres" value="${genre.id}" /> ${genre.type}
+										<g:checkBox name="genres" value="${genre.id}" checked='false'/> ${genre.type}
 										<br/>
 
 									</label>
@@ -441,7 +441,7 @@
 					<h4 class="modal-title">Reject this book?</h4>
 				</div>
 				<div class="modal-body">
-					<g:link controller="home" action="updateRejectAdminBook" class="btn btn-success" id="${bookInstance.id}" params="${params<<[listId:1]}">Yes</g:link>
+					<g:link controller="home" action="showRejectAdminBookForm" class="btn btn-success" id="${bookInstance.id}" params="${params<<[listId:1]}">Yes</g:link>
 						<button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
 					</div>
 					<div class="modal-footer">

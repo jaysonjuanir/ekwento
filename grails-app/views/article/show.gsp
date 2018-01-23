@@ -314,6 +314,17 @@
                                     <input type="file" class="form-control" name="bookLogo" accept=".gif,.jpg,.jpeg,.png,"/>
                                 </div>
                             </div>
+							<g:each var="genre" in="${Genre.list(sort: "type", order: "asc")}">
+								<div class="col-lg-3">
+									<div class="form-group">
+										<label for="genres" style="color : black;">
+											<g:checkBox name="genres" value="${genre.id}" checked='false'/> ${genre.type}
+											<br/>
+
+										</label>
+									</div>
+								</div>
+							</g:each>
                         <%--<g:actionSubmit action="login" value="Submit" class="btn btn-success"/>--%>
                             <input type="submit" class="btn btn-success" id="submit" value="Submit"/><br>
                         </g:form>
@@ -430,7 +441,7 @@
 								<div class="col-lg-3">
 									<div class="form-group">
 										<label for="genres" style="color : black;">
-											<g:checkBox name="genres" value="${genre.id}" /> ${genre.type}
+											<g:checkBox name="genres" value="${genre.id}" checked='false'/> ${genre.type}
 											<br/>
 
 										</label>
@@ -476,6 +487,17 @@
                                     <g:textArea class="form-control" name="content" value="${articleInstance.content}" rows="10" cols="100"/>
                                 </div>
                             </div>
+							<g:each var="genre" in="${Genre.list(sort: "type", order: "asc")}">
+								<div class="col-lg-3">
+									<div class="form-group">
+										<label for="genres" style="color : black;">
+											<g:checkBox name="genres" value="${genre.id}" checked='false'/> ${genre.type}
+											<br/>
+
+										</label>
+									</div>
+								</div>
+							</g:each>
                         <%--<g:actionSubmit action="login" value="Submit" class="btn btn-success"/>--%>
                             <input type="submit" class="btn btn-success" id="submit" value="Submit"/><br>
 
@@ -518,7 +540,7 @@
                         <h4 class="modal-title">Reject this book?</h4>
                     </div>
                     <div class="modal-body">
-                        <g:link controller="home" action="updateRejectAdminArticle" class="btn btn-success" id="${articleInstance.id}" params="${params<<[listId:1]}">Yes</g:link>
+                        <g:link controller="home" action="showRejectAdminArticleForm" class="btn btn-success" id="${articleInstance.id}" params="${params<<[listId:1]}">Yes</g:link>
                             <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
                         </div>
                         <div class="modal-footer">

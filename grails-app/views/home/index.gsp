@@ -118,7 +118,7 @@
                             <div class="col-sm-offset-2 col-sm-10">
                                 <div class="checkbox">
                                     <label class="col-xs-12 col-sm-6 col-md-8">
-                                        <input class="reg-inline" type="checkbox" data-toggle="popover" data-placement="bottom" title="By Checking this" data-content="Term and Termination
+                                        <input class="reg-inline" required type="checkbox" data-toggle="popover" data-placement="bottom" title="By Checking this" data-content="Term and Termination
 
 This Agreement shall remain in effect until terminated by you or My Company (change this). 
 
@@ -193,7 +193,12 @@ If you have any questions about this Agreement, please contact us.
 										<g:else>
 											<g:img dir="images" file="ek.png" width="140" height="140"/>
 										</g:else>
-										<div><g:link title="${book.description}" action="show" controller="book" id="${book.id}">${book.title}</g:link></div>
+										<g:if test="${book.title.size() >=12}">
+											<div style="padding:1em;font-size: 16px;font-size: 0.75em;"><g:link title="${book.title} - ${book.description}" action="show" controller="book" id="${book.id}">${book.title.substring(0,10)}.....</g:link></div>
+										</g:if>
+										<g:else>
+											<div style="padding:1em;font-size: 16px;font-size: 0.75em;"><g:link title="${book.title} - ${book.description}" action="show" controller="book" id="${book.id}">${book.title}</g:link></div>
+										</g:else>
 									</li>
 								</g:each>
                                 
@@ -202,12 +207,12 @@ If you have any questions about this Agreement, please contact us.
                     </div>
 
                     <div class="leftSideBooks" style="border-radius:5px;background-color: rgba(189, 184, 184, 0.54);">
-                        <h3 class="reg-inline"><b>Recent Books</b></h3>
+                        <h3 class="reg-inline"><b>Popular Books</b></h3>
                         <g:link class="reg-inline side-buttons btn btn-primary" action="index" controller="book">Read More</g:link>
 
                         <div>
                             <ul id="Grid">
-								<g:each var="book" in="${Book.findAllByApprovedAndRejected(true, false, [max: 8, sort: "dateCreated", order: "desc"])}">
+								<g:each var="book" in="${Book.findAllByApprovedAndRejected(true, false, [max: 8, sort: "numberOfViews", order: "asc"])}">
 									<li>
 										<g:if test="${book.logo}">
 											<img src="${createLink (controller:'book' , action:'renderImage' , id:book.id)}" alt="bookLogo" height="140" width="140"/>
@@ -216,7 +221,13 @@ If you have any questions about this Agreement, please contact us.
 											<g:img dir="images" file="ek.png" width="140" height="140"/>
 										</g:else>
 										
-										<div><g:link title="${book.description}" action="show" controller="book" id="${book.id}">${book.title}</g:link></div>
+										<g:if test="${book.title.size() >=12}">
+											<div style="padding:1em;font-size: 16px;font-size: 0.75em;"><g:link title="${book.title} - ${book.description}" action="show" controller="book" id="${book.id}">${book.title.substring(0,10)}.....</g:link></div>
+										</g:if>
+										<g:else>
+											<div style="padding:1em;font-size: 16px;font-size: 0.75em;"><g:link title="${book.title} - ${book.description}" action="show" controller="book" id="${book.id}">${book.title}</g:link></div>
+										</g:else>
+											
 									</li>
 								</g:each>
                             </ul>
@@ -239,7 +250,12 @@ If you have any questions about this Agreement, please contact us.
 										<g:else>
 											<g:img dir="images" file="ek.png" height="75" width="75"/>
 										</g:else>
-										<div><g:link title="${article.description}" action="show" controller="article" id="${article.id}" style="font-size:1em;">${article.title}</g:link></div>
+										<g:if test="${article.title.size() >=7}">
+											<div style="padding:1em;font-size: 16px;font-size: 0.75em;"><g:link title="${article.title} - ${article.description}" action="show" controller="article" id="${article.id}">${article.title.substring(0,5)}.....</g:link></div>
+										</g:if>
+										<g:else>
+											<div style="padding:1em;font-size: 16px;font-size: 0.75em;"><g:link title="${article.title} - ${article.description}" action="show" controller="article" id="${article.id}">${article.title}</g:link></div>
+										</g:else>
 									</li>
 								</g:each>
                             </ul>
@@ -260,7 +276,12 @@ If you have any questions about this Agreement, please contact us.
 										<g:else>
 											<g:img dir="images" file="ek.png" height="75" width="75"/>
 										</g:else>
-										<div><g:link title="${manga.description}" action="show" controller="manga" id="${manga.id}" style="font-size:1em;">${manga.title}</g:link></div>
+										<g:if test="${manga.title.size() >=7}">
+											<div style="padding:1em;font-size: 16px;font-size: 0.75em;"><g:link title="${manga.title} - ${manga.description}" action="show" controller="manga" id="${manga.id}">${manga.title.substring(0,4)}.....</g:link></div>
+										</g:if>
+										<g:else>
+											<div style="padding:1em;font-size: 16px;font-size: 0.75em;"><g:link title="${manga.title} - ${manga.description}" action="show" controller="manga" id="${manga.id}">${manga.title}</g:link></div>
+										</g:else>
 									</li>
 								</g:each>
                             </ul>
@@ -281,7 +302,12 @@ If you have any questions about this Agreement, please contact us.
 										<g:else>
 											<g:img dir="images" file="ek.png" height="75" width="75"/>
 										</g:else>
-										<div><g:link title="${book.description}" action="show" controller="book" id="${book.id}" style="font-size:1em;">${book.title}</g:link></div>
+										<g:if test="${book.title.size() >=7}">
+											<div style="padding:1em;font-size: 16px;font-size: 0.75em;"><g:link title="${book.title} - ${book.description}" action="show" controller="book" id="${book.id}">${book.title.substring(0,4)}.....</g:link></div>
+										</g:if>
+										<g:else>
+											<div style="padding:1em;font-size: 16px;font-size: 0.75em;"><g:link title="${book.title} - ${book.description}" action="show" controller="book" id="${book.id}">${book.title}</g:link></div>
+										</g:else>
 									</li>
 								</g:each>
                             </ul>

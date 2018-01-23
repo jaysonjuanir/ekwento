@@ -79,8 +79,8 @@
 								<tr>
 									<th scope="col">Book Title</th>
 									<th scope="col">Book Description</th>
-									<th scope="col">Edit</th>
-									<th scope="col">Delete</th>
+									<th scope="col">Approve</th>
+									<th scope="col">Reject</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -117,11 +117,12 @@
 										  <!-- Modal content-->
 											<div class="modal-content">
 												<div class="modal-header">
+													
 													<button type="button" class="close" data-dismiss="modal">&times;</button>
 													<h4 class="modal-title">Reject this book?</h4>
 												</div>
 												<div class="modal-body">
-													<g:link controller="home" action="updateRejectAdminBook" class="btn btn-success" id="${bookInstance.id}" params="${params}">Yes</g:link>
+													<g:link controller="home" action="showRejectAdminBookForm" class="btn btn-success" id="${bookInstance.id}" params="${params}">Yes</g:link>
 														<button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
 													</div>
 													<div class="modal-footer">

@@ -5,6 +5,7 @@ class Book {
     String title
     String description
     String content
+    String reasonForReject
     Date dateCreated
     Date dateUpdated
     Integer numberOfViews = 0
@@ -25,6 +26,7 @@ class Book {
     static constraints = {
         title nullable:false
         content nullable:false
+		reasonForReject nullable:true
         dateUpdated nullable:true
         logo(nullable:true)
     }

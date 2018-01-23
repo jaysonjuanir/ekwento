@@ -291,7 +291,7 @@
 								<div class="col-lg-3">
 									<div class="form-group">
 										<label for="genres" style="color : black;">
-											<g:checkBox name="genres" value="${genre.id}" /> ${genre.type}
+											<g:checkBox name="genres" value="${genre.id}" checked='false'/> ${genre.type}
 											<br/>
 
 										</label>
@@ -346,7 +346,7 @@
                                 <div class="col-lg-3">
                                     <div class="form-group">
                                         <label for="genres" style="color : black;">
-                                            <g:checkBox name="genres" value="${genre.id}" /> ${genre.type}
+                                            <g:checkBox name="genres" value="${genre.id}" checked='false'/> ${genre.type}
                                             <br/>
 
                                         </label>
@@ -433,7 +433,6 @@
 							<button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
 						</div>
 						<div class="modal-footer">
-
 					</div>
 				</div>
 			</div>
@@ -448,7 +447,7 @@
 						<h4 class="modal-title">Reject this manga?</h4>
 					</div>
 					<div class="modal-body">
-						<g:link controller="home" action="updateRejectAdminManga" class="btn btn-success" id="${mangaInstance.id}" params="${params<<[listId:1]}">Yes</g:link>
+						<g:link controller="home" action="showRejectAdminMangaForm" class="btn btn-success" id="${mangaInstance.id}" params="${params<<[listId:1]}">Yes</g:link>
 							<button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
 						</div>
 						<div class="modal-footer">

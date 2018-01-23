@@ -3,6 +3,7 @@ package com.mmm.ekwento
 class Manga {
 String title
     String description
+    String reasonForReject
     Date dateCreated
     Date dateUpdated
     Integer numberOfViews = 0
@@ -24,6 +25,7 @@ String title
         title nullable:false
         contentPage nullable:true
         dateUpdated nullable:true
+        reasonForReject nullable:true
         logo(nullable:true)
     }
 	String toString(){

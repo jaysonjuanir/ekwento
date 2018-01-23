@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse
 class HomeController {
     
     def springSecurityService
+    def emailerService
 
 	@Secured('permitAll')
     def index() { 
@@ -161,7 +162,7 @@ class HomeController {
 		
 		
 		//create notification from user here
-		//notification.createNotif(model.bookUser, "Admin approved your book.")
+		emailerService.createApproveEmailBook(bookInstance)
 
 		flash.message = "Successfully approved the ${bookInstance} Book!"
         //String view = 'list'
@@ -180,7 +181,7 @@ class HomeController {
 		
 		
 		//create notification from user here
-		//notification.createNotif(model.bookUser, "Admin approved your article.")
+		emailerService.createApproveEmailArticle(articleInstance)
 
 		flash.message = "Successfully approved the ${articleInstance} article!"
         String view = 'list'
@@ -198,65 +199,83 @@ class HomeController {
 		
 		
 		//create notification from user here
-		//notification.createNotif(model.bookUser, "Admin approved your manga.")
+		emailerService.createApproveEmailManga(mangaInstance)
 
 		flash.message = "Successfully approved the manga! ${mangaInstance}"
         String view = 'list'
         redirect action:"list", id:params.listId
     }
-
+	
+	@Secured('ROLE_ADMIN_DASHBOARD')
+	def showRejectAdminBookForm(Book bookInstance) { 
+        def model= [:]
+		model.bookInstance = bookInstance
+        render view:"showRejectBookForm", id:bookInstance.id, model:model
+    }
+	
+	@Secured('ROLE_ADMIN_DASHBOARD')
+	def showRejectAdminArticleForm(Article articleInstance) { 
+        def model= [:]		
+		model.articleInstance = articleInstance
+        render view:"showRejectArticleForm", id:articleInstance.id,model:model
+    }
+	
+	@Secured('ROLE_ADMIN_DASHBOARD')
+	def showRejectAdminMangaForm(Manga mangaInstance) { 
+        def model= [:]		
+		model.mangaInstance = mangaInstance
+        render view:"showRejectMangaForm", id:mangaInstance.id,model:model
+    }
+	
 	@Secured('ROLE_ADMIN_DASHBOARD')
 	def updateRejectAdminBook(Book bookInstance) { 
-        
-        def model= [:]		
-		model.bookUser = bookInstance.createdBy
+        println("updateRejectAdminBook params: ${params}")
 
 		bookInstance.rejected = true
+		bookInstance.reasonForReject = params.reasonForReject
 		bookInstance.save(flush:true, failOnError:true)
 		
 		
 		//create notification from user here
-		//notification.createNotif(model.bookUser, "Admin rejected your book.")
+		emailerService.createRejectEmailBook(bookInstance)
 
 		flash.message = "Successfully rejected the ${bookInstance} Book!"
         String view = 'list'
-        redirect action:"list", id:params.listId
+        redirect action:"list", id:1
     }
 	
 	@Secured('ROLE_ADMIN_DASHBOARD')
 	def updateRejectAdminArticle(Article articleInstance) { 
-        
-        def model= [:]		
-		model.articleUser = articleInstance.createdBy
+        println("updateRejectAdminArticle params: ${params}")
 
 		articleInstance.rejected = true
+		articleInstance.reasonForReject = params.reasonForReject
 		articleInstance.save(flush:true, failOnError:true)
 		
 		
 		//create notification from user here
-		//notification.createNotif(model.bookUser, "Admin rejected your article.")
+		emailerService.createRejectEmailArticle(articleInstance)
 
 		flash.message = "Successfully rejected the ${articleInstance} Article!"
         String view = 'list'
-        redirect action:"list", id:params.listId
+        redirect action:"list", id:2
     }
 	
 	@Secured('ROLE_ADMIN_DASHBOARD')
 	def updateRejectAdminManga(Manga mangaInstance) { 
-        
-        def model= [:]		
-		model.mangaUser = mangaInstance.createdBy
+        println("updateRejectAdminManga params: ${params}")
 
 		mangaInstance.rejected = true
+		mangaInstance.reasonForReject = params.reasonForReject
 		mangaInstance.save(flush:true, failOnError:true)
 		
 		
 		//create notification from user here
-		//notification.createNotif(model.mangaUser, "Admin rejected your manga.")
+		emailerService.createRejectEmailManga(mangaInstance)
 
-		flash.message = "Successfully rejected the manga! ${mangaInstance}"
+		flash.message = "Successfully rejected the ${mangaInstance} Manga!"
         String view = 'list'
-        redirect action:"list", id:params.listId
+        redirect action:"list", id:3
     }
     
 	@Secured('IS_AUTHENTICATED_FULLY')

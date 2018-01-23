@@ -43,8 +43,16 @@ class BookController {
 			}
 			eq("approved", true);
 			eq("rejected", false)
-			if(params?.searchBook)
-				ilike("title", "%"+params.searchBook+"%")
+			if(params?.searchBook){
+				or{
+					ilike("title", "%"+params.searchBook+"%")
+					createdBy{
+						ilike("firstName", "%"+params.searchBook+"%")
+						ilike("lastName", "%"+params.searchBook+"%")
+						ilike("username", "%"+params.searchBook+"%")
+					}
+				}
+			}
                 
             genres{
                 if(minorIndicator){
@@ -62,8 +70,16 @@ class BookController {
 			eq("approved", true);
 			eq("rejected", false);
 			
-			if(params?.searchBook)
-				ilike("title", "%"+params.searchBook+"%")
+			if(params?.searchBook){
+				or{
+					ilike("title", "%"+params.searchBook+"%")
+					createdBy{
+						ilike("firstName", "%"+params.searchBook+"%")
+						ilike("lastName", "%"+params.searchBook+"%")
+						ilike("username", "%"+params.searchBook+"%")
+					}
+				}
+			}
 
             genres{
                 if(minorIndicator){

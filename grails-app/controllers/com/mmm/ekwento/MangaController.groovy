@@ -35,8 +35,17 @@ class MangaController {
 			}
 			eq("approved", true);
 			eq("rejected", false)
-			if(params?.searchManga)
-				ilike("title", "%"+params.searchManga+"%")
+
+			if(params?.searchManga){
+				or{
+					ilike("title", "%"+params.searchManga+"%")
+					createdBy{
+						ilike("firstName", "%"+params.searchManga+"%")
+						ilike("lastName", "%"+params.searchManga+"%")
+						ilike("username", "%"+params.searchManga+"%")
+					}
+				}
+			}
 				
             genres{
                 if(minorIndicator)
@@ -52,8 +61,16 @@ class MangaController {
 			eq("approved", true);
 			eq("rejected", false);
 			
-			if(params?.searchManga)
-				ilike("title", "%"+params.searchManga+"%")
+			if(params?.searchManga){
+				or{
+					ilike("title", "%"+params.searchManga+"%")
+					createdBy{
+						ilike("firstName", "%"+params.searchManga+"%")
+						ilike("lastName", "%"+params.searchManga+"%")
+						ilike("username", "%"+params.searchManga+"%")
+					}
+				}
+			}
                 
             genres{
                 if(minorIndicator)
