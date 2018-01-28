@@ -1,5 +1,14 @@
 package com.mmm.ekwento
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.util.List;
+
+import org.apache.poi.hwpf.HWPFDocument;
+import org.apache.poi.hwpf.extractor.WordExtractor;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
+import org.apache.poi.xwpf.usermodel.XWPFParagraph;
+
 import grails.converters.JSON
 import grails.plugin.springsecurity.SpringSecurityUtils
 import org.springframework.web.multipart.commons.*;
@@ -304,4 +313,74 @@ class HomeController {
         println("Home show method params: "+params)
         render(view:"show");
     }
+	
+	@Secured('IS_AUTHENTICATED_ANONYMOUSLY')
+	def testDoc(){
+		println("testDoc here")
+		
+		
+//		def content = readDocxFile("C:\\test.docx");
+		def content = readDocFile("C:\\test.doc");
+		
+		println("content: " + content)
+	}
+	
+	@Secured('IS_AUTHENTICATED_ANONYMOUSLY')
+	def testDocx(){
+		println("testDocx here")
+		
+		
+//		def content = readDocxFile("C:\\test.docx");
+		def content = readDocxFile("C:\\test.docx");
+		
+		println("content: " + content)
+	}
+	
+	def readDocFile(String fileName) {
+		String content = "";
+		try {
+			File file = new File(fileName);
+			FileInputStream fis = new FileInputStream(file.getAbsolutePath());
+
+			HWPFDocument doc = new HWPFDocument(fis);
+
+			WordExtractor we = new WordExtractor(doc);
+
+			String[] paragraphs = we.getParagraphText();
+			
+			
+			println("Total no of paragraph "+paragraphs.length);
+			for (String para : paragraphs) {
+				//println(para.toString());
+				content += para.toString() + "\n"
+			}
+			fis.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return content
+	}
+	
+	def readDocxFile(String fileName) {
+		String content = "";
+		try {
+			File file = new File(fileName);
+			FileInputStream fis = new FileInputStream(file.getAbsolutePath());
+
+			XWPFDocument document = new XWPFDocument(fis);
+
+			List<XWPFParagraph> paragraphs = document.getParagraphs();
+			
+			
+			println("Total no of paragraph "+paragraphs.size());
+			for (XWPFParagraph para : paragraphs) {
+				//println();
+				content += para.getText() + "\n"
+			}
+			fis.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return content;
+	}
 }

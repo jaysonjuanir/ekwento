@@ -18,7 +18,7 @@ String title
     static mapping = {
         logo column: "logo" , sqlType: "LONGBLOB"
         contentPage column: "logo" , sqlType: "LONGBLOB"
-		genres joinTable: [name: "book_genres", column: "genre_id", key: 'book_id' ]
+		genres joinTable: [name: "manga_genres", column: "genre_id", key: 'manga_id' ]
     }
     
     static constraints = {
