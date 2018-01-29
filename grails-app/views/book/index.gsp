@@ -160,8 +160,8 @@
 							</div>
 							<div class="col-lg-12">
 								<div class="form-group">
-									<label for="bookContent" style="color : black;">Upload text file:</label>
-									<input type="file" class="form-control" name="fileContent" accept=".txt"/>
+									<label for="bookContent" style="color : black;">Upload text/doc/docx file:</label>
+									<input type="file" class="form-control" name="fileContent" accept=".txt,.doc,.docx,"/>
 								</div>
 							</div>
 							<div class="col-lg-12">

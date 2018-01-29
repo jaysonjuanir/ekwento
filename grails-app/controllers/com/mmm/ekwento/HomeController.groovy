@@ -352,7 +352,7 @@ class HomeController {
 			println("Total no of paragraph "+paragraphs.length);
 			for (String para : paragraphs) {
 				//println(para.toString());
-				content += para.toString() + "\n"
+				content += para.toString()
 			}
 			fis.close();
 		} catch (Exception e) {
@@ -375,7 +375,7 @@ class HomeController {
 			println("Total no of paragraph "+paragraphs.size());
 			for (XWPFParagraph para : paragraphs) {
 				//println();
-				content += para.getText() + "\n"
+				content += para.getText()
 			}
 			fis.close();
 		} catch (Exception e) {

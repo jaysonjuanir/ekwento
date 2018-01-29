@@ -12,6 +12,8 @@ import org.springframework.security.access.annotation.Secured
 @Secured('permitAll')
 class BookController {
 
+	def wordExtractorService
+	
     def index(Integer max) { 
 		println("book index: " +params)
 		String view
@@ -106,7 +108,14 @@ class BookController {
 		def logo = request.getFile('bookLogo')
         def bookInstance
         if(testFile){
-            def content = testFile.getFileItem().getString()
+			def content = ""
+			if(testFile.contentType == 'text/plain'){ //text file
+				content = testFile.getFileItem().getString()
+			}else if(testFile.contentType == 'application/msword'){ //doc file
+				content = wordExtractorService.readDocFile(testFile)
+			}else{ //docx file
+				content = wordExtractorService.readDocxFile(testFile)
+			}
             
             bookInstance = new Book()
             bookInstance.title = params.bookTitle

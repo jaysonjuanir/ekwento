@@ -11,6 +11,8 @@ import org.springframework.security.access.annotation.Secured
 @Secured('permitAll')
 class ArticleController {
 
+	def wordExtractorService
+	
     def index(Integer max) { 
 		println("article index: " +params)
 		String view
@@ -105,7 +107,14 @@ class ArticleController {
         def logo = request.getFile("articleLogo")
         def articleInstance
         if(testFile){
-            def content = testFile.getFileItem().getString()
+			def content = ""
+			if(testFile.contentType == 'text/plain'){ //text file
+				content = testFile.getFileItem().getString()
+			}else if(testFile.contentType == 'application/msword'){ //doc file
+				content = wordExtractorService.readDocFile(testFile)
+			}else{ //docx file
+				content = wordExtractorService.readDocxFile(testFile)
+			}
             
             articleInstance = new Article()
             articleInstance.title = params.articleTitle
