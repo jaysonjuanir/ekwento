@@ -21,6 +21,7 @@ class HomeController {
     
     def springSecurityService
     def emailerService
+    def searchService
 
 	@Secured('permitAll')
     def index() { 
@@ -34,11 +35,18 @@ class HomeController {
 		//            return
 		//        }
 
+		def globalLatestUploadList = searchService.getGlobalLatestUploadResult()
+		def globalPopularUploadList = searchService.getGlobalPopularUploadResult()
 		
+		println("globalLatestUploadList" +globalLatestUploadList!=null?true:false)
+//		globalLatestUploadList.each{latest->
+//			println("id"+latest.id.toString() + " and type: " +latest.type)
+//		}
+//		println("globalPopularUploadList" +globalPopularUploadList)
 
         String view = 'index'
-        String postUrl = "${request.contextPath}${config.apf.filterProcessesUrl}"
-        respond view: view, model: [postUrl: postUrl]
+//        String postUrl = "${request.contextPath}${config.apf.filterProcessesUrl}"
+        respond view: view, model: [postUrl: postUrl, globalLatestUploadList:globalLatestUploadList, globalPopularUploadList:globalPopularUploadList]
     }
 	
 	@Secured('ROLE_ADMIN_DASHBOARD')

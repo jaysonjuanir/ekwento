@@ -185,20 +185,50 @@ If you have any questions about this Agreement, please contact us.
                             <ul id="Grid">
 								
 								<%--<g:each var="book" in="${Book.list(max: 4, sort: "dateCreated", order: "desc")}">--%>
-								<g:each var="book" in="${Book.findAllByApprovedAndRejected(true, false, [max: 4, sort: "dateCreated", order: "desc"])}">
+								<g:each var="globalLatest" in="${globalLatestUploadList}">
 									<li>
-										<g:if test="${book.logo}">
-											<img src="${createLink (controller:'book' , action:'renderImage' , id:book.id)}" alt="bookLogo" height="140" width="140"/>
+										<g:if test="${globalLatest.type == 'book'}">
+											<g:if test="${globalLatest.logo}">
+												<img src="${createLink (controller:'book' , action:'renderImage' , id:globalLatest.id)}" alt="bookLogo" height="140" width="140"/>
+											</g:if>
+											<g:else>
+												<g:img dir="images" file="ek.png" width="140" height="140"/>
+											</g:else>
+											<g:if test="${globalLatest.title.size() >=12}">
+												<div style="padding:1em;font-size: 16px;font-size: 0.75em;"><g:link title="${globalLatest.title} - ${globalLatest.description}" action="show" controller="book" id="${globalLatest.id}">${globalLatest.title.substring(0,10)}.....</g:link></div>
+											</g:if>
+											<g:else>
+												<div style="padding:1em;font-size: 16px;font-size: 0.75em;"><g:link title="${globalLatest.title} - ${globalLatest.description}" action="show" controller="book" id="${globalLatest.id}">${globalLatest.title}</g:link></div>
+											</g:else>
 										</g:if>
-										<g:else>
-											<g:img dir="images" file="ek.png" width="140" height="140"/>
-										</g:else>
-										<g:if test="${book.title.size() >=12}">
-											<div style="padding:1em;font-size: 16px;font-size: 0.75em;"><g:link title="${book.title} - ${book.description}" action="show" controller="book" id="${book.id}">${book.title.substring(0,10)}.....</g:link></div>
-										</g:if>
-										<g:else>
-											<div style="padding:1em;font-size: 16px;font-size: 0.75em;"><g:link title="${book.title} - ${book.description}" action="show" controller="book" id="${book.id}">${book.title}</g:link></div>
-										</g:else>
+										<g:elseif test="${globalLatest.type == 'article'}">
+											<g:if test="${globalLatest.logo}">
+												<img src="${createLink (controller:'article' , action:'renderImage' , id:globalLatest.id)}" alt="articleLogo" height="140" width="140"/>
+											</g:if>
+											<g:else>
+												<g:img dir="images" file="ek.png" width="140" height="140"/>
+											</g:else>
+											<g:if test="${globalLatest.title.size() >=12}">
+												<div style="padding:1em;font-size: 16px;font-size: 0.75em;"><g:link title="${globalLatest.title} - ${globalLatest.description}" action="show" controller="article" id="${globalLatest.id}">${globalLatest.title.substring(0,10)}.....</g:link></div>
+											</g:if>
+											<g:else>
+												<div style="padding:1em;font-size: 16px;font-size: 0.75em;"><g:link title="${globalLatest.title} - ${globalLatest.description}" action="show" controller="article" id="${globalLatest.id}">${globalLatest.title}</g:link></div>
+											</g:else>
+										</g:elseif>
+										<g:elseif test="${globalLatest.type == 'manga'}">
+											<g:if test="${globalLatest.logo}">
+												<img src="${createLink (controller:'manga' , action:'renderImage' , id:globalLatest.id)}" alt="mangaLogo" height="140" width="140"/>
+											</g:if>
+											<g:else>
+												<g:img dir="images" file="ek.png" width="140" height="140"/>
+											</g:else>
+											<g:if test="${globalLatest.title.size() >=12}">
+												<div style="padding:1em;font-size: 16px;font-size: 0.75em;"><g:link title="${globalLatest.title} - ${globalLatest.description}" action="show" controller="manga" id="${globalLatest.id}">${globalLatest.title.substring(0,10)}.....</g:link></div>
+											</g:if>
+											<g:else>
+												<div style="padding:1em;font-size: 16px;font-size: 0.75em;"><g:link title="${globalLatest.title} - ${globalLatest.description}" action="show" controller="manga" id="${globalLatest.id}">${globalLatest.title}</g:link></div>
+											</g:else>
+										</g:elseif>
 									</li>
 								</g:each>
                                 
