@@ -167,9 +167,6 @@
                         </ul>
                     </li>
 					</sec:ifAnyGranted>
-                    <li class="active"><a href="#">Library</a></li>
-                    <li class="active"><a href="#">Message</a></li>
-                    <li class="active"><a href="#">Notification</a></li>
 					
                 </ul>
 

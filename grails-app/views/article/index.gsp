@@ -107,10 +107,10 @@
 										
 										<td data-label="Logo">
 											<g:if test="${articleInstance.logo}">
-												<img src="${createLink (controller:'article' , action:'renderImage' , id:articleInstance.id)}" alt="bookLogo" height="75" width="75"/>
+												<g:link title="${articleInstance.description}" controller="article" action="show" id="${articleInstance.id}" class="nameLink"><img src="${createLink (controller:'article' , action:'renderImage' , id:articleInstance.id)}" alt="bookLogo" height="75" width="75"/></g:link>
 											</g:if>
 											<g:else>
-												<g:img dir="images" file="ek.png" height="75" width="75"/>
+												<g:link title="${articleInstance.description}" controller="article" action="show" id="${articleInstance.id}" class="nameLink"><g:img dir="images" file="ek.png" height="75" width="75"/></g:link>
 											</g:else>
 										</td>
 								</tr>

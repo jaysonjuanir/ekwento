@@ -66,8 +66,8 @@
                             <g:actionSubmit action = "login" value = "Submit" class="btn btn-success"/>
                         </form>--%>
                         <sec:ifNotGranted roles="ROLE_ADMIN_DASHBOARD">
-                        <g:form controller="book" action="index" method="get" name="searchForm" role="form" class="searchform cf">
-                            <input type="text" placeholder="Is it me you’re looking for?" name="searchBook">
+                        <g:form controller="home" action="searchList" method="get" name="searchForm" role="form" class="searchform cf">
+                            <input type="text" placeholder="Is it me you’re looking for?" name="searchCriteria">
                             <button type="submit">Search</button>
                         </g:form>
                         </sec:ifNotGranted>

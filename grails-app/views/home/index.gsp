@@ -179,7 +179,7 @@ If you have any questions about this Agreement, please contact us.
                 <div class="leftSidePanel" id="offset-top">
                     <div class="leftSideBooks" style="border-radius:5px;background-color: rgba(189, 184, 184, 0.54);">
                         <h3 class="reg-inline"><b>Latest Uploads</b></h3>
-                        <g:link class="reg-inline side-buttons btn btn-primary" action="index" controller="book">Read More</g:link>
+                        <g:link class="reg-inline side-buttons btn btn-primary" action="latestUploads" controller="home">Read More</g:link>
 
                         <div>
                             <ul id="Grid">
@@ -189,10 +189,10 @@ If you have any questions about this Agreement, please contact us.
 									<li>
 										<g:if test="${globalLatest.type == 'book'}">
 											<g:if test="${globalLatest.logo}">
-												<img src="${createLink (controller:'book' , action:'renderImage' , id:globalLatest.id)}" alt="bookLogo" height="140" width="140"/>
+												<g:link title="${globalLatest.title} - ${globalLatest.description}" action="show" controller="book" id="${globalLatest.id}"><img src="${createLink (controller:'book' , action:'renderImage' , id:globalLatest.id)}" alt="bookLogo" height="140" width="140"/></g:link>
 											</g:if>
 											<g:else>
-												<g:img dir="images" file="ek.png" width="140" height="140"/>
+												<g:link title="${globalLatest.title} - ${globalLatest.description}" action="show" controller="book" id="${globalLatest.id}"><g:img dir="images" file="ek.png" width="140" height="140"/></g:link>
 											</g:else>
 											<g:if test="${globalLatest.title.size() >=12}">
 												<div style="padding:1em;font-size: 16px;font-size: 0.75em;"><g:link title="${globalLatest.title} - ${globalLatest.description}" action="show" controller="book" id="${globalLatest.id}">${globalLatest.title.substring(0,10)}.....</g:link></div>
@@ -203,10 +203,10 @@ If you have any questions about this Agreement, please contact us.
 										</g:if>
 										<g:elseif test="${globalLatest.type == 'article'}">
 											<g:if test="${globalLatest.logo}">
-												<img src="${createLink (controller:'article' , action:'renderImage' , id:globalLatest.id)}" alt="articleLogo" height="140" width="140"/>
+												<g:link title="${globalLatest.title} - ${globalLatest.description}" action="show" controller="article" id="${globalLatest.id}"><img src="${createLink (controller:'article' , action:'renderImage' , id:globalLatest.id)}" alt="articleLogo" height="140" width="140"/></g:link>
 											</g:if>
 											<g:else>
-												<g:img dir="images" file="ek.png" width="140" height="140"/>
+												<g:link title="${globalLatest.title} - ${globalLatest.description}" action="show" controller="article" id="${globalLatest.id}"><g:img dir="images" file="ek.png" width="140" height="140"/></g:link>
 											</g:else>
 											<g:if test="${globalLatest.title.size() >=12}">
 												<div style="padding:1em;font-size: 16px;font-size: 0.75em;"><g:link title="${globalLatest.title} - ${globalLatest.description}" action="show" controller="article" id="${globalLatest.id}">${globalLatest.title.substring(0,10)}.....</g:link></div>
@@ -217,10 +217,10 @@ If you have any questions about this Agreement, please contact us.
 										</g:elseif>
 										<g:elseif test="${globalLatest.type == 'manga'}">
 											<g:if test="${globalLatest.logo}">
-												<img src="${createLink (controller:'manga' , action:'renderImage' , id:globalLatest.id)}" alt="mangaLogo" height="140" width="140"/>
+												<g:link title="${globalLatest.title} - ${globalLatest.description}" action="show" controller="manga" id="${globalLatest.id}"><img src="${createLink (controller:'manga' , action:'renderImage' , id:globalLatest.id)}" alt="mangaLogo" height="140" width="140"/></g:link>
 											</g:if>
 											<g:else>
-												<g:img dir="images" file="ek.png" width="140" height="140"/>
+												<g:link title="${globalLatest.title} - ${globalLatest.description}" action="show" controller="manga" id="${globalLatest.id}"><g:img dir="images" file="ek.png" width="140" height="140"/></g:link>
 											</g:else>
 											<g:if test="${globalLatest.title.size() >=12}">
 												<div style="padding:1em;font-size: 16px;font-size: 0.75em;"><g:link title="${globalLatest.title} - ${globalLatest.description}" action="show" controller="manga" id="${globalLatest.id}">${globalLatest.title.substring(0,10)}.....</g:link></div>
@@ -238,26 +238,54 @@ If you have any questions about this Agreement, please contact us.
 
                     <div class="leftSideBooks" style="border-radius:5px;background-color: rgba(189, 184, 184, 0.54);">
                         <h3 class="reg-inline"><b>Popular Books</b></h3>
-                        <g:link class="reg-inline side-buttons btn btn-primary" action="index" controller="book">Read More</g:link>
+                        <g:link class="reg-inline side-buttons btn btn-primary" action="popularUploads" controller="home">Read More</g:link>
 
                         <div>
                             <ul id="Grid">
-								<g:each var="book" in="${Book.findAllByApprovedAndRejected(true, false, [max: 8, sort: "numberOfViews", order: "asc"])}">
+								<g:each var="globalPopular" in="${globalPopularUploadList}">
 									<li>
-										<g:if test="${book.logo}">
-											<img src="${createLink (controller:'book' , action:'renderImage' , id:book.id)}" alt="bookLogo" height="140" width="140"/>
+										<g:if test="${globalPopular.type == 'book'}">
+											<g:if test="${globalPopular.logo}">
+												<g:link title="${globalPopular.title} - ${globalPopular.description}" action="show" controller="book" id="${globalPopular.id}"><img src="${createLink (controller:'book' , action:'renderImage' , id:globalPopular.id)}" alt="bookLogo" height="140" width="140"/></g:link>
+											</g:if>
+											<g:else>
+												<g:link title="${globalPopular.title} - ${globalPopular.description}" action="show" controller="book" id="${globalPopular.id}"><g:img dir="images" file="ek.png" width="140" height="140"/></g:link>
+											</g:else>
+											<g:if test="${globalPopular.title.size() >=12}">
+												<div style="padding:1em;font-size: 16px;font-size: 0.75em;"><g:link title="${globalPopular.title} - ${globalPopular.description}" action="show" controller="book" id="${globalPopular.id}">${globalPopular.title.substring(0,10)}.....</g:link></div>
+											</g:if>
+											<g:else>
+												<div style="padding:1em;font-size: 16px;font-size: 0.75em;"><g:link title="${globalPopular.title} - ${globalPopular.description}" action="show" controller="book" id="${globalPopular.id}">${globalPopular.title}</g:link></div>
+											</g:else>
 										</g:if>
-										<g:else>
-											<g:img dir="images" file="ek.png" width="140" height="140"/>
-										</g:else>
-										
-										<g:if test="${book.title.size() >=12}">
-											<div style="padding:1em;font-size: 16px;font-size: 0.75em;"><g:link title="${book.title} - ${book.description}" action="show" controller="book" id="${book.id}">${book.title.substring(0,10)}.....</g:link></div>
-										</g:if>
-										<g:else>
-											<div style="padding:1em;font-size: 16px;font-size: 0.75em;"><g:link title="${book.title} - ${book.description}" action="show" controller="book" id="${book.id}">${book.title}</g:link></div>
-										</g:else>
-											
+										<g:elseif test="${globalPopular.type == 'article'}">
+											<g:if test="${globalPopular.logo}">
+												<g:link title="${globalPopular.title} - ${globalPopular.description}" action="show" controller="article" id="${globalPopular.id}"><img src="${createLink (controller:'article' , action:'renderImage' , id:globalPopular.id)}" alt="articleLogo" height="140" width="140"/></g:link>
+											</g:if>
+											<g:else>
+												<g:link title="${globalPopular.title} - ${globalPopular.description}" action="show" controller="article" id="${globalPopular.id}"><g:img dir="images" file="ek.png" width="140" height="140"/></g:link>
+											</g:else>
+											<g:if test="${globalPopular.title.size() >=12}">
+												<div style="padding:1em;font-size: 16px;font-size: 0.75em;"><g:link title="${globalPopular.title} - ${globalPopular.description}" action="show" controller="article" id="${globalPopular.id}">${globalPopular.title.substring(0,10)}.....</g:link></div>
+											</g:if>
+											<g:else>
+												<div style="padding:1em;font-size: 16px;font-size: 0.75em;"><g:link title="${globalPopular.title} - ${globalPopular.description}" action="show" controller="article" id="${globalPopular.id}">${globalPopular.title}</g:link></div>
+											</g:else>
+										</g:elseif>
+										<g:elseif test="${globalPopular.type == 'manga'}">
+											<g:if test="${globalPopular.logo}">
+												<g:link title="${globalPopular.title} - ${globalPopular.description}" action="show" controller="manga" id="${globalPopular.id}"><img src="${createLink (controller:'manga' , action:'renderImage' , id:globalPopular.id)}" alt="mangaLogo" height="140" width="140"/></g:link>
+											</g:if>
+											<g:else>
+												<g:link title="${globalPopular.title} - ${globalPopular.description}" action="show" controller="manga" id="${globalPopular.id}"><g:img dir="images" file="ek.png" width="140" height="140"/></g:link>
+											</g:else>
+											<g:if test="${globalPopular.title.size() >=12}">
+												<div style="padding:1em;font-size: 16px;font-size: 0.75em;"><g:link title="${globalPopular.title} - ${globalPopular.description}" action="show" controller="manga" id="${globalPopular.id}">${globalPopular.title.substring(0,10)}.....</g:link></div>
+											</g:if>
+											<g:else>
+												<div style="padding:1em;font-size: 16px;font-size: 0.75em;"><g:link title="${globalPopular.title} - ${globalPopular.description}" action="show" controller="manga" id="${globalPopular.id}">${globalPopular.title}</g:link></div>
+											</g:else>
+										</g:elseif>
 									</li>
 								</g:each>
                             </ul>
@@ -275,10 +303,10 @@ If you have any questions about this Agreement, please contact us.
                                 <g:each var="article" in="${Article.findAllByApprovedAndRejected(true, false, [max: 4, sort: "dateCreated", order: "desc"])}">
 									<li>
 										<g:if test="${article.logo}">
-											<img src="${createLink (controller:'article' , action:'renderImage' , id:article.id)}" alt="articleLogo" height="75" width="75"/>
+											<g:link title="${article.title} - ${article.description}" action="show" controller="article" id="${article.id}"><img src="${createLink (controller:'article' , action:'renderImage' , id:article.id)}" alt="articleLogo" height="75" width="75"/></g:link>
 										</g:if>
 										<g:else>
-											<g:img dir="images" file="ek.png" height="75" width="75"/>
+											<g:link title="${article.title} - ${article.description}" action="show" controller="article" id="${article.id}"><g:img dir="images" file="ek.png" height="75" width="75"/></g:link>
 										</g:else>
 										<g:if test="${article.title.size() >=7}">
 											<div style="padding:1em;font-size: 16px;font-size: 0.75em;"><g:link title="${article.title} - ${article.description}" action="show" controller="article" id="${article.id}">${article.title.substring(0,5)}.....</g:link></div>
@@ -301,10 +329,10 @@ If you have any questions about this Agreement, please contact us.
                                 <g:each var="manga" in="${Manga.findAllByApprovedAndRejected(true, false, [max: 4, sort: "dateCreated", order: "desc"])}">
 									<li>
 										<g:if test="${manga.logo}">
-											<img src="${createLink (controller:'manga' , action:'renderImage' , id:manga.id)}" alt="mangaLogo" height="75" width="75"/>
+											<g:link title="${manga.title} - ${manga.description}" action="show" controller="manga" id="${manga.id}"><img src="${createLink (controller:'manga' , action:'renderImage' , id:manga.id)}" alt="mangaLogo" height="75" width="75"/></g:link>
 										</g:if>
 										<g:else>
-											<g:img dir="images" file="ek.png" height="75" width="75"/>
+											<g:link title="${manga.title} - ${manga.description}" action="show" controller="manga" id="${manga.id}"><g:img dir="images" file="ek.png" height="75" width="75"/></g:link>
 										</g:else>
 										<g:if test="${manga.title.size() >=7}">
 											<div style="padding:1em;font-size: 16px;font-size: 0.75em;"><g:link title="${manga.title} - ${manga.description}" action="show" controller="manga" id="${manga.id}">${manga.title.substring(0,4)}.....</g:link></div>
@@ -327,10 +355,10 @@ If you have any questions about this Agreement, please contact us.
                                 <g:each var="book" in="${Book.findAllByApprovedAndRejected(true, false, [max: 4, sort: "dateCreated", order: "desc"])}">
 									<li>
 										<g:if test="${book.logo}">
-											<img src="${createLink (controller:'book' , action:'renderImage' , id:book.id)}" alt="bookLogo" height="75" width="75"/>
+											<g:link title="${book.title} - ${book.description}" action="show" controller="book" id="${book.id}"><img src="${createLink (controller:'book' , action:'renderImage' , id:book.id)}" alt="bookLogo" height="75" width="75"/></g:link>
 										</g:if>
 										<g:else>
-											<g:img dir="images" file="ek.png" height="75" width="75"/>
+											<g:link title="${book.title} - ${book.description}" action="show" controller="book" id="${book.id}"><g:img dir="images" file="ek.png" height="75" width="75"/></g:link>
 										</g:else>
 										<g:if test="${book.title.size() >=7}">
 											<div style="padding:1em;font-size: 16px;font-size: 0.75em;"><g:link title="${book.title} - ${book.description}" action="show" controller="book" id="${book.id}">${book.title.substring(0,4)}.....</g:link></div>

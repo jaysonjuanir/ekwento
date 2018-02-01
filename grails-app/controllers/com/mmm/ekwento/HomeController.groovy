@@ -35,18 +35,27 @@ class HomeController {
 		//            return
 		//        }
 
-		def globalLatestUploadList = searchService.getGlobalLatestUploadResult()
-		def globalPopularUploadList = searchService.getGlobalPopularUploadResult()
+		def globalLatestUploadList = searchService.getGlobalLatestUploadResult(0, 4)
+		def globalPopularUploadList = searchService.getGlobalPopularUploadResult(0, 12)
 		
-		println("globalLatestUploadList" +globalLatestUploadList!=null?true:false)
-//		globalLatestUploadList.each{latest->
-//			println("id"+latest.id.toString() + " and type: " +latest.type)
-//		}
-//		println("globalPopularUploadList" +globalPopularUploadList)
+		println("globalLatestUploadList: " +globalLatestUploadList)
+		globalLatestUploadList.each{latest->
+			println("globalLatest.title class: " + (latest.title.getClass()))
+		}
+		println("globalPopularUploadList" +globalPopularUploadList)
 
         String view = 'index'
-//        String postUrl = "${request.contextPath}${config.apf.filterProcessesUrl}"
-        respond view: view, model: [postUrl: postUrl, globalLatestUploadList:globalLatestUploadList, globalPopularUploadList:globalPopularUploadList]
+        String postUrl = "${request.contextPath}${config.apf.filterProcessesUrl}"
+		
+		def model = [:]
+		
+		model.postUrl = postUrl
+		model.globalLatestUploadList = globalLatestUploadList
+		model.globalPopularUploadList = globalPopularUploadList 
+		
+		println("model: "+ model)
+//        respond view: view, model: model
+		render(view: "index", model: model)
     }
 	
 	@Secured('ROLE_ADMIN_DASHBOARD')
@@ -54,7 +63,6 @@ class HomeController {
         println("home list: " +params)
 		def max = null
 		String view
-		params.max = Math.min(max ?: 10, 100)
         if(!params.max) params.max = 10
         if(!params.offset) params.offset = 0
         
@@ -322,73 +330,73 @@ class HomeController {
         render(view:"show");
     }
 	
-	@Secured('IS_AUTHENTICATED_ANONYMOUSLY')
-	def testDoc(){
-		println("testDoc here")
+	@Secured('permitAll')
+	def searchList(){
+		println("Search List params: "+params)
 		
+		def model = [:]
+        if(!params.max) params.max = 10
+		else params.max = params.max.toInteger()
 		
-//		def content = readDocxFile("C:\\test.docx");
-		def content = readDocFile("C:\\test.doc");
+        if(!params.offset) params.offset = 0
+		else params.offset = params.offset.toInteger()
 		
-		println("content: " + content)
+		if(!params.searchCriteria) params.searchCriteria = ""
+		
+		def searchGlobalList = searchService.searchGlobalResult(params.searchCriteria, params.offset, params.max)
+		def searchGlobalCount = searchService.searchGlobalCount(params.searchCriteria)
+		
+		model.searchGlobalList = searchGlobalList
+		model.searchGlobalCount = searchGlobalCount
+		
+		println("model Success!: "+model)
+		
+		render(view:"searchList", model:model)
 	}
 	
-	@Secured('IS_AUTHENTICATED_ANONYMOUSLY')
-	def testDocx(){
-		println("testDocx here")
+	@Secured('permitAll')
+	def latestUploads(){
+		println("Latest Uploads params: "+params)
 		
+		def model = [:]
+        if(!params.max) params.max = 10
+		else params.max = params.max.toInteger()
 		
-//		def content = readDocxFile("C:\\test.docx");
-		def content = readDocxFile("C:\\test.docx");
+        if(!params.offset) params.offset = 0
+		else params.offset = params.offset.toInteger()
 		
-		println("content: " + content)
+		if(!params.searchCriteria) params.searchCriteria = ""
+		
+		def latestGlobalList = searchService.getGlobalLatestUploadResult(params.offset, params.max)
+		def latestGlobalCount = searchService.getGlobalLatestUploadCount()
+		
+		model.latestGlobalList = latestGlobalList
+		model.latestGlobalCount = latestGlobalCount
+		
+		println("model Success!: "+model)
+		
+		render(view:"latestUploads", model:model)
 	}
 	
-	def readDocFile(String fileName) {
-		String content = "";
-		try {
-			File file = new File(fileName);
-			FileInputStream fis = new FileInputStream(file.getAbsolutePath());
-
-			HWPFDocument doc = new HWPFDocument(fis);
-
-			WordExtractor we = new WordExtractor(doc);
-
-			String[] paragraphs = we.getParagraphText();
-			
-			
-			println("Total no of paragraph "+paragraphs.length);
-			for (String para : paragraphs) {
-				//println(para.toString());
-				content += para.toString()
-			}
-			fis.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return content
-	}
-	
-	def readDocxFile(String fileName) {
-		String content = "";
-		try {
-			File file = new File(fileName);
-			FileInputStream fis = new FileInputStream(file.getAbsolutePath());
-
-			XWPFDocument document = new XWPFDocument(fis);
-
-			List<XWPFParagraph> paragraphs = document.getParagraphs();
-			
-			
-			println("Total no of paragraph "+paragraphs.size());
-			for (XWPFParagraph para : paragraphs) {
-				//println();
-				content += para.getText()
-			}
-			fis.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return content;
+	@Secured('permitAll')
+	def popularUploads(){
+		println("Popular Uploads params: "+params)
+		
+		def model = [:]
+        if(!params.max) params.max = 10
+		else params.max = params.max.toInteger()
+		
+        if(!params.offset) params.offset = 0
+		else params.offset = params.offset.toInteger()
+		
+		def popularGlobalList = searchService.getGlobalPopularUploadResult(params.offset, params.max)
+		def popularGlobalCount = searchService.getGlobalPopularUploadCount()
+		
+		model.popularGlobalList = popularGlobalList
+		model.popularGlobalCount = popularGlobalCount
+		
+		println("model Success!: "+model)
+		
+		render(view:"popularUploads", model:model)
 	}
 }
