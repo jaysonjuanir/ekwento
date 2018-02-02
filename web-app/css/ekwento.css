@@ -718,6 +718,7 @@ table a{
 .reg-inline{
     display: inline-block;
     vertical-align: top;
+	color: #4b4b4b;
 }
 .side-buttons{
     margin: 25px 10px;
