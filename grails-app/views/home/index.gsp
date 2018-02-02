@@ -328,7 +328,7 @@ If you have any questions about this Agreement, please contact us.
                     
                     <div class="rightSideBooks" style="border-radius:5px;background-color: rgba(189, 184, 184, 0.54);">
                         <h3 class="reg-inline"><b>Manga</b></h3>
-                        <g:link class="reg-inline side-buttons btn btn-primary" action="show" controller="manga">Read More</g:link>
+                        <g:link class="reg-inline side-buttons btn btn-primary" action="index" controller="manga">Read More</g:link>
 
                         <div>
                             <ul id="Grid">
