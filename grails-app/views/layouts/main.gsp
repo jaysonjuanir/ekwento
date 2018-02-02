@@ -38,7 +38,7 @@
         
         <!-- Favicon -->
         <!--<link href="/eKwento-1.0/images/faviconn.ico" rel="shortcut icon" type="image/x-icon"></link>-->
-        <link href="${resource(dir: 'images', file: 'ek.ico')}" rel="shortcut icon" type="image/x-icon"></link>
+        <link href="${resource(dir: 'images', file: 'favicon.ico.png')}" rel="shortcut icon" type="image/x-icon"></link>
         <g:layoutHead/>
     </head>
     <body>
@@ -53,7 +53,7 @@
                         <span class="icon-bar"></span>
                     </button>
                     <a data-scroll class="pull-left header-link" href="#page-top">
-                        <img class="header-logo" src="${resource(dir: 'images', file: 'ek.png')}" height="100" width="100">
+                        <img class="header-logo" src="${resource(dir: 'images', file: 'logo1.png')}" height="100" width="100">
                         
                     </a>
                     <div style="float:left;">

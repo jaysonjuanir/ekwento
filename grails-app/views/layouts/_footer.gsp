@@ -35,9 +35,9 @@
         </div>
         <div class="rowFooter">
             <h3>Contact Us</h3>
-            <a href="https://twitter.com/minimalmonkey" class="icon-button twitter"><i class="icon-twitter"></i><span></span></a>
-            <a href="https://facebook.com" class="icon-button facebook"><i class="icon-facebook"></i><span></span></a>
-            <a href="https://plus.google.com" class="icon-button google-plus"><i class="icon-google-plus"></i><span></span></a>
+            <a href="https://twitter.com/minimalmonkey" class="icon-button twitter"><i id="twitter-hover">t</i><span></span></a>
+            <a href="https://www.facebook.com/E-Kwento-A-Web-based-and-Mobile-Application-1504561822997621/" class="icon-button facebook"><i id="fb-hover">f</i><span></span></a>
+            <a href="https://plus.google.com/u/1/114882348674497438322" class="icon-button google-plus"><i id="gmail-hover">g</i><span></span></a>
         </div>
 <!--        <div class="row">
             <small class="pull-right">Karaoke Avenue. Sing your feelings &copy; 2016</small>

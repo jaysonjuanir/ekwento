@@ -120,11 +120,11 @@
                                     <label class="col-xs-12 col-sm-6 col-md-8">
                                         <input class="reg-inline" required type="checkbox" data-toggle="popover" data-placement="bottom" title="By Checking this" data-content="Term and Termination
 
-This Agreement shall remain in effect until terminated by you or My Company (change this). 
+This Agreement shall remain in effect until terminated by you or My Company Ekwento. 
 
-My Company (change this) may, in its sole discretion, at any time and for any or no reason, suspend or terminate this Agreement with or without prior notice.
+My Company Ekwento may, in its sole discretion, at any time and for any or no reason, suspend or terminate this Agreement with or without prior notice.
 
-This Agreement will terminate immediately, without prior notice from My Company (change this), in the event that you fail to comply with any provision of this Agreement. You may also terminate this Agreement by deleting the Application and all copies thereof from your mobile device or from your desktop.
+This Agreement will terminate immediately, without prior notice from My Company Ekwento, in the event that you fail to comply with any provision of this Agreement. You may also terminate this Agreement by deleting the Application and all copies thereof from your mobile device or from your desktop.
 
 Upon termination of this Agreement, you shall cease all use of the Application and delete all copies of the Application from your mobile device or from your desktop.
 
@@ -134,7 +134,7 @@ If any provision of this Agreement is held to be unenforceable or invalid, such 
 
 Amendments to this Agreement
 
-My Company (change this) reserves the right, at its sole discretion, to modify or replace this Agreement at any time. If a revision is material we will provide at least 30 (changes this) days' notice prior to any new terms taking effect. What constitutes a material change will be determined at our sole discretion.
+My Company Ekwento reserves the right, at its sole discretion, to modify or replace this Agreement at any time. If a revision is material we will provide at least 30 (changes this) days' notice prior to any new terms taking effect. What constitutes a material change will be determined at our sole discretion.
 
 Contact Information
 
@@ -154,7 +154,10 @@ If you have any questions about this Agreement, please contact us.
                 </div>
                 <div class="splash-image-registration">
                     <a data-scroll class="pull-left header-link" href="#page-top">
-                        <img class="img-responsive" alt="Responsive image" src="${resource(dir: 'images', file: 'books-library.jpg')}" >
+                        <%--<img class="img-responsive" alt="Responsive image" src="${resource(dir: 'images', file: 'books-library.jpg')}" > --%>
+						<h1>Istorya mo,</h1>
+						<h1>e-Kwento mo!</h1>
+						<h3>Read everything you love anywhere, anytime.</h3>
                     </a>
                 </div>
             </div>
@@ -168,7 +171,10 @@ If you have any questions about this Agreement, please contact us.
                 </div>
                 <div class="splash-image-registration">
                     <a data-scroll class="pull-left header-link" href="#page-top">
-                        <img class="img-responsive" alt="Responsive image" src="${resource(dir: 'images', file: 'books-library.jpg')}" >
+                        <%--<img class="img-responsive" alt="Responsive image" src="${resource(dir: 'images', file: 'books-library.jpg')}" >--%>
+						<h1>Istorya mo,</h1>
+						<h1>e-Kwento mo!</h1>
+						<h3>Read everything you love anywhere, anytime.</h3>
                     </a>
                 </div>
             </div>
@@ -322,7 +328,7 @@ If you have any questions about this Agreement, please contact us.
                     
                     <div class="rightSideBooks" style="border-radius:5px;background-color: rgba(189, 184, 184, 0.54);">
                         <h3 class="reg-inline"><b>Manga</b></h3>
-                        <g:link class="reg-inline side-buttons btn btn-primary" action="show" id="1">Read More</g:link>
+                        <g:link class="reg-inline side-buttons btn btn-primary" action="show" controller="manga">Read More</g:link>
 
                         <div>
                             <ul id="Grid">

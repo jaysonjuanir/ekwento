@@ -1016,6 +1016,26 @@ table a{
 	background-color: #db5a3c;
 }
 
+#twitter-hover{
+	color: #4099ff;
+}
+#fb-hover{
+	color: #3B5998;
+}
+#gmail-hover{
+	color: #db5a3c;
+}
+
+#twitter-hover:hover{
+	color: #FFF;
+}
+#fb-hover:hover{
+	color: #FFF;
+}
+#gmail-hover:hover{
+	color: #FFF;
+}
+
 /* Icons */
 .icon-button i {
 	background: none;
